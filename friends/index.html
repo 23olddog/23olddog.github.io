@@ -348,8 +348,11 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay()  + '.jpg';
-    console.log('这是bannerUrl' + bannerUrl)
+    
+    var bannerUrl =  "/medias/banner/"  + new Date().getDay() + '.jpg';;
+    
+ //   = "/medias/banner/" + new Date().getSeconds()  + '.jpg';
+   
     $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
 </script>
 
@@ -719,7 +722,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2022</span>
+                <span id="year">2022</span>
             
             <a href="/about" target="_blank">olddog</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
