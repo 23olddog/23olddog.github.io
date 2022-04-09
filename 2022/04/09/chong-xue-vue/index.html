@@ -4,8 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 前端">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="重学Vue第一天, 前端">
+    <meta name="description" content="模板语法调用函数123&amp;lt;span :title=&#34;toTitleDate(date)&#34;&amp;gt;  {{ formatDate(date) }}//formatData不应该时更改数据或者触发异步操作&amp;lt;/span&amp;gt;
+
+每次组">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +21,7 @@
 
     
 
-    <title>Hello World | olddog</title>
+    <title>重学Vue第一天 | olddog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -312,12 +314,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">重学Vue第一天</h1>
                 </div>
             </div>
         </div>
@@ -466,19 +468,94 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                <h2 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h2><h4 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;span :title="toTitleDate(date)"&gt;</span><br><span class="line">  {{ formatDate(date) }}//formatData不应该时更改数据或者触发异步操作</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></tbody></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p><strong>每次组件更新时 都会调用绑定表达式内部调用的函数 因此他们不应该产生任何副作用 例如更改数据或触发异步操作</strong></p>
+<h4 id="受限的全局访问"><a href="#受限的全局访问" class="headerlink" title="受限的全局访问"></a>受限的全局访问</h4><p>魔棒表达式是沙盒化的 只能访问全局的受限列表（该列表公布了常用的内置全局变量 如 Math Date）未明确包含在列表中的全局变量（用户附加属性）</p>
+<p>将无法在模板表达式中访问 可以将所有 Vue 表达式添加到<code>app.config.globalProperties</code>来显式定义其他全局变量（window）</p>
+<h4 id="动态参数"><a href="#动态参数" class="headerlink" title="动态参数"></a>动态参数</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-bind:[attributeName]="url"&gt; ... &lt;/a&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- shorthand --&gt;</span><br><span class="line">&lt;a :[attributeName]="url"&gt; ... &lt;/a&gt;</span><br><span class="line">//如果组件实例具有数据属性 则此绑定等价于 attributeName attributeName 'href' v-bind:href</span><br><span class="line">//避免使用大写字符命名键 因为浏览器会强制将属性名称转化为小写 someAttr -&gt; someattr</span><br></pre></td></tr></tbody></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h4 id="DOM-更新时间"><a href="#DOM-更新时间" class="headerlink" title="DOM 更新时间"></a>DOM 更新时间</h4><p>dom 更新不是同步更新的 vue 会缓冲它们知道更新周期的下一个“next tick” 以确保不管进行了多少状态更改 每个组件都只需要更新依次</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//要在状态更改后等待DOM更新完成 可以使用nextTick全局API</span><br><span class="line">Import {nextTick} form 'vue';</span><br><span class="line">function increment() {</span><br><span class="line">  state.count++</span><br><span class="line">  nextTick(() =&gt; {</span><br><span class="line">    // access updated DOM</span><br><span class="line">  })</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>在 vue 中默认深度响应的 即在嵌套的对象或数组中也可以检测到更改 也可以显式地创建浅反应对象 仅在跟级别跟踪反应性 但是通常仅在高级用例中需要（后面学到补充）</p>
+<h4 id="反应式代理与原始"><a href="#反应式代理与原始" class="headerlink" title="反应式代理与原始"></a>反应式代理与原始</h4><p><strong>reactive（）是原对象的代理 而不是原对象的返回值</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const raw = {}</span><br><span class="line">const proxy = reactive(raw)//返回的是代理Proxy对象</span><br><span class="line"></span><br><span class="line">// proxy is NOT equal to the original.</span><br><span class="line">console.log(proxy === raw) // false</span><br></pre></td></tr></tbody></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>如果只是代理反应 那么改变原始对象不会触发更新 所以 Vue 的响应式系统是使用状态的代理版本 为了确保对代理的始终统一访问 使用 reactive 同一个对象 然后调用 reacitive 一个现有的代理也返回同一个代理</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// calling reactive() on the same object returns the same proxy</span><br><span class="line">console.log(reactive(raw) === proxy) // true</span><br><span class="line"></span><br><span class="line">// calling reactive() on a proxy returns itself</span><br><span class="line">console.log(reactive(proxy) === proxy) // true</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>由于 Vue 的响应式适用于属性访问 因此我们必须保持响应式对象的相同引用 这意味着我们不能轻易地替换反应式对象 以为与第一个引用的反应性连接丢失了</strong></p>
+<p>这也意味着当我们将反应性对象的属性分配或解构为局部变量时 或者将属性传递给函数时 将失去响应性</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">const state = reactive({ count: 0 })</span><br><span class="line"></span><br><span class="line">// n is a local variable that is disconnected</span><br><span class="line">// from state.count.</span><br><span class="line">let n = state.count</span><br><span class="line">// does not affect original state</span><br><span class="line">n++</span><br><span class="line"></span><br><span class="line">// count is also disconnected from state.count.</span><br><span class="line">let { count } = state</span><br><span class="line">// does not affect original state</span><br><span class="line">count++</span><br><span class="line"></span><br><span class="line">// the function receives a plain number and</span><br><span class="line">// won't be able to track changes to state.count</span><br><span class="line">callSomeFunction(state.count)</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="ref（）"><a href="#ref（）" class="headerlink" title="ref（）"></a>ref（）</h4><p>当持有对象类型时 ref 会自动将其.value 与 reactive（） 包含对象值的 ref 可以反应性替换整个对象</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const objectRef = ref({ count: 0 })</span><br><span class="line"></span><br><span class="line">// this works reactively</span><br><span class="line">objectRef.value = { count: 1 }</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Refs 也可以传递给函数或从普通对象中解构，而不会失去反应性：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const obj = {</span><br><span class="line">  foo: ref(1),</span><br><span class="line">  bar: ref(2)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">// the function receives a ref</span><br><span class="line">// it needs to access the value via .value but it</span><br><span class="line">// will retain the reactivity connection</span><br><span class="line">callSomeFunction(obj.foo)</span><br><span class="line"></span><br><span class="line">// still reactive</span><br><span class="line">const { foo, bar } = obj</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>换句话说，<code>ref()</code>允许我们创建对任何值的“引用”并在不失去反应性的情况下传递它。此功能非常重要，因为它在将逻辑提取到<a target="_blank" rel="noopener" href="https://vuejs.org/guide/reusability/composables.html">Composable Functions</a>时经常使用。</strong></p>
+<p>当 ref 作为响应式对象的属性被访问或改变时 他会自动被解包 因此它的行为类似于普通属性</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const count = ref(0)</span><br><span class="line">const state = reactive({</span><br><span class="line">  count</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">console.log(state.count) // 0</span><br><span class="line"></span><br><span class="line">state.count = 1</span><br><span class="line">console.log(count.value) // 1</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果将新的 ref 分配给现有的 ref 属性 他将替代旧的 ref</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const count = ref(0)</span><br><span class="line">const state = reactive({</span><br><span class="line">  count</span><br><span class="line">})</span><br><span class="line">const otherCount = ref(2)</span><br><span class="line"></span><br><span class="line">state.count = otherCount</span><br><span class="line">console.log(count.value) // 0</span><br><span class="line">console.log(state.count) // 2</span><br><span class="line"></span><br><span class="line">state.count = 3</span><br><span class="line">console.log(count.value) // 0</span><br><span class="line">console.log(otherCount.value)//3</span><br></pre></td></tr></tbody></table></figure>
+
+<p>*<em>Ref 展开仅在嵌套在深层反应对象时发生 当它作为浅反应对象的属性被访问时 它不适用</em></p>
+<h2 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h2><p>computed（）函数需要传递一个 getter 函数 返回值是一个计算的 ref 计算属性会自动跟踪其反应性依赖关系</p>
+<p>getters 没有副作用 ：计算属性只执行纯计算并且没有副作用 所以不要发出异步请求或者在计算的 getter 上改变 DOM</p>
+<h2 id="类和样式绑定"><a href="#类和样式绑定" class="headerlink" title="类和样式绑定"></a>类和样式绑定</h2><p>可以绑定到返回对象的计算属性 这是一种常见且强大的模式</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const isActive = ref(true)</span><br><span class="line">const error = ref(null)</span><br><span class="line"></span><br><span class="line">const classObject = computed(() =&gt; ({</span><br><span class="line">  active: isActive.value &amp;&amp; !error.value,</span><br><span class="line">  'text-danger': error.value &amp;&amp; error.value.type === 'fatal'</span><br><span class="line">}))</span><br><span class="line">&lt;div :class="classObject"&gt;&lt;/div&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果想要 有条件切换列表中的值 可以用三元表达式实现</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div :class="[isActive ? activeClass : '', errorClass]"&gt;&lt;/div&gt;</span><br><span class="line">//这将始终适用errorClass 但是activeClass仅在为真的时候才适用</span><br><span class="line">//如果有多个条件类 可以使用对象语法</span><br><span class="line">&lt;div :class="[{ active: isActive }, errorClass]"&gt;&lt;/div&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>当在具有单个根元素的组件上使用该属性时 这些类将添加到组件的根元素中 并与该组件上已有的现有类合并</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- child component template --&gt;</span><br><span class="line">&lt;p class="foo bar"&gt;Hi!&lt;/p&gt;</span><br><span class="line">!-- when using the component --&gt;</span><br><span class="line">&lt;my-component class="baz boo"&gt;&lt;/my-component&gt;</span><br><span class="line">呈线的html将为</span><br><span class="line">&lt;p class="foo bar baz boo"&gt;Hi&lt;/p&gt;</span><br><span class="line">类绑定也是这样</span><br><span class="line">如果组件有多个根元素 则需要定义哪些元素将接收此类 可以使用$attrs组件属性来执行此操作</span><br><span class="line">&lt;!-- my-component template using $attrs --&gt;</span><br><span class="line">&lt;p :class="$attrs.class"&gt;Hi!&lt;/p&gt;</span><br><span class="line">&lt;span&gt;This is a child component&lt;/span&gt;</span><br><span class="line">&lt;my-component class="baz"&gt;&lt;/my-component&gt;</span><br><span class="line">将渲染为</span><br><span class="line">&lt;p class="baz"&gt;Hi!&lt;/p&gt;</span><br><span class="line">&lt;span&gt;This is a child component&lt;/span&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="v-if"><a href="#v-if" class="headerlink" title="v-if"></a>v-if</h4><p>v-if 是一个指令 必须添加到单个元素上 可以将 v-if 在一个 template 上使用</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;template v-if="ok"&gt;&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>v-show 将始终被渲染在 DOM 中 仅切换 display 元素的 css 属性 不支持使用在 template</p>
+<p>经常切换使用 v-show 不经常使用则用 v-show</p>
+<p><strong>v-for 遍历对象时 顺序基于枚举顺序 Objects.keys(), 这不能保证在 JavaScript 引擎实现中保持一致</strong>、</p>
+<p>可以在 template 中使用 v-for 来渲染一个包含多个元素的块</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;template v-for="item in items"&gt;</span><br><span class="line">    &lt;li&gt;{{ item.msg }}&lt;/li&gt;</span><br><span class="line">    &lt;li class="divider" role="presentation"&gt;&lt;/li&gt;</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>为什么 v-for 要提供 key</strong></p>
+<ul>
+<li>当 vue 更新使用渲染的元素列表时 v-for 默认使用就地补丁策略（如果数据项的顺序发生了变化 而不是移动 DOM 元素来匹配项的顺序 VUE 将就地补丁修补每个元素并确保他们反映应该在该特定索引处呈现的内容）但这种模式仅适用于列表的渲染输出不依赖子组件或者临时 DOM 状态（表单输入值）的情况</li>
+<li>为了给 vue 一个提示以便它可以跟踪每个节点的身份 从而重用或重新排序现有元素 需要提供一个唯一的 key</li>
+</ul>
+<h4 id="数组变化侦测"><a href="#数组变化侦测" class="headerlink" title="数组变化侦测"></a>数组变化侦测</h4><ul>
+<li>push()</li>
+<li>pop()</li>
+<li>shift()</li>
+<li>unshift()</li>
+<li>splice()</li>
+<li>sort()</li>
+<li>reverse()</li>
+</ul>
+<p>在 vue 中 将一个数组替换为另一个数组包含重叠对象的数组是一种高效的操作 如使用新数组替换旧数组:concact() slice()</p>
+<p>当我们需要显示一个经过过滤或排序的数组版本 而不需要实际改变或重置原始数据 可以创建一个返回过滤或排序数组的计算属性</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const numbers = ref([1, 2, 3, 4, 5])</span><br><span class="line"></span><br><span class="line">const evenNumbers = computed(() =&gt; {</span><br><span class="line">  return numbers.value.filter((n) =&gt; n % 2 === 0)</span><br><span class="line">})</span><br><span class="line">&lt;li v-for="n in evenNumbers"&gt;{{ n }}&lt;/li&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在计算属性不行使 比如嵌套的 v-for 循环中</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const sets = ref([</span><br><span class="line">  [1, 2, 3, 4, 5],</span><br><span class="line">  [6, 7, 8, 9, 10]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">function even(numbers) {</span><br><span class="line">  return numbers.filter((number) =&gt; number % 2 === 0)</span><br><span class="line">}</span><br><span class="line">&lt;ul v-for="numbers in sets"&gt;</span><br><span class="line">  &lt;li v-for="n in even(numbers)"&gt;{{ n }}&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">输出：2 4 6 8 10</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>在计算属性中使用 reverse 和 sort 要小心 因为他们会改变原始数组 在计算属性的 getter 中应该避免这种情况 在调用前先创建原始数据的副本</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- return numbers.reverse()</span><br><span class="line">+ return [...numbers].reverse()</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>当我们需要访问内联处理程序中的原始 DOM 事件 可以用特殊变量将其传递给方法$event 或者使用内联箭头函数</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click="warn('Form cannot be submitted yet.', $event)"&gt;</span><br><span class="line">  Submit</span><br><span class="line">&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- using inline arrow function --&gt;</span><br><span class="line">&lt;button @click="(event) =&gt; warn('Form cannot be submitted yet.', event)"&gt;</span><br><span class="line">  Submit</span><br><span class="line">&lt;/button&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="表单上输入绑定"><a href="#表单上输入绑定" class="headerlink" title="表单上输入绑定"></a>表单上输入绑定</h4><ul>
+<li><code>&lt;input&gt;</code>文本类型和<code>&lt;textarea&gt;</code>元素使用<code>value</code>属性和<code>input</code>事件；</li>
+<li><code>&lt;input type="checkbox"&gt;``&lt;input type="radio"&gt;</code>使用<code>checked</code>和事件<code>change</code>；</li>
+<li><code>&lt;select&gt;</code>用作<code>value</code>和<code>change</code>事件。</li>
+</ul>
+<p><strong>v-model<code>将忽略在任何表单元素上找到的初始或属性</code>value<code>。它将始终将当前绑定的 JavaScript 状态视为事实来源。您应该使用反应性 API在 JavaScript 端声明初始值。</code>checked``selected</strong></p>
 
                 
             </div>
@@ -505,7 +582,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://23olddog.github.io/2022/04/09/hello-world/">https://23olddog.github.io/2022/04/09/hello-world/</a>
+                    <a href="https://23olddog.github.io/2022/04/09/chong-xue-vue/">https://23olddog.github.io/2022/04/09/chong-xue-vue/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -714,18 +791,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/09/hello-world/">
+                <a href="/2022/04/09/vue-kuang-jia-jie-du-1.0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="Vue的原理实现">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">Vue的原理实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -735,9 +811,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-09
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -746,7 +822,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -757,13 +832,13 @@
                 本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/09/hello-world/">
+                <a href="/2022/04/09/chong-xue-vue/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="重学Vue第一天">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">重学Vue第一天</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -995,13 +1070,13 @@
             
         </div>
         <div class="col s12 m4 l4 social-link social-statis">
-    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <a href="https://github.com/23olddog" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
         <i class="fab fa-github"></i>
     </a>
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:3056085618@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -1011,7 +1086,7 @@
 
 
 
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3056085618" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3056085618" data-position="top" data-delay="50">
         <i class="fab fa-qq"></i>
     </a>
 
@@ -1156,6 +1231,14 @@ $(function () {
     
 
     <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
+            }
+        </script>
     
 
     <!-- 鼠标星星特效 -->

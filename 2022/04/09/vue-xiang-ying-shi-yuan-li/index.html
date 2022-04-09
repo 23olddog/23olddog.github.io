@@ -1,0 +1,1367 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="你不知道的reactive, 前端">
+    <meta name="description" content="Vue3 源码解析系列 - 响应式原理（reactive 篇）reactive核心入口话不多说，我们先来看下核心的 reactive 的源码，先看下有哪些依赖：
+1234567891011121314151617// 工具方法，isObje">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+
+    <title>你不知道的reactive | olddog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="olddog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">olddog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">olddog</div>
+        <div class="logo-desc">
+            
+            nothing but code
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">你不知道的reactive</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-04-09
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Vue3-源码解析系列-响应式原理（reactive-篇）"><a href="#Vue3-源码解析系列-响应式原理（reactive-篇）" class="headerlink" title="Vue3 源码解析系列 - 响应式原理（reactive 篇）"></a>Vue3 源码解析系列 - 响应式原理（reactive 篇）</h1><h2 id="reactive"><a href="#reactive" class="headerlink" title="reactive"></a>reactive</h2><h3 id="核心入口"><a href="#核心入口" class="headerlink" title="核心入口"></a>核心入口</h3><p>话不多说，我们先来看下核心的 <code>reactive</code> 的源码，先看下有哪些依赖：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 工具方法，isObject 是判断是否是对象，toTypeString 获取数据类型</span></span><br><span class="line"><span class="keyword">import</span> { isObject, toTypeString } <span class="keyword">from</span> <span class="string">"@vue/shared"</span>;</span><br><span class="line"><span class="comment">// Proxy 的 handlers</span></span><br><span class="line"><span class="comment">// mutableHandlers：可变数据的 handler</span></span><br><span class="line"><span class="comment">// readonlyHandlers：只读数据的 handler</span></span><br><span class="line"><span class="keyword">import</span> { mutableHandlers, readonlyHandlers } <span class="keyword">from</span> <span class="string">"./baseHandlers"</span>;</span><br><span class="line"><span class="keyword">import</span> {</span><br><span class="line">  mutableCollectionHandlers, <span class="comment">// 可变集合数据的 handler</span></span><br><span class="line">  readonlyCollectionHandlers, <span class="comment">// 只读集合数据的 handler</span></span><br><span class="line">} <span class="keyword">from</span> <span class="string">"./collectionHandlers"</span>;</span><br><span class="line"><span class="comment">// effect 泛型类型</span></span><br><span class="line"><span class="keyword">import</span> { <span class="title class_">ReactiveEffect</span> } <span class="keyword">from</span> <span class="string">"./effect"</span>;</span><br><span class="line"><span class="comment">// ref 泛型类型</span></span><br><span class="line"><span class="keyword">import</span> { <span class="title class_">UnwrapRef</span>, <span class="title class_">Ref</span> } <span class="keyword">from</span> <span class="string">"./ref"</span>;</span><br><span class="line"><span class="comment">// 工具方法，将字符串转化成 Map，返回 function 来判断是否 这个Map 上包含所给的 key</span></span><br><span class="line"><span class="comment">// 这个在 vue2 里也有</span></span><br><span class="line"><span class="keyword">import</span> { makeMap } <span class="keyword">from</span> <span class="string">"@vue/shared"</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以很清楚的看到，重点依赖项就是那一堆 <code>handler</code> 了，其他都是一些工具方法和泛型类型</p>
+<p>接下来的源码里是一堆变量的定义，不过我们先跳过，先来看下 <code>reactive</code> 的方法和类型：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 上面还有一大坨变量定义，很关键，但是我们先跳过，先看下有哪些方法，类型是什么样的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 依赖集合类型</span></span><br><span class="line"><span class="keyword">export</span> type <span class="title class_">Dep</span> = <span class="title class_">Set</span>&lt;<span class="title class_">ReactiveEffect</span>&gt;</span><br><span class="line"><span class="comment">// 看名字就知道，是 key 和 Dep 集合的对应关系集合</span></span><br><span class="line"><span class="comment">// key 其实就是我们响应式数据上的 key，Dep 则是有哪些地方依赖到了这个 key</span></span><br><span class="line"><span class="comment">// 比如 const a = { foo: 1 }，如果在其他两处都用到了 a.foo，那么</span></span><br><span class="line"><span class="comment">// 这里的 key 就是 foo，Dep 就是这两处的 依赖集合</span></span><br><span class="line"><span class="keyword">export</span> type <span class="title class_">KeyToDepMap</span> = <span class="title class_">Map</span>&lt;string | symbol, <span class="title class_">Dep</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断对象能不能被观察的</span></span><br><span class="line"><span class="keyword">const</span> canObserve = (<span class="attr">value</span>: any): boolean</span><br><span class="line"></span><br><span class="line"><span class="comment">// only unwrap nested ref</span></span><br><span class="line"><span class="comment">// 解套 Ref 类型</span></span><br><span class="line">type <span class="title class_">UnwrapNestedRefs</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="title class_">Ref</span> ? T : <span class="title class_">UnwrapRef</span>&lt;T&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 响应式入口方法，入参是泛型，继承 object，返回值就是上面的解套 Ref 类型</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> reactive&lt;T <span class="keyword">extends</span> object&gt;(<span class="attr">target</span>: T): <span class="title class_">UnwrapNestedRefs</span>&lt;T&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 跟 reactive 作用相同，只不过返回值是 Readonly 的</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> readonly&lt;T <span class="keyword">extends</span> object&gt;(</span><br><span class="line">  <span class="attr">target</span>: T</span><br><span class="line">): <span class="title class_">Readonly</span>&lt;<span class="title class_">UnwrapNestedRefs</span>&lt;T&gt;&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建响应式对象的关键方法，reactive 和 only 都调用了这个方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createReactiveObject</span>(<span class="params"></span></span><br><span class="line"><span class="params">  target: any,</span></span><br><span class="line"><span class="params">  toProxy: <span class="built_in">WeakMap</span>&lt;any, any&gt;,</span></span><br><span class="line"><span class="params">  toRaw: <span class="built_in">WeakMap</span>&lt;any, any&gt;,</span></span><br><span class="line"><span class="params">  baseHandlers: ProxyHandler&lt;any&gt;,</span></span><br><span class="line"><span class="params">  collectionHandlers: ProxyHandler&lt;any&gt;</span></span><br><span class="line"><span class="params"></span>): any</span><br><span class="line"></span><br><span class="line"><span class="comment">// 是否是响应式数据</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">isReactive</span>(<span class="params">value: any</span>): boolean</span><br><span class="line"></span><br><span class="line"><span class="comment">// 是否是只读的响应式数据</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">isReadonly</span>(<span class="params">value: any</span>): boolean</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将响应式数据转化为原始数据</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> toRaw&lt;T&gt;(<span class="attr">observed</span>: T): T</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 value 标记为 Readonly，在 reactive 方法里会判断是否是 Readonly 的原始数据</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> markReadonly&lt;T&gt;(<span class="attr">value</span>: T): T</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 value 标记为不可响应数据，这个将会影响 canObserve 方法的判断</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> markNonReactive&lt;T&gt;(<span class="attr">value</span>: T): T</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看完方法和类型，大致有以下几个问题：</p>
+<ol>
+<li><code>Dep</code> 依赖是如何追踪的？</li>
+<li><code>UnwrapRef</code> 是如何展开嵌套的响应式数据类型的（俗称解套）,比如 <code>reactive({ name: reactive(ref('Jooger')) })</code></li>
+<li>如何判断是否是（只读的）响应式数据？往响应式数据上面挂载一个标记位来标记？还是用一个对象来存储响应式数据？</li>
+<li>如何将响应式数据转化为原始数据？proxy 数据如何转化成 object？</li>
+</ol>
+<p>问题 1，后面的 <code>effect</code> 会讲，这里先不讨论</p>
+<p>问题 2，后面的 <code>ref</code> 会讲，这里先不讨论</p>
+<p>问题 3，4 就需要看下我刚才跳过的一堆变量的定义了：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The main WeakMap that stores {target -&gt; key -&gt; dep} connections.</span></span><br><span class="line"><span class="comment">// Conceptually, it's easier to think of a dependency as a Dep class</span></span><br><span class="line"><span class="comment">// which maintains a Set of subscribers, but we simply store them as</span></span><br><span class="line"><span class="comment">// raw Sets to reduce memory overhead.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// target 和 KeyToDepMap 的映射关系集合</span></span><br><span class="line"><span class="comment">// 一句话理解，有多个 target，每个 target 上有多个 key，每个 key 都有多个依赖</span></span><br><span class="line"><span class="comment">// 至于为什么要把映射关系存到 WeakMap 里，根据上面注释所述，是为了减少内存开销</span></span><br><span class="line"><span class="comment">// 这个在后续的 effect 部分会讲</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> targetMap = <span class="keyword">new</span> <span class="title class_">WeakMap</span>&lt;any, <span class="title class_">KeyToDepMap</span>&gt;()</span><br><span class="line"></span><br><span class="line"><span class="comment">// WeakMaps that store {raw &lt;-&gt; observed} pairs.</span></span><br><span class="line"><span class="comment">// 下面这四个变量就是为了解答 问题 3 和 4 的</span></span><br><span class="line"><span class="comment">// 根据上面的原英文注释，这四个变量是 raw 和 observed 的对应关系集合</span></span><br><span class="line"><span class="comment">// raw 是原始数据，observed 则是响应式数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 原始数据 -&gt; 响应式数据</span></span><br><span class="line"><span class="keyword">const</span> rawToReactive = <span class="keyword">new</span> <span class="title class_">WeakMap</span>&lt;any, any&gt;()</span><br><span class="line"><span class="comment">// 响应式数据 -&gt; 原始数据</span></span><br><span class="line"><span class="keyword">const</span> reactiveToRaw = <span class="keyword">new</span> <span class="title class_">WeakMap</span>&lt;any, any&gt;()</span><br><span class="line"><span class="comment">// 原始数据 -&gt; 只读响应式数据</span></span><br><span class="line"><span class="keyword">const</span> rawToReadonly = <span class="keyword">new</span> <span class="title class_">WeakMap</span>&lt;any, any&gt;()</span><br><span class="line"><span class="comment">// 只读响应式数据 -&gt; 原始数据</span></span><br><span class="line"><span class="keyword">const</span> readonlyToRaw = <span class="keyword">new</span> <span class="title class_">WeakMap</span>&lt;any, any&gt;()</span><br><span class="line"></span><br><span class="line"><span class="comment">// WeakSets for values that are marked readonly or non-reactive during</span></span><br><span class="line"><span class="comment">// observable creation.</span></span><br><span class="line"><span class="comment">// 前面提到过的 markReadonly 和 markNonReactive 方法用到的</span></span><br><span class="line"><span class="comment">// 用来存储我们标记的特定数据，以便在创建响应式数据是来检查是否被上面两个方法标记过</span></span><br><span class="line"><span class="keyword">const</span> readonlyValues = <span class="keyword">new</span> <span class="title class_">WeakSet</span>&lt;any&gt;()</span><br><span class="line"><span class="keyword">const</span> nonReactiveValues = <span class="keyword">new</span> <span class="title class_">WeakSet</span>&lt;any&gt;()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断是否是集合类型（Set, Map, WeakMap, WeakSet）</span></span><br><span class="line"><span class="comment">// 因为集合类型的代理 handler 和普通对象是不同的，需要特殊处理</span></span><br><span class="line"><span class="keyword">const</span> collectionTypes = <span class="keyword">new</span> <span class="title class_">Set</span>&lt;<span class="title class_">Function</span>&gt;([<span class="title class_">Set</span>, <span class="title class_">Map</span>, <span class="title class_">WeakMap</span>, <span class="title class_">WeakSet</span>])</span><br><span class="line"><span class="comment">// 判断是否是可观察类型，有以下 6 类，在 canObserve 方法里会用到</span></span><br><span class="line"><span class="keyword">const</span> isObservableType = <span class="comment">/*#__PURE__*/</span> <span class="title function_">makeMap</span>(</span><br><span class="line">  [<span class="string">'Object'</span>, <span class="string">'Array'</span>, <span class="string">'Map'</span>, <span class="string">'Set'</span>, <span class="string">'WeakMap'</span>, <span class="string">'WeakSet'</span>]</span><br><span class="line">    .<span class="title function_">map</span>(<span class="function"><span class="params">t</span> =&gt;</span> <span class="string">`[object <span class="subst">${t}</span>]`</span>)</span><br><span class="line">    .<span class="title function_">join</span>(<span class="string">','</span>)</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看完上面这些变量定义，我们来解答一下问题 3，4：</p>
+<blockquote>
+<p>问题 3：如何判断是否是（只读的）响应式数据？往响应式数据上面挂载一个标记位来标记？还是用一个对象来存储响应式数据？</p>
+</blockquote>
+<p>用 <code>readonlyToRaw</code> 来存储只读响应式数据的，参见下面代码：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">isReadonly</span>(<span class="params">value: any</span>): boolean {</span><br><span class="line">  <span class="keyword">return</span> readonlyToRaw.<span class="title function_">has</span>(value);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<p>问题 4：如何将响应式数据转化为原始数据？proxy 数据如何转化成 object？</p>
+</blockquote>
+<p>用 <code>reactiveToRaw</code> 和 <code>readonlyToRaw</code> 来存储<code>响应式数据 -&gt; 原始数据</code> 的映射关系，然后：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> toRaw&lt;T&gt;(<span class="attr">observed</span>: T): T {</span><br><span class="line">  <span class="keyword">return</span> reactiveToRaw.<span class="title function_">get</span>(observed) || readonlyToRaw.<span class="title function_">get</span>(observed) || observed;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>总的来讲，就是利用各种集合来存储原始数据和响应式数据的映射关系，以便快速根据这种映射关系拿到对应的数据。</p>
+<p>再回头看下 <code>canObserve</code> 方法，来看看到底有哪些数据是可以观察的：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canObserve = (<span class="attr">value</span>: any): <span class="function"><span class="params">boolean</span> =&gt;</span> {</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="comment">// Vue 实例不可观察，目前库里还没有 _isVue 的逻辑，不过猜测应该是内部在 setup 方法中挂载</span></span><br><span class="line">    !value.<span class="property">_isVue</span> &amp;&amp;</span><br><span class="line">    <span class="comment">// virtual dom 不可观察</span></span><br><span class="line">    !value.<span class="property">_isVNode</span> &amp;&amp;</span><br><span class="line">    <span class="comment">// 'Object', 'Array', 'Map', 'Set', 'WeakMap', 'WeakSet' 类型以外的不可观察</span></span><br><span class="line">    <span class="title function_">isObservableType</span>(<span class="title function_">toTypeString</span>(value)) &amp;&amp;</span><br><span class="line">    <span class="comment">// 已经标记为不可响应数据的不可观察</span></span><br><span class="line">    !nonReactiveValues.<span class="title function_">has</span>(value)</span><br><span class="line">  );</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>相比于 <code>Vue2</code> 的是否可观察判断，则少了很多条件：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我就不解析 Vue2 中的这段判断代码了</span></span><br><span class="line"><span class="comment">// 相比于 Vue2，少了 __ob__ ，ssr 以及 Object.isExtensible 的判断</span></span><br><span class="line"><span class="comment">// 这都是得益于 Proxy</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">hasOwn</span>(value, <span class="string">"__ob__"</span>) &amp;&amp; value.<span class="property">__ob__</span> <span class="keyword">instanceof</span> <span class="title class_">Observer</span>) {</span><br><span class="line">  ob = value.<span class="property">__ob__</span>;</span><br><span class="line">} <span class="keyword">else</span> <span class="keyword">if</span> (</span><br><span class="line">  shouldObserve &amp;&amp;</span><br><span class="line">  !<span class="title function_">isServerRendering</span>() &amp;&amp;</span><br><span class="line">  (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(value) || <span class="title function_">isPlainObject</span>(value)) &amp;&amp;</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">isExtensible</span>(value) &amp;&amp;</span><br><span class="line">  !value.<span class="property">_isVue</span></span><br><span class="line">) {</span><br><span class="line">  ob = <span class="keyword">new</span> <span class="title class_">Observer</span>(value);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>接下来就讲一下重点的 <code>reactive</code> 和 <code>readonly</code> 这两个核心方法的实现：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 前面讲过返回值就是上面的解套 Ref 类型</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">reactive</span>(<span class="params">target: object</span>) {</span><br><span class="line">  <span class="comment">// if trying to observe a readonly proxy, return the readonly version.</span></span><br><span class="line">  <span class="comment">// 如果是一个只读响应式数据，直接返回，因为已经是响应式的了</span></span><br><span class="line">  <span class="keyword">if</span> (readonlyToRaw.<span class="title function_">has</span>(target)) {</span><br><span class="line">    <span class="keyword">return</span> target</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// target is explicitly marked as readonly by user</span></span><br><span class="line">  <span class="comment">// 如果曾经被标记为只读数据，直接调用 readonly 方法生成只读响应式对象</span></span><br><span class="line">  <span class="keyword">if</span> (readonlyValues.<span class="title function_">has</span>(target)) {</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">readonly</span>(target)</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建响应式对象</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">createReactiveObject</span>(</span><br><span class="line">    target, <span class="comment">// 原始数据</span></span><br><span class="line">    rawToReactive, <span class="comment">// raw -&gt; observed</span></span><br><span class="line">    reactiveToRaw, <span class="comment">// observed -&gt; raw</span></span><br><span class="line">    mutableHandlers, <span class="comment">// 可变数据的 proxy handle</span></span><br><span class="line">    mutableCollectionHandlers <span class="comment">// 可变集合数据的 proxy handler</span></span><br><span class="line">  )</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> readonly&lt;T <span class="keyword">extends</span> object&gt;(</span><br><span class="line">  <span class="attr">target</span>: T</span><br><span class="line">): <span class="title class_">Readonly</span>&lt;<span class="title class_">UnwrapNestedRefs</span>&lt;T&gt;&gt; {</span><br><span class="line">  <span class="comment">// value is a mutable observable, retrieve its original and return</span></span><br><span class="line">  <span class="comment">// a readonly version.</span></span><br><span class="line">  <span class="comment">// 如果是响应式数据，那么获取原始数据来进行观察</span></span><br><span class="line">  <span class="keyword">if</span> (reactiveToRaw.<span class="title function_">has</span>(target)) {</span><br><span class="line">    target = reactiveToRaw.<span class="title function_">get</span>(target)</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// 创建响应式数据，同样</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">createReactiveObject</span>(</span><br><span class="line">    target, <span class="comment">// 原始数据</span></span><br><span class="line">    rawToReadonly, <span class="comment">// raw -&gt; readonly observed</span></span><br><span class="line">    readonlyToRaw, <span class="comment">// readonly ovserved -&gt; raw</span></span><br><span class="line">    readonlyHandlers, <span class="comment">// 只读数据的 proxy handler</span></span><br><span class="line">    readonlyCollectionHandlers <span class="comment">// 只读集合数据的 proxy handler</span></span><br><span class="line">  )</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>其实我们看 <code>Vue3</code> 的源码会发现，很多入口方法都变得短小精简，不像 <code>Vue2</code> 里的一些 exposed function 那样写的很长，这两个核心方法也一样，逻辑很简单，主要是进行一些原始数据检查和转换，核心实现逻辑都是放在 <code>createReactiveObject</code> 里的</p>
+<p>下面继续看下核心实现方法 <code>createReactiveObject</code>：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建响应式对象</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createReactiveObject</span>(<span class="params"></span></span><br><span class="line"><span class="params">  target: any, <span class="comment">// 原始数据</span></span></span><br><span class="line"><span class="params">  toProxy: <span class="built_in">WeakMap</span>&lt;any, any&gt;, <span class="comment">// raw -&gt; (readonly) observed</span></span></span><br><span class="line"><span class="params">  toRaw: <span class="built_in">WeakMap</span>&lt;any, any&gt;, <span class="comment">// (readonly) observed -&gt; raw</span></span></span><br><span class="line"><span class="params">  baseHandlers: ProxyHandler&lt;any&gt;, <span class="comment">// 只读/可变 数据的 proxy handler</span></span></span><br><span class="line"><span class="params">  collectionHandlers: ProxyHandler&lt;any&gt; <span class="comment">// 只读/可变 集合数据的 proxy handler</span></span></span><br><span class="line"><span class="params"></span>) {</span><br><span class="line">  <span class="comment">// 如果不是对象，则直接返回自身，包括 null，reactive(null) =&gt; null</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="title function_">isObject</span>(target)) {</span><br><span class="line">    <span class="keyword">if</span> (__DEV__) {</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">`value cannot be made reactive: <span class="subst">${<span class="built_in">String</span>(target)}</span>`</span>);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// target already has corresponding Proxy</span></span><br><span class="line">  <span class="comment">// 如果原始数据已经被观察过，直接通过 raw -&gt; observed 映射，返回响应式数据</span></span><br><span class="line">  <span class="keyword">let</span> observed = toProxy.<span class="title function_">get</span>(target);</span><br><span class="line">  <span class="keyword">if</span> (observed !== <span class="keyword">void</span> <span class="number">0</span>) {</span><br><span class="line">    <span class="keyword">return</span> observed;</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// target is already a Proxy</span></span><br><span class="line">  <span class="comment">// 如果原始数据本身就是响应式的，直接返回自身</span></span><br><span class="line">  <span class="keyword">if</span> (toRaw.<span class="title function_">has</span>(target)) {</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// only a whitelist of value types can be observed.</span></span><br><span class="line">  <span class="comment">// 如果是不可观察对象，直接返回自身</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="title function_">canObserve</span>(target)) {</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// 判断是采用基础数据（object|array）handler 还是集合数据 handler</span></span><br><span class="line">  <span class="keyword">const</span> handlers = collectionTypes.<span class="title function_">has</span>(target.<span class="property">constructor</span>)</span><br><span class="line">    ? collectionHandlers</span><br><span class="line">    : baseHandlers;</span><br><span class="line">  <span class="comment">// Proxy 创建代理对象，即响应式对象</span></span><br><span class="line">  observed = <span class="keyword">new</span> <span class="title class_">Proxy</span>(target, handlers);</span><br><span class="line">  <span class="comment">// 创建后，设置好 raw &lt;-&gt; observed 的双向映射关系(*)</span></span><br><span class="line">  toProxy.<span class="title function_">set</span>(target, observed);</span><br><span class="line">  toRaw.<span class="title function_">set</span>(observed, target);</span><br><span class="line">  <span class="comment">// 上面讲到了 targetMap 的作用，这里是创建默认依赖追踪集合</span></span><br><span class="line">  <span class="keyword">if</span> (!targetMap.<span class="title function_">has</span>(target)) {</span><br><span class="line">    targetMap.<span class="title function_">set</span>(target, <span class="keyword">new</span> <span class="title class_">Map</span>());</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> observed;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我们可以看到：</p>
+<ul>
+<li>目前来看 <code>reactive</code> 和 <code>readonly</code> 的区别仅有两点：映射关系存储集合不同 and <code>proxy handler</code> 不同</li>
+<li><code>object``array</code> 和集合类型 <code>Set``Map``WeakSet``WeakMap</code> 的 <code>proxy handler</code> 是不同的</li>
+</ul>
+<p>所以下面再来依次看下响应式核心中的核心 - 各种 <code>proxy handler</code></p>
+<h2 id="baseHandler"><a href="#baseHandler" class="headerlink" title="baseHandler"></a>baseHandler</h2><p>方法跟上面一样，先看依赖：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 上面讲过，不过现在来看感觉像是是在 get set 这些 trap 方法里会调用</span></span><br><span class="line"><span class="keyword">import</span> { reactive, readonly, toRaw } <span class="keyword">from</span> <span class="string">"./reactive"</span>;</span><br><span class="line"><span class="comment">// 操作类型枚举，对应于 proxy handler 里的 trap 方法</span></span><br><span class="line"><span class="keyword">import</span> { <span class="title class_">OperationTypes</span> } <span class="keyword">from</span> <span class="string">"./operations"</span>;</span><br><span class="line"><span class="comment">// 依赖收集和触发依赖回调</span></span><br><span class="line"><span class="keyword">import</span> { track, trigger } <span class="keyword">from</span> <span class="string">"./effect"</span>;</span><br><span class="line"><span class="comment">// 全局锁，用来禁止 set 和 delete</span></span><br><span class="line"><span class="keyword">import</span> { <span class="variable constant_">LOCKED</span> } <span class="keyword">from</span> <span class="string">"./lock"</span>;</span><br><span class="line"><span class="comment">// 工具方法，类型判断</span></span><br><span class="line"><span class="keyword">import</span> { isObject, hasOwn, isSymbol } <span class="keyword">from</span> <span class="string">"@vue/shared"</span>;</span><br><span class="line"><span class="comment">// 判断是否是 ref，后面会讲到</span></span><br><span class="line"><span class="keyword">import</span> { isRef } <span class="keyword">from</span> <span class="string">"./ref"</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这里有两个疑问：</p>
+<ol>
+<li><code>track</code> 和 <code>trigger</code> 的实现</li>
+<li><code>LOCKED</code> 的作用？为什么会有这个全局锁？</li>
+</ol>
+<p>问题 1 在后面的 <code>effect</code> 部分会讲到，现在只需要知道是用来追踪依赖和触发依赖回调方法就行</p>
+<p>问题 2 现在我也不是特别了解，只知道是在组件 <code>mount</code> 和 <code>update</code> 的时候会对组件的 <code>props</code>的代理进行修改，因为我们都知道单向数据流中，子组件内部是不能更改 <code>props</code> 的，但是子组件更新，进行 vnode patch 后需要更新子组件的 <code>props</code>，包括一些动态 <code>props</code></p>
+<p>再来看下变量和方法概览：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JS 内部语言行为描述符集合，比如 Symbol.iterator 这些，在 get 里会用到</span></span><br><span class="line"><span class="keyword">const</span> builtInSymbols = <span class="keyword">new</span> <span class="title class_">Set</span>(</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">getOwnPropertyNames</span>(<span class="title class_">Symbol</span>)</span><br><span class="line">    .<span class="title function_">map</span>(<span class="function"><span class="params">key</span> =&gt;</span> (<span class="title class_">Symbol</span> <span class="keyword">as</span> any)[key])</span><br><span class="line">    .<span class="title function_">filter</span>(isSymbol)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createGetter</span>(<span class="params">isReadonly: boolean</span>) {}</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">set</span>(<span class="params"></span></span><br><span class="line"><span class="params">  target: any,</span></span><br><span class="line"><span class="params">  key: string | symbol,</span></span><br><span class="line"><span class="params">  value: any,</span></span><br><span class="line"><span class="params">  receiver: any</span></span><br><span class="line"><span class="params"></span>): boolean</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">deleteProperty</span>(<span class="params">target: any, key: string | symbol</span>): boolean</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">has</span>(<span class="params">target: any, key: string | symbol</span>): boolean</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">ownKeys</span>(<span class="params">target: any</span>): (string | number | symbol)[]</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">mutableHandlers</span>: <span class="title class_">ProxyHandler</span>&lt;any&gt; = {</span><br><span class="line">  <span class="attr">get</span>: <span class="title function_">createGetter</span>(<span class="literal">false</span>),</span><br><span class="line">  set,</span><br><span class="line">  deleteProperty,</span><br><span class="line">  has,</span><br><span class="line">  ownKeys</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">readonlyHandlers</span>: <span class="title class_">ProxyHandler</span>&lt;any&gt; = {</span><br><span class="line">  <span class="attr">get</span>: <span class="title function_">createGetter</span>(<span class="literal">true</span>),</span><br><span class="line"></span><br><span class="line">  <span class="title function_">set</span>(<span class="attr">target</span>: any, <span class="attr">key</span>: string | symbol, <span class="attr">value</span>: any, <span class="attr">receiver</span>: any): boolean {</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable constant_">LOCKED</span>) {</span><br><span class="line">      <span class="keyword">if</span> (__DEV__) {</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">warn</span>(</span><br><span class="line">          <span class="string">`Set operation on key "<span class="subst">${<span class="built_in">String</span>(key)}</span>" failed: target is readonly.`</span>,</span><br><span class="line">          target</span><br><span class="line">        )</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">set</span>(target, key, value, receiver)</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line"></span><br><span class="line">  <span class="title function_">deleteProperty</span>(<span class="attr">target</span>: any, <span class="attr">key</span>: string | symbol): boolean {</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable constant_">LOCKED</span>) {</span><br><span class="line">      <span class="keyword">if</span> (__DEV__) {</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">warn</span>(</span><br><span class="line">          <span class="string">`Delete operation on key "<span class="subst">${<span class="built_in">String</span>(</span></span></span><br><span class="line"><span class="subst"><span class="string">            key</span></span></span><br><span class="line"><span class="subst"><span class="string">          )}</span>" failed: target is readonly.`</span>,</span><br><span class="line">          target</span><br><span class="line">        )</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">deleteProperty</span>(target, key)</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line"></span><br><span class="line">  has,</span><br><span class="line">  ownKeys</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以看到，<code>mutableHandlers</code> 和 <code>readonlyHandlers</code> 都是定义了 5 个 trap 方法：<code>get</code>、<code>set</code>、<code>deleteProperty</code>、<code>has</code>、<code>ownKeys</code>，前 3 个不用多家介绍，<code>has</code> trap 针对与 <code>in</code> 操作符，而 <code>ownKeys</code> 针对于 <code>for in</code> 和 <code>Object.keys</code> 这些遍历操作的</p>
+<p>而 <code>readonlyHandlers</code> 相比于 <code>mutableHandlers</code> 其实只是在 <code>get</code>、<code>set</code> 和 <code>deleteProperty</code> 这三个 trap 方法里有区别，而对于可能改变数据的 <code>set</code> 和 <code>deleteProperty</code> 方法，则是利用 <code>LOCKED</code> 来锁定，不让修改数据，这个变量我在上面也提了一下</p>
+<p>下面来一个一个的看下各个 trap 方法</p>
+<h3 id="get"><a href="#get" class="headerlink" title="get"></a>get</h3><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建 get trap 方法</span></span><br><span class="line"><span class="comment">// 如果是可变数据， isReadonly 是 false</span></span><br><span class="line"><span class="comment">// 如果是只读数据，那么 isReadonly 就是 true</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createGetter</span>(<span class="params">isReadonly: boolean</span>) {</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> <span class="title function_">get</span>(<span class="params">target: any, key: string | symbol, receiver: any</span>) {</span><br><span class="line">    <span class="comment">// 利用 Reflect 反射来获取原始值</span></span><br><span class="line">    <span class="keyword">const</span> res = <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, key, receiver);</span><br><span class="line">    <span class="comment">// 如果是 JS 内置方法，不进行依赖收集</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">isSymbol</span>(key) &amp;&amp; builtInSymbols.<span class="title function_">has</span>(key)) {</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// 如果是 ref 类型数据，则直接返回其 value</span></span><br><span class="line">    <span class="comment">// TODO 后面 ref 部分我们会讲到，ref(target) 其实在 get value 的时候做了依赖收集了，</span></span><br><span class="line">    <span class="comment">// 就不需要下面重复收集依赖</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">isRef</span>(res)) {</span><br><span class="line">      <span class="keyword">return</span> res.<span class="property">value</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get 类型操作的依赖收集</span></span><br><span class="line">    <span class="title function_">track</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">GET</span>, key);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这里其实很简单就是递归返回响应式对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">isObject</span>(res)</span><br><span class="line">      ? isReadonly</span><br><span class="line">        ? <span class="comment">// need to lazy access readonly and reactive here to avoid</span></span><br><span class="line">          <span class="comment">// circular dependency</span></span><br><span class="line">          <span class="title function_">readonly</span>(res)</span><br><span class="line">        : <span class="title function_">reactive</span>(res)</span><br><span class="line">      : res;</span><br><span class="line">  };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>看完 <code>get trap</code> 其实很简单，但是也会有写疑问：</p>
+<h3 id="1-为什么用-Reflect-get，而不是直接-target-key-返回呢"><a href="#1-为什么用-Reflect-get，而不是直接-target-key-返回呢" class="headerlink" title="1. 为什么用 Reflect.get，而不是直接 target[key] 返回呢?"></a>1. 为什么用 <code>Reflect.get</code>，而不是直接 <code>target[key]</code> 返回呢?</h3><p>我们可以看它的第三个参数：</p>
+<blockquote>
+<p>receiver：如果 target 对象中指定了 getter，receiver 则为 getter 调用时的 this 值</p>
+</blockquote>
+<p>举个例子：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> target = {</span><br><span class="line">  <span class="attr">foo</span>: <span class="number">24</span>,</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">bar</span>() {</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">foo</span>;</span><br><span class="line">  },</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> observed = <span class="title function_">reactive</span>(target);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>此时，如果不用 <code>Reflect.get</code>，而是 <code>target[key]</code>，那么 <code>this.foo</code> 中的 <code>this</code> 就指向的是 <code>target</code>，而不是 <code>observed</code>，此时 <code>this.foo</code> 就不能收集到 <code>foo</code> 的依赖了，如果 <code>observed.foo = 20</code> 改变了 foo 的值，那么是无法触发依赖回调的，所以需要利用 <code>Reflect.get</code> 将 getter 里的 <code>this</code> 指向代理对象</p>
+<h3 id="2-为什么在结尾-return-的时候还要调用-reactive-或者-readoonly-呢？"><a href="#2-为什么在结尾-return-的时候还要调用-reactive-或者-readoonly-呢？" class="headerlink" title="2. 为什么在结尾 return 的时候还要调用 reactive 或者 readoonly 呢？"></a>2. 为什么在结尾 return 的时候还要调用 <code>reactive</code> 或者 <code>readoonly</code> 呢？</h3><p>原注释是这样写的：</p>
+<blockquote>
+<p>need to lazy access readonly and reactive here to avoid circular dependency<br>翻译过来是：需要延迟地使用 readonly 和 readtive 来避免循环引用</p>
+</blockquote>
+<p>为什么这样说呢？这里不得不说一下 <code>Proxy</code> 的特性：只能代理一层，对于嵌套的深层对象，如果不按源码中的方法，那就需要一层层递归来代理劫持对象，即每次递归都判断是否是对象，如果是对象，那么再调用 <code>reactive</code> 来响应式化</p>
+<p>但是问题又来了，JS 里是有循环引用这个概念的，就像下面这样：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = {</span><br><span class="line">  <span class="attr">b</span>: {},</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line">a.<span class="property">b</span>.<span class="property">c</span> = a;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这样的话，如果每次递归调用 <code>reactive</code> 的话，会造成调用栈溢出 <code>Maximum call stack size exceeded</code>，但是我们只需要加上一个判断条件即可解决，在上面解析的 <code>createReactiveObject</code> 方法里我们知道如果原始数据已经被观察过，则直接返回对应的响应式数据，那么我们可以在递归调用 <code>reactive</code> 的时候判断 <code>toProxy.get(target)</code> 是否存在，如果存在就不往下递归了，我写了一个例子代码：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 循环引用对象</span></span><br><span class="line"><span class="keyword">const</span> target = { <span class="attr">b</span>: { <span class="attr">c</span>: <span class="number">1</span> } };</span><br><span class="line">target.<span class="property">b</span>.<span class="property">d</span> = target;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这个就是上面讲的 原始数据 -&gt; 响应式数据的集合</span></span><br><span class="line"><span class="keyword">const</span> rawToReactive = <span class="keyword">new</span> <span class="title class_">WeakMap</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">reactive</span>(<span class="params">data</span>) {</span><br><span class="line">  <span class="keyword">const</span> observed = <span class="keyword">new</span> <span class="title class_">Proxy</span>(data, {</span><br><span class="line">    <span class="title function_">get</span>(<span class="params">target, key, receiver</span>) {</span><br><span class="line">      <span class="keyword">const</span> res = <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, key, receiver);</span><br><span class="line">      <span class="keyword">const</span> observed = rawToReactive.<span class="title function_">get</span>(res);</span><br><span class="line">      <span class="keyword">return</span> observed || res;</span><br><span class="line">    },</span><br><span class="line">  });</span><br><span class="line">  rawToReactive.<span class="title function_">set</span>(data, observed);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> data) {</span><br><span class="line">    <span class="keyword">const</span> child = data[key];</span><br><span class="line">    <span class="comment">// 这里判断如果没有被观察过，那么继续 reactive 递归观察</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> child === <span class="string">"object"</span> &amp;&amp; !rawToReactive.<span class="title function_">get</span>(child)) {</span><br><span class="line">      <span class="title function_">reactive</span>(child);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> observed;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p = <span class="title function_">reactive</span>(target);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p.<span class="property">b</span>.<span class="property">c</span>); <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p.<span class="property">b</span>.<span class="property">d</span>.<span class="property">b</span>); <span class="comment">// Proxy {c: 1, d: {…}}</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 我试了一下。跟源码里的 reactive 的 get 结果是一样的</span></span><br></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<p>可以去看下我在 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87409653">vue3 响应式源码解析-Reactive 篇</a> 这篇文章下的评论部分</p>
+</blockquote>
+<p>而源码中的 <code>lazy access</code> 方式很取巧，只代理一层，当用到某个属性值对象时，再进行响应式观察这一层</p>
+<p>所以相比于初始化时递归劫持，延迟访问劫持的方式更能<strong>提升初始化性能</strong>，也有利于对数据劫持做更细的控制，特别是针对于数据对象比较大时（比如接口返回数据嵌套过深），有些数据并非需要劫持，所以按需劫持代理我们用到的数据这种方式更好</p>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// set trap 方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">set</span>(<span class="params"></span></span><br><span class="line"><span class="params">  target: any,</span></span><br><span class="line"><span class="params">  key: string | symbol,</span></span><br><span class="line"><span class="params">  value: any,</span></span><br><span class="line"><span class="params">  receiver: any</span></span><br><span class="line"><span class="params"></span>): boolean {</span><br><span class="line">  <span class="comment">// 如果是观察过响应式数据，那么获取它映射的原始数据</span></span><br><span class="line">  value = <span class="title function_">toRaw</span>(value);</span><br><span class="line">  <span class="comment">// 获取旧值</span></span><br><span class="line">  <span class="keyword">const</span> oldValue = target[key];</span><br><span class="line">  <span class="comment">// 如果旧值是 ref 类型数据，而新的值不是 ref，那么直接赋值给 oldValue.value</span></span><br><span class="line">  <span class="comment">// 因为 ref 数据在 set value 的时候就已经 trigger 依赖了，所以直接 return 就行</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isRef</span>(oldValue) &amp;&amp; !<span class="title function_">isRef</span>(value)) {</span><br><span class="line">    oldValue.<span class="property">value</span> = value;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  }</span><br><span class="line">  <span class="comment">// 对象上是否有这个 key，有则是 set，无则是 add</span></span><br><span class="line">  <span class="keyword">const</span> hadKey = <span class="title function_">hasOwn</span>(target, key);</span><br><span class="line">  <span class="comment">// 利用 Reflect 来执行 set 操作</span></span><br><span class="line">  <span class="keyword">const</span> result = <span class="title class_">Reflect</span>.<span class="title function_">set</span>(target, key, value, receiver);</span><br><span class="line">  <span class="comment">// don't trigger if target is something up in the prototype chain of original</span></span><br><span class="line">  <span class="comment">// 如果 target 原型链上的数据，那么就不触发依赖回调</span></span><br><span class="line">  <span class="keyword">if</span> (target === <span class="title function_">toRaw</span>(receiver)) {</span><br><span class="line">    <span class="comment">/* istanbul ignore else */</span></span><br><span class="line">    <span class="keyword">if</span> (__DEV__) {</span><br><span class="line">      <span class="comment">// 开发环境操作，只比正式环境多了个 extraInfo 的调试信息</span></span><br><span class="line">      <span class="keyword">const</span> extraInfo = { oldValue, <span class="attr">newValue</span>: value };</span><br><span class="line">      <span class="keyword">if</span> (!hadKey) {</span><br><span class="line">        <span class="title function_">trigger</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">ADD</span>, key, extraInfo);</span><br><span class="line">      } <span class="keyword">else</span> <span class="keyword">if</span> (value !== oldValue) {</span><br><span class="line">        <span class="title function_">trigger</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">SET</span>, key, extraInfo);</span><br><span class="line">      }</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      <span class="comment">// 上面讲过，有这个 key 则是 set，无则是 add</span></span><br><span class="line">      <span class="keyword">if</span> (!hadKey) {</span><br><span class="line">        <span class="title function_">trigger</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">ADD</span>, key);</span><br><span class="line">      } <span class="keyword">else</span> <span class="keyword">if</span> (value !== oldValue) {</span><br><span class="line">        <span class="comment">// 只有当 value 改变的时候才触发</span></span><br><span class="line">        <span class="title function_">trigger</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">SET</span>, key);</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>同样，<code>set trap</code> 看起来也很简单，但是同时也会有一些问题：</p>
+<h3 id="1-target-toRaw-receiver-是什么鬼逻辑"><a href="#1-target-toRaw-receiver-是什么鬼逻辑" class="headerlink" title="1. target === toRaw(receiver) 是什么鬼逻辑?"></a>1. <code>target === toRaw(receiver)</code> 是什么鬼逻辑?</h3><p>首先看下</p>
+<p><a href="https://link.zhihu.com/?target=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set%23%E5%8F%82%E6%95%B0">handler.set()developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/set#%E5%8F%82%E6%95%B0<img src="https://pic4.zhimg.com/v2-72382e605ce3eba8154aa310a712c403_ipico.jpg" alt="img"></a></p>
+<p>的关于第三个参数的说明：</p>
+<blockquote>
+<p>最初被调用的对象。通常是 proxy 本身，但 handler 的 set 方法也有可能在原型链上或以其他方式被间接地调用（因此不一定是 proxy 本身）。<br>比如，假设有一段代码执行 obj.name = “jen”，obj 不是一个 proxy 且自身不含 name 属性，但它的原型链上有一个 proxy，那么那个 proxy 的 set 拦截函数会被调用，此时 obj 会作为 receiver 参数传进来</p>
+</blockquote>
+<p>上面已经给出例子了，这里我再写一下：</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> child = { <span class="attr">name</span>: <span class="string">"child"</span> };</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> parent = <span class="keyword">new</span> <span class="title class_">Proxy</span>(</span><br><span class="line">  { <span class="attr">name</span>: <span class="string">"parent"</span> },</span><br><span class="line">  {</span><br><span class="line">    <span class="title function_">set</span>(<span class="params">target, key, value, receiver</span>) {</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(target, receiver);</span><br><span class="line">      <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">set</span>(target, key, value, receiver);</span><br><span class="line">    },</span><br><span class="line">  }</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">setPrototypeOf</span>(child, parent);</span><br><span class="line"></span><br><span class="line">child.<span class="property">foo</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 会打印出</span></span><br><span class="line"><span class="comment">// {name: "parent"} {name: "child"}</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>这里有两个先决条件：</p>
+<ol>
+<li>child 的原型链是一个 Proxy</li>
+<li>child 在设置值的时候，本身不包含 key 的</li>
+</ol>
+<p>可以看到，当满足上面两个条件的时候，设置 child 的值，会触发原型链上的 <code>set trap</code> 方法，并且 <code>target</code> 是原型链数据，而 <code>receiver</code> 则是真实数据</p>
+<p>所以，源码中的那个条件逻辑也就不难看懂了，当满足上述两个条件时，我们当然不希望触发 parent 的 <code>set trap</code> 了</p>
+<h3 id="2-像数组的-unshift，splice-这些操作是如何触发-set-trap方法的呢？"><a href="#2-像数组的-unshift，splice-这些操作是如何触发-set-trap方法的呢？" class="headerlink" title="2. 像数组的 unshift，splice 这些操作是如何触发 set trap方法的呢？"></a>2. 像数组的 <code>unshift</code>，<code>splice</code> 这些操作是如何触发 <code>set trap</code>方法的呢？</h3><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 set 里加上这么一个 log</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(</span><br><span class="line">  !hadKey ? <span class="string">"add"</span> : value !== oldValue ? <span class="string">"set"</span> : <span class="string">"unknow"</span>,</span><br><span class="line">  target,</span><br><span class="line">  key,</span><br><span class="line">  value,</span><br><span class="line">  oldValue</span><br><span class="line">);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然后</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="title function_">reactive</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line">a.<span class="title function_">unshift</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 会打印</span></span><br><span class="line"><span class="comment">// add [1, 2, 3, 3] 3 3 undefined</span></span><br><span class="line"><span class="comment">// set [1, 2, 2, 3] 2 2 3</span></span><br><span class="line"><span class="comment">// set [1, 1, 2, 3] 1 1 2</span></span><br><span class="line"><span class="comment">// set [0, 1, 2, 3] 0 0 1</span></span><br><span class="line"><span class="comment">// unknow [0, 1, 2, 3] length 4 4</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>一共打印了 5 次，根据打印内容我们可以看到 <code>unshift</code> 的实际操作过程，即把数组的每一项依次都往后移动一位，然后再把首位设置成 <code>0</code>，至于为什么这么操作，</p>
+<p><a href="https://link.zhihu.com/?target=https://www.ecma-international.org/ecma-262/6.0/%23sec-array.prototype.unshift">ECMA-262 Array.property.unshiftwww.ecma-international.org/ecma-262/6.0/#sec-array.prototype.unshift</a></p>
+<p>标准中有原理介绍，我就不赘述了，还有像 <code>shift</code> 和 <code>splice</code> 也是一样的操作步骤</p>
+<p>可以看到 <code>unshift</code> 或者 <code>splice</code> 是会带来多次的 <code>trigger</code> 的，当然这些会有批量跟新优化的，有时间我再展开讲一下</p>
+<p>细心的同学可能会发现，还触发了 <code>length</code> 属性的 set，而且 <code>value</code> 和 <code>oldValue</code> 是一样的，那么根据源码所示，就不会触发 set 类型的回调了呀，那我们如果在 template 里用到了 <code>a.length</code> 那也不会更新了么？</p>
+<p>肯定是会更新的，解决办法就在 <code>trigger</code> 这个方法里，后续 <code>effect</code> 部分会讲到，先简单说一下，对于会导致数组 <code>length</code> 改变的操作，比如 add 和 delete，在 <code>effect</code> 的 <code>trigger</code> 方法里会单独处理，来触发 <code>length</code> 属性的依赖回调的</p>
+<h3 id="其他-trap-方法"><a href="#其他-trap-方法" class="headerlink" title="其他 trap 方法"></a>其他 trap 方法</h3><p>还有 <code>deleteProperty</code>、<code>has</code> 和 <code>ownKeys</code> 这几个 trap，代码不多，都很简单，直接看下面的源码就能明白，我就不在赘述了</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// deleteProperty trap 方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">deleteProperty</span>(<span class="params">target: any, key: string | symbol</span>): boolean {</span><br><span class="line">  <span class="keyword">const</span> hadKey = <span class="title function_">hasOwn</span>(target, key);</span><br><span class="line">  <span class="keyword">const</span> oldValue = target[key];</span><br><span class="line">  <span class="keyword">const</span> result = <span class="title class_">Reflect</span>.<span class="title function_">deleteProperty</span>(target, key);</span><br><span class="line">  <span class="keyword">if</span> (result &amp;&amp; hadKey) {</span><br><span class="line">    <span class="comment">/* istanbul ignore else */</span></span><br><span class="line">    <span class="keyword">if</span> (__DEV__) {</span><br><span class="line">      <span class="title function_">trigger</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">DELETE</span>, key, { oldValue });</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      <span class="title function_">trigger</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">DELETE</span>, key);</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// has trap 方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">has</span>(<span class="params">target: any, key: string | symbol</span>): boolean {</span><br><span class="line">  <span class="keyword">const</span> result = <span class="title class_">Reflect</span>.<span class="title function_">has</span>(target, key);</span><br><span class="line">  <span class="title function_">track</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">HAS</span>, key);</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">// ownKey trap 方法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">ownKeys</span>(<span class="params">target: any</span>): (string | number | symbol)[] {</span><br><span class="line">  <span class="title function_">track</span>(target, <span class="title class_">OperationTypes</span>.<span class="property">ITERATE</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(target);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><code>baseHandler</code> 是针对于数组和对象类型的数据的 proxy handler</li>
+<li>每个 <code>trap</code> 方法都是用 <code>Reflect</code> 来反射到原始数据上的</li>
+<li>对于 <code>get</code>、<code>has</code> 和 <code>ownKeys</code> 这一类读操作，会进行 <code>track</code> 来收集依赖，而对于 <code>set</code> 和 <code>deleteProperty</code> 这类写操作，则是会进行 <code>trigger</code> 来触发依赖回调</li>
+<li>响应式数据的读取是 <code>lazy</code> 的，即初始化的时候不会对嵌套对象全盘观察，而是只有用到了每个值才会生成对应的响应式数据</li>
+</ul>
+<h2 id="collectionHandler"><a href="#collectionHandler" class="headerlink" title="collectionHandler"></a>collectionHandler</h2><p>还记得我们在看 <code>reactive</code> 方法那里有个 <code>collectionTypes</code> 的判断对吧，<code>collectionHandler</code> 就是专门来处理 <code>Set|Map|WeakSet|WeakMap</code> 这类集合类型数据的</p>
+<p>这里可以参考相学长的</p>
+<p><a href="https://link.zhihu.com/?target=https://juejin.im/post/5da9d7ebf265da5bbb1e52b7%23heading-12">vue3 响应式源码解析-Reactive 篇 - 掘金 juejin.im/post/5da9d7ebf265da5bbb1e52b7#heading-12</a></p>
+<p>这篇文章，写的很详细，我这里也不再赘述了</p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>最开始阅读 <code>reactive</code> 源码时，总体的逻辑是比较清晰的，但是仍然有几个地方当时有疑惑：</p>
+<ul>
+<li><code>rawToReactive|rawToReadonly</code> 等这几个变量是干嘛的？</li>
+<li><code>targetMap</code> 的是干什么的？为什么是 <code>WeakMap&lt;any, KeyToDepMap&gt;</code> 类型</li>
+<li><code>LOCKED</code> 是用来干嘛的?</li>
+<li><code>baseHandler</code> 的 <code>get trap</code> 为什么又返回了一个 <code>reactive(res)</code>？</li>
+<li><code>collectionHandler</code> 里的 trap 方法为什么只有 <code>get</code>？为什么跟 <code>baseHandler</code> 不一样？</li>
+</ul>
+<p>在读完源码后，除了 <code>LOCKED</code> 那个疑惑，其他几个问题我都已经找到答案，并且也在上面解惑了，我相信大家看完这篇文章后也应该都有自己的答案了</p>
+<p>最后再来个源码里的知识点总结吧：</p>
+<ul>
+<li><code>reactive</code> 是利用 <code>Proxy</code> 来进行数据观察，<code>Reflect</code> 相关操作来反射到原始数据的，并且数据的访问是一个 <code>lazy reactive</code> 方式，即按需观察</li>
+<li>普通对象、数组和集合类型数据的代理 handler 是不同的，这是因为 <code>Proxy</code> 的一些限制，参考</li>
+</ul>
+<p><a href="https://link.zhihu.com/?target=https://javascript.info/proxy%23proxy-limitations">Proxy and Reflectjavascript.info/proxy#proxy-limitations<img src="https://pic4.zhimg.com/v2-371dd24f02bbb7f17ea00a910ff8f70b_180x120.jpg" alt="img"></a></p>
+<ul>
+<li>利用几个 <code>WeakMap</code> 来存储原始数据 &lt;-&gt; 响应式数据的双向映射关系，以便在响应式入口方法里判断是否原始数据已经被观察过，这个相比于 Vue2 的直接在原始数据上挂载 <code>__ob__</code>要少一些冗余数据，并且由于 <code>WeakMap</code> 的 GC 特性，在运行时会有一定的内存优化</li>
+<li>响应式数据的读操作会 <code>track</code> 来收集依赖，写操作则是会 <code>trigger</code> 来触发依赖回调</li>
+</ul>
+<p>整个 <code>reactive|readonly</code> 的流程如下：</p>
+<p><img src="https://pic3.zhimg.com/80/v2-849f116c5d6f242c776ab5b8d610ee1a_720w.jpg" alt="img"></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">olddog</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://23olddog.github.io/2022/04/09/vue-xiang-ying-shi-yuan-li/">https://23olddog.github.io/2022/04/09/vue-xiang-ying-shi-yuan-li/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">olddog</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/04/09/vue-xiang-ying-shi-yuan-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="你不知道的reactive">
+                        
+                        <span class="card-title">你不知道的reactive</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            olddog
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/09/xing-neng-you-hua/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="项目优化">
+                        
+                        <span class="card-title">项目优化</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            olddog
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <a href="/about" target="_blank">olddog</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/23olddog" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:3056085618@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3056085618" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3056085618" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
