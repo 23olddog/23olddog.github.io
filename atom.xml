@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-04-09T08:55:27.584Z</updated>
+  <updated>2022-04-09T09:20:20.907Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://23olddog.github.io/2022/04/09/vue-xiang-ying-shi-yuan-li/"/>
     <id>https://23olddog.github.io/2022/04/09/vue-xiang-ying-shi-yuan-li/</id>
     <published>2022-04-09T08:55:08.115Z</published>
-    <updated>2022-04-09T08:55:27.584Z</updated>
+    <updated>2022-04-09T09:20:20.907Z</updated>
     
     
       
@@ -34,6 +34,10 @@
     
     
     
+    <category term="Vue" scheme="https://23olddog.github.io/categories/Vue/"/>
+    
+    
+    <category term="Vue 原理 框架" scheme="https://23olddog.github.io/tags/Vue-%E5%8E%9F%E7%90%86-%E6%A1%86%E6%9E%B6/"/>
     
   </entry>
   
@@ -42,7 +46,7 @@
     <link href="https://23olddog.github.io/2022/04/09/xing-neng-you-hua/"/>
     <id>https://23olddog.github.io/2022/04/09/xing-neng-you-hua/</id>
     <published>2022-04-09T08:53:48.757Z</published>
-    <updated>2022-04-09T08:54:01.280Z</updated>
+    <updated>2022-04-09T09:20:43.880Z</updated>
     
     
       
@@ -55,6 +59,10 @@
     
     
     
+    <category term="项目" scheme="https://23olddog.github.io/categories/%E9%A1%B9%E7%9B%AE/"/>
+    
+    
+    <category term="优化 原理" scheme="https://23olddog.github.io/tags/%E4%BC%98%E5%8C%96-%E5%8E%9F%E7%90%86/"/>
     
   </entry>
   
@@ -63,7 +71,7 @@
     <link href="https://23olddog.github.io/2022/04/09/qian-tan-she-ji-mo-shi/"/>
     <id>https://23olddog.github.io/2022/04/09/qian-tan-she-ji-mo-shi/</id>
     <published>2022-04-09T08:51:41.164Z</published>
-    <updated>2022-04-09T08:52:03.601Z</updated>
+    <updated>2022-04-09T09:18:41.137Z</updated>
     
     
       
@@ -77,6 +85,10 @@
     
     
     
+    <category term="设计模式" scheme="https://23olddog.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+    <category term="设计模式" scheme="https://23olddog.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
@@ -85,7 +97,7 @@
     <link href="https://23olddog.github.io/2022/04/09/vue-kuang-jia-jie-du-1.0/"/>
     <id>https://23olddog.github.io/2022/04/09/vue-kuang-jia-jie-du-1.0/</id>
     <published>2022-04-09T08:49:01.526Z</published>
-    <updated>2022-04-09T08:49:25.736Z</updated>
+    <updated>2022-04-09T09:19:51.690Z</updated>
     
     
       
@@ -98,6 +110,10 @@
     
     
     
+    <category term="Vue" scheme="https://23olddog.github.io/categories/Vue/"/>
+    
+    
+    <category term="Vue 原理" scheme="https://23olddog.github.io/tags/Vue-%E5%8E%9F%E7%90%86/"/>
     
   </entry>
   
@@ -106,7 +122,7 @@
     <link href="https://23olddog.github.io/2022/04/09/chong-xue-vue/"/>
     <id>https://23olddog.github.io/2022/04/09/chong-xue-vue/</id>
     <published>2022-04-09T08:45:09.527Z</published>
-    <updated>2022-04-09T08:47:23.600Z</updated>
+    <updated>2022-04-09T09:18:09.821Z</updated>
     
     
       
@@ -119,6 +135,10 @@
     
     
     
+    <category term="-web前端" scheme="https://23olddog.github.io/categories/web%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="Vue TS 框架" scheme="https://23olddog.github.io/tags/Vue-TS-%E6%A1%86%E6%9E%B6/"/>
     
   </entry>
   

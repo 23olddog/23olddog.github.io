@@ -18,6 +18,15 @@
 
 
     
+    <style>
+        body{
+            background-image: url(https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.jpg);
+            background-repeat:no-repeat;
+            background-size: 100% 100%;
+            background-attachment:fixed;
+        }
+    </style>
+
 
     <title>关于 | olddog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -382,7 +391,17 @@
 
 
 
+<div class="statis">
+    <span class="count"><a href="/categories">4</a></span>
+    <span class="name">分类</span>
+</div>
 
+
+
+<div class="statis">
+    <span class="count"><a href="/tags">5</a></span>
+    <span class="name">标签</span>
+</div>
 
 
                     </div>
@@ -402,7 +421,17 @@
 
 
 
+<div class="statis">
+    <span class="count"><a href="/categories">4</a></span>
+    <span class="name">分类</span>
+</div>
 
+
+
+<div class="statis">
+    <span class="count"><a href="/tags">5</a></span>
+    <span class="name">标签</span>
+</div>
 
 
                                 </div>
@@ -586,7 +615,7 @@
                 type: 'pie',
                 radius: '50%',
                 color: ['#6772e5', '#ff9e0f', '#fa755a', '#3ecf8e', '#82d3f4', '#ab47bc', '#525f7f', '#f51c47', '#26A69A'],
-                data: [],
+                data: [{"name":"-web前端","value":1},{"name":"设计模式","value":1},{"name":"Vue","value":2},{"name":"项目","value":1}],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -610,7 +639,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: []
+                data: ["Vue TS 框架","设计模式","Vue 原理","Vue 原理 框架","优化 原理"]
             }
         ],
         yAxis: [
@@ -623,7 +652,7 @@
                 type: 'bar',
                 color: ['#82d3f4'],
                 barWidth : 18,
-                data: [],
+                data: [1,1,1,1,1],
                 markPoint: {
                     symbolSize: 45,
                     data: [{
@@ -721,7 +750,7 @@
             <div class="skillbar">
                 <div class="skillbar-title"
                      style="background: linear-gradient(to right, #FF0066 0%, #FF00CC 100%); width: 85%">
-                    <span>Java</span>
+                    <span>TypeScript</span>
                 </div>
                 <div class="skill-bar-percent">85%</div>
             </div>
@@ -753,10 +782,10 @@
         <div class="col s12 m6 l6" data-aos="fade-up">
             <div class="skillbar">
                 <div class="skillbar-title"
-                     style="background: linear-gradient(to right, #00BCD4 0%, #80DEEA 100%); width: 70%">
-                    <span>CSS</span>
+                     style="background: linear-gradient(to right, #00BCD4 0%, #80DEEA 100%); width: 60%">
+                    <span>算法</span>
                 </div>
-                <div class="skill-bar-percent">70%</div>
+                <div class="skill-bar-percent">60%</div>
             </div>
         </div>
         
@@ -765,7 +794,7 @@
             <div class="skillbar">
                 <div class="skillbar-title"
                      style="background: linear-gradient(to right, #4CAF50 0%, #81C784 100%); width: 90%">
-                    <span>SQL</span>
+                    <span>Vue</span>
                 </div>
                 <div class="skill-bar-percent">90%</div>
             </div>
@@ -775,10 +804,21 @@
         <div class="col s12 m6 l6" data-aos="fade-up">
             <div class="skillbar">
                 <div class="skillbar-title"
-                     style="background: linear-gradient(to right, #FFEB3B 0%, #FFF176 100%); width: 75%">
-                    <span>程序设计</span>
+                     style="background: linear-gradient(to right, #FFEB3B 0%, #FFF176 100%); width: 50%">
+                    <span>Node</span>
                 </div>
-                <div class="skill-bar-percent">75%</div>
+                <div class="skill-bar-percent">50%</div>
+            </div>
+        </div>
+        
+        
+        <div class="col s12 m6 l6" data-aos="fade-up">
+            <div class="skillbar">
+                <div class="skillbar-title"
+                     style="background: linear-gradient(to right, #FF0066 0%, #FF00CC 100%); width: 70%">
+                    <span>计网</span>
+                </div>
+                <div class="skill-bar-percent">70%</div>
             </div>
         </div>
         
@@ -791,6 +831,36 @@
     <div class="other-skills chip-container" data-aos="zoom-in-up">
         <div class="sub-title center-align"><i class="fa fa-book"></i>&nbsp;&nbsp;其他技能</div>
         <div class="tag-chips center-align">
+            
+            
+            <a href="/tags/Vue-TS-%E6%A1%86%E6%9E%B6/">
+                <span class="chip center-align waves-effect waves-light chip-default">Vue TS 框架</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                <span class="chip center-align waves-effect waves-light chip-default">设计模式</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Vue-%E5%8E%9F%E7%90%86/">
+                <span class="chip center-align waves-effect waves-light chip-default">Vue 原理</span>
+            </a>
+            
+            
+            
+            <a href="/tags/Vue-%E5%8E%9F%E7%90%86-%E6%A1%86%E6%9E%B6/">
+                <span class="chip center-align waves-effect waves-light chip-default">Vue 原理 框架</span>
+            </a>
+            
+            
+            
+            <a href="/tags/%E4%BC%98%E5%8C%96-%E5%8E%9F%E7%90%86/">
+                <span class="chip center-align waves-effect waves-light chip-default">优化 原理</span>
+            </a>
+            
             
         </div>
     </div>
