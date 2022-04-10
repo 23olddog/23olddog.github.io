@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-04-09T09:20:20.907Z</updated>
+  <updated>2022-04-10T13:58:24.401Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>重学Vue第二天</title>
+    <link href="https://23olddog.github.io/2022/04/10/chong-xue-vue2.0/"/>
+    <id>https://23olddog.github.io/2022/04/10/chong-xue-vue2.0/</id>
+    <published>2022-04-10T13:56:54.839Z</published>
+    <updated>2022-04-10T13:58:24.401Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;事件处理&quot;&gt;&lt;a href=&quot;#事件处理&quot; class=&quot;headerlink&quot; title=&quot;事件处理&quot;&gt;&lt;/a&gt;事件处理&lt;/h2&gt;&lt;p&gt;当我们需要访问内联处理程序中的原始 DOM 事件 可以用特殊变量将其传递给方法$event</summary>
+        
+      
+    
+    
+    
+    <category term="Vue" scheme="https://23olddog.github.io/categories/Vue/"/>
+    
+    
+    <category term="Vue TS 框架" scheme="https://23olddog.github.io/tags/Vue-TS-%E6%A1%86%E6%9E%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>你不知道的reactive</title>

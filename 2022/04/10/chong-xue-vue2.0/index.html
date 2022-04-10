@@ -1,0 +1,1548 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="重学Vue第二天, 前端">
+    <meta name="description" content="事件处理当我们需要访问内联处理程序中的原始 DOM 事件 可以用特殊变量将其传递给方法$event 或者使用内联箭头函数
+12345678&amp;lt;button @click=&#34;warn(&#39;Form cannot be submitted y">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+    <style>
+        body{
+            background-image: url(https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.jpg);
+            background-repeat:no-repeat;
+            background-size: 100% 100%;
+            background-attachment:fixed;
+        }
+    </style>
+
+
+    <title>重学Vue第二天 | olddog</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="olddog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">olddog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">olddog</div>
+        <div class="logo-desc">
+            
+            nothing but code
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/23olddog" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/23olddog" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">重学Vue第二天</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Vue-TS-%E6%A1%86%E6%9E%B6/">
+                                <span class="chip bg-color">Vue TS 框架</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Vue/" class="post-category">
+                                Vue
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-04-10
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-04-10
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    24 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h2><p>当我们需要访问内联处理程序中的原始 DOM 事件 可以用特殊变量将其传递给方法$event 或者使用内联箭头函数</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click="warn('Form cannot be submitted yet.', $event)"&gt;</span><br><span class="line">  Submit</span><br><span class="line">&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- using inline arrow function --&gt;</span><br><span class="line">&lt;button @click="(event) =&gt; warn('Form cannot be submitted yet.', event)"&gt;</span><br><span class="line">  Submit</span><br><span class="line">&lt;/button&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="表单上输入绑定"><a href="#表单上输入绑定" class="headerlink" title="表单上输入绑定"></a>表单上输入绑定</h4><ul>
+<li><code>&lt;input&gt;</code>文本类型和<code>&lt;textarea&gt;</code>元素使用<code>value</code>属性和<code>input</code>事件；</li>
+<li><code>&lt;input type="checkbox"&gt;``&lt;input type="radio"&gt;</code>使用<code>checked</code>和事件<code>change</code>；</li>
+<li><code>&lt;select&gt;</code>用作<code>value</code>和<code>change</code>事件。</li>
+</ul>
+<p><strong>v-model<code>将忽略在任何表单元素上找到的初始或属性</code>value<code>。它将始终将当前绑定的 JavaScript 状态视为事实来源。您应该使用反应性 API在 JavaScript 端声明初始值。</code>checked``selected</strong></p>
+<p>如果您的表达式的初始值<code>v-model</code>与任何选项都不匹配，则该<code>&lt;select&gt;</code>元素将呈现为“未选择”状态。在 iOS 上，这将导致用户无法选择第一项，因为在这种情况下 iOS 不会触发更改事件。因此，建议提供一个带空值的禁用选项</p>
+<p>默认情况下 v-model 在每个事件之后将输入与数据同步 可以添加修饰符<code>lazy</code>修改为在事件后同步</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- synced after "change" instead of "input" --&gt;</span><br><span class="line">&lt;input v-model.lazy="msg" /&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果希望用户输入的自动转化为数字 可以添加.number</p>
+<p>如果希望自动修剪用户输入中的空白 可以加入.trim</p>
+<h2 id="生命周期钩子"><a href="#生命周期钩子" class="headerlink" title="生命周期钩子"></a>生命周期钩子</h2><img src="https://s3.bmp.ovh/imgs/2022/04/09/87a9e53a6371f344.png" style="zoom: 50%;">
+
+<h2 id="Watcher"><a href="#Watcher" class="headerlink" title="Watcher"></a>Watcher</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import { ref, watch } from 'vue'</span><br><span class="line"></span><br><span class="line">const question = ref('')</span><br><span class="line">const answer = ref('Questions usually contain a question mark. ;-)')</span><br><span class="line"></span><br><span class="line">// watch works directly on a ref</span><br><span class="line">watch(question, async (newQuestion, oldQuestion) =&gt; {</span><br><span class="line">  if (newQuestion.indexOf('?') &gt; -1) {</span><br><span class="line">    answer.value = 'Thinking...'</span><br><span class="line">    try {</span><br><span class="line">      const res = await fetch('https://yesno.wtf/api')</span><br><span class="line">      answer.value = (await res.json()).answer</span><br><span class="line">    } catch (error) {</span><br><span class="line">      answer.value = 'Error! Could not reach the API. ' + error</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">})</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p&gt;</span><br><span class="line">    Ask a yes/no question:</span><br><span class="line">    &lt;input v-model="question" /&gt;</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">  &lt;p&gt;{{ answer }}&lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>当你在 watch()直接调用一个响应式对象时 它会隐式创建一个深度观察者模式-回调将在所有嵌套突变上触发</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const obj = reactive({ count: 0});</span><br><span class="line">watch(obj, (newValue, oldValue) =&gt; {</span><br><span class="line"></span><br><span class="line">});</span><br><span class="line">obj.count ++;</span><br><span class="line">//而使用getter：() =&gt; state.someObject则只会在放回不同的对象时才会触发回调</span><br><span class="line">可以显示使用deep选项来进入深度观察者模式</span><br><span class="line">watch(</span><br><span class="line">() =&gt; state....,</span><br><span class="line">(newValue, oldValue) =&gt; {}</span><br><span class="line">{ deep: true})</span><br></pre></td></tr></tbody></table></figure>
+
+<p>**tips:**深度监视需要遍历监控对象中的所有嵌套属性 并且在用于大型数据结构时可能会开销昂贵 所以仅在必要时使用它并注意性能影响</p>
+<h4 id="watchEffect（）"><a href="#watchEffect（）" class="headerlink" title="watchEffect（）"></a>watchEffect（）</h4><p>watch 是惰性的 在观察源发生变化之前不会立即调用 但是如果我们想要获取一些初始数据 然后在相关状态发生变化时重新获取数据</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const url = ref('https://...')</span><br><span class="line">const data = ref(null)</span><br><span class="line"></span><br><span class="line">async function fetchData() {</span><br><span class="line">  const response = await fetch(url.value)</span><br><span class="line">  data.value = await response.json()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">// fetch immediately</span><br><span class="line">fetchData()</span><br><span class="line">// ...then watch for url change</span><br><span class="line">watch(url, fetchData)</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>watchEffect 允许我们在自动追踪效果的反应依赖的同时立即执行副作用函数</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">watchEffect(async () =&gt; {</span><br><span class="line">  const response = await fetch(url.value)</span><br><span class="line">  data.value = await response.json()</span><br><span class="line">})</span><br><span class="line">//在这苦 回调函数立即执行 他还会跟踪url.value为依赖项（类似于计算属性） 当url.value发生变化时 回调将再次运行</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">const API_URL = `https://api.github.com/repos/vuejs/core/commits?per_page=3&amp;sha=`</span><br><span class="line">const branches = ['main', 'v2-compat']</span><br><span class="line"></span><br><span class="line">const currentBranch = ref(branches[0])</span><br><span class="line">const commits = ref(null)</span><br><span class="line"></span><br><span class="line">watchEffect(async () =&gt; {</span><br><span class="line">  // this effect will run immediately and then</span><br><span class="line">  // re-run whenever currentBranch.value changes</span><br><span class="line">  const url = `${API_URL}${currentBranch.value}`</span><br><span class="line">  commits.value = await (await fetch(url)).json()</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>tips：</strong>watch 仅在其同步执行期间跟踪依赖项 当它与异步回调一起使用时 只会跟踪 await 跟踪第一个 tick 之前访问的属性</p>
+<ul>
+<li>watch 仅跟踪明确监视的源 将依赖跟踪与副作用分开</li>
+<li>将依赖跟踪与副作用结合到一个阶段 会自动跟踪在同步执行期间访问的每一个反应属性 会使代码更简洁 但是依赖关系不明确</li>
+</ul>
+<h4 id="回调刷新时间"><a href="#回调刷新时间" class="headerlink" title="回调刷新时间"></a>回调刷新时间</h4><p>vue 默认在组件更新之前调用用户创建的观察者回调 所以如果尝试在观察者回调中访问 dom 则 dom 将处于 Vue 应用任何更新之前的状态 所以如果想要在 vue 更新后在 watcher 回调中访问 dom 需要指定 flush:’post’</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">watch(source, callback, {</span><br><span class="line">  flush: 'post'</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">watchEffect(callback, {</span><br><span class="line">  flush: 'post'</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="停止观察者"><a href="#停止观察者" class="headerlink" title="停止观察者"></a>停止观察者</h4><p>Watchers 在内部同步声明<code>setup()</code>或<code>&lt;script setup&gt;</code>绑定到所有者组件实例，并在所有者组件卸载时自动停止。如果观察者是<strong>异步</strong>创建的 那么不会绑定到所有者组件 必须手动停止以避免<strong>内存泄漏</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const unwatch = watchEffect(() =&gt; {})</span><br><span class="line"></span><br><span class="line">// ...later, when no longer needed</span><br><span class="line">unwatch()</span><br></pre></td></tr></tbody></table></figure>
+
+<p>应该军垦首选同步创建 如果需要等待一些异步数据 可以使用逻辑控制异步操作</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">watchEffect(() =&gt; {</span><br><span class="line">  if (data.value) {</span><br><span class="line">    // do something when data is loaded</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Props"><a href="#Props" class="headerlink" title="Props"></a>Props</h2><p>如果要将对象的所有属性作为 props 传递 则可以使用 v-bind 不带参数使用</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;BlogPost v-bind="post" /&gt;</span><br><span class="line">//相当于使用</span><br><span class="line">&lt;BlogPost :id="post.id" :title="post.title" /&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><p>prop 用于传入一个初始值：子组件之后希望将其用作本地数据属性 则定义一个使用 prop 作为其初始值的本地数据属性</p>
+</li>
+<li><p>```<br>const props = defineProps([‘initialCounter’])</p>
+<p>// counter only uses props.initialCounter as the initial value;<br>// it is disconnected from future prop updates.<br>const counter = ref(props.initialCounter)</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- prop 作为需要转换的原始值传入 最好使用 prop 的值定义计算属性</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  const props = defineProps(['size'])</span><br><span class="line"></span><br><span class="line">  // computed property that auto-updates when the prop changes</span><br><span class="line">  const normalizedSize = computed(() =&gt; props.size.trim().toLowerCase())</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h2 id="组件事件"><a href="#组件事件" class="headerlink" title="组件事件"></a>组件事件</h2><p><strong>tips：</strong>组件的事件不会冒泡 父组件只能接收直接子组件发出的事件</p>
+<p>可以通过 defineEmits 显示声明</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">const emit = defineEmits(['inFocus', 'submit'])</span><br><span class="line">// type-based</span><br><span class="line">const emit = defineEmits&lt;{</span><br><span class="line">  (e: 'change', id: number): void</span><br><span class="line">  (e: 'update', value: string): void</span><br><span class="line">}&gt;()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果在选项中定义了本地事件如 click 则侦听器现在仅侦听组件发出的 click 而不再响应本地的 click 事件</p>
+<p>如果使用对象语法则可以添加验证 为了添加验证 事件被分配了一个函数 改函数将接收传递给调用的参数并返回一个有效的布尔值以只是事件是否</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">const emit = defineEmits({</span><br><span class="line">  // No validation</span><br><span class="line">  click: null,</span><br><span class="line"></span><br><span class="line">  // Validate submit event</span><br><span class="line">  submit: ({ email, password }) =&gt; {</span><br><span class="line">    if (email &amp;&amp; password) {</span><br><span class="line">      return true</span><br><span class="line">    } else {</span><br><span class="line">      console.warn('Invalid submit event payload!')</span><br><span class="line">      return false</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">function submitForm(email, password) {</span><br><span class="line">  emit('submit', { email, password })</span><br><span class="line">}</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>自定义事件还能和 v-model 相结合</strong></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- CustomInput.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">defineProps(['modelValue'])</span><br><span class="line">defineEmits(['update:modelValue'])</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input</span><br><span class="line">    :value="modelValue"</span><br><span class="line">    @input="$emit('update:modelValue', $event.target.value)"</span><br><span class="line">  /&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">使用：</span><br><span class="line">&lt;CustomInput v-model="searchText" /&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>v-model 还可以使用 computed 属性和 getter 以及 setter 该 get 方法应该返回 modelValue 属性并且该 set 方法应该发出相应的事件</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- CustomInput.vue --&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import { computed } from 'vue'</span><br><span class="line"></span><br><span class="line">const props = defineProps(['modelValue'])</span><br><span class="line">const emit = defineEmits(['update:modelValue'])</span><br><span class="line"></span><br><span class="line">const value = computed({</span><br><span class="line">  get() {</span><br><span class="line">    return props.modelValue</span><br><span class="line">  },</span><br><span class="line">  set(value) {</span><br><span class="line">    emit('update:modelValue', value)</span><br><span class="line">  }</span><br><span class="line">})</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input v-model="value" /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>使用多个 v-model</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;UserName</span><br><span class="line">  v-model:first-name="firstName"</span><br><span class="line">  v-model:last-name="lastName"</span><br><span class="line">/&gt;</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">defineProps({</span><br><span class="line">  firstName: String,</span><br><span class="line">  lastName: String</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">defineEmits(['update:firstName', 'update:lastName'])</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input</span><br><span class="line">    type="text"</span><br><span class="line">    :value="firstName"</span><br><span class="line">    @input="$emit('update:firstName', $event.target.value)"</span><br><span class="line">  /&gt;</span><br><span class="line">  &lt;input</span><br><span class="line">    type="text"</span><br><span class="line">    :value="lastName"</span><br><span class="line">    @input="$emit('update:lastName', $event.target.value)"</span><br><span class="line">  /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>处理 v-model 修饰符：<strong>自定义修饰符</strong></p>
+<p>eg：自定义一个将字符串第一个字母大写</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent v-model.capitalize="myText" /&gt;</span><br><span class="line">添加到组件的修饰符v-model将通过modelModifiers prop提供给组件 我们创建了一个组件 其中包含一个modelModifiers默认为空的对象的prop</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">const props = defineProps({</span><br><span class="line">  modelValue: String,</span><br><span class="line">  modelModifiers: { default: () =&gt; ({}) }</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">defineEmits(['update:modelValue'])</span><br><span class="line"></span><br><span class="line">console.log(props.modelModifiers) // { capitalize: true }</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input</span><br><span class="line">    type="text"</span><br><span class="line">    :value="modelValue"</span><br><span class="line">    @input="$emit('update:modelValue', $event.target.value)"</span><br><span class="line">  /&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">------------------我们可以更改成当触发input事件后就会将字符串大写</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">const props = defineProps({</span><br><span class="line">  modelValue: String,</span><br><span class="line">  modelModifiers: { default: () =&gt; ({}) }//即传递过来的{ capitalize: true }</span><br><span class="line">})</span><br><span class="line">//设置默认抛出事件</span><br><span class="line">const emit = defineEmits(['update:modelValue'])</span><br><span class="line"></span><br><span class="line">function emitValue(e) {</span><br><span class="line">  let value = e.target.value</span><br><span class="line">  if (props.modelModifiers.capitalize) {</span><br><span class="line">    value = value.charAt(0).toUpperCase() + value.slice(1)</span><br><span class="line">  }</span><br><span class="line">  emit('update:modelValue', value)//触发事件</span><br><span class="line">}</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">//设置input触发事件</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;input type="text" :value="modelValue" @input="emitValue" /&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>对于<code>v-model</code>同时具有参数和修饰符 生成的道具名称将为<code>arg + 'Modifiers'</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent v-model:title.capitalize="myText"&gt;</span><br><span class="line">//对应的声明应该为</span><br><span class="line">const props = defineProps(['title', 'titleModifiers'])</span><br><span class="line">defineEmits(['update:title'])</span><br><span class="line">console.log(props.titleModifiers) // { capitalize: true }</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Fallthrough-属性"><a href="#Fallthrough-属性" class="headerlink" title="Fallthrough 属性"></a>Fallthrough 属性</h2><p><code>v-on</code>传递给组件的属性或事件监听器 但是未在组件的 props 或 emits 中显示声明 如<code>class</code>、<code>style</code>、<code>id</code></p>
+<p>当组件渲染单个根元素时 将自动添加到根元素的属性中</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- template of &lt;MyButton&gt; --&gt;</span><br><span class="line">&lt;button&gt;click me&lt;/button&gt;</span><br><span class="line">&lt;MyButton class="large" /&gt;</span><br><span class="line">---最终渲染为</span><br><span class="line">&lt;button class="large"&gt;click me&lt;/button&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果不希望组件自动继承属性 可以在<code>inheriAttrs： false</code>在组件的选项中进行设置</p>
+<p>如果使用<code>&lt;script setup&gt;</code>，您将需要使用单独的普通<code>&lt;script&gt;</code>块声明此选项：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">// use normal &lt;script&gt; to declare options</span><br><span class="line">export default {</span><br><span class="line">  inheritAttrs: false</span><br><span class="line">}</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">// ...setup logic</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>常见场景：当属性需要引用于根节点以为的其他元素时 可以将<code>inheritAttrs</code>选项设置为<code>false</code>，您可以完全控制在何处应用 fallthrough 属性</p>
+<p>可以通过<code>$attrs</code>来访问</p>
+<ul>
+<li>与 props 不同，fallthrough 属性在 JavaScript 中保留了它们的原始大小写，因此<code>foo-bar</code>需要将属性 like 访问为<code>$attrs['foo-bar']</code>.</li>
+<li>像这样的<code>v-on</code>事件侦听<code>@click</code>器将作为<code>$attrs.onClick</code>.</li>
+</ul>
+<p>我们希望所有诸如<code>class</code>和<code>v-on</code>监听器之类的贯穿属性都应用于内部<code>&lt;button&gt;</code>，而不是外部<code>&lt;div&gt;</code>。可以使用 inheritAttrs: false 和</p>
+<p><code>v-bind="$attrs"</code>来使用</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class="btn-wrapper"&gt;</span><br><span class="line">  &lt;button class="btn" v-bind="$attrs"&gt;click me&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>如果 v-bind 没有参数 则将对象的所有属性绑定为目标元素的属性</strong></p>
+<h4 id="多个根节点的继承"><a href="#多个根节点的继承" class="headerlink" title="多个根节点的继承"></a>多个根节点的继承</h4><p>具有多个根节点的组件没有自动属性失效的行为 需要明确绑定$attrs</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;CustomLayout id="custom-layout" @click="changeValue" /&gt;</span><br><span class="line">&lt;header&gt;...&lt;/header&gt;</span><br><span class="line">&lt;main v-bind="$attrs"&gt;...&lt;/main&gt;</span><br><span class="line">&lt;footer&gt;...&lt;/footer&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import { useAttrs } from 'vue'</span><br><span class="line"></span><br><span class="line">const attrs = useAttrs()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">//尽管attrs始终反应最新的fallthrough属性 但是并不是响应性的 所以无法使用观察者观察变化 如果需要响应性 可以使用prop 或者在onUpdated（）时执行最新的副作用</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="插槽"><a href="#插槽" class="headerlink" title="插槽"></a>插槽</h2><img src="https://s3.bmp.ovh/imgs/2022/04/10/8d00a97ed8cd1522.png" style="zoom: 50%;">
+
+<p>插槽的作用</p>
+<ul>
+<li>使用插槽 子组件负责样式的渲染 而内容由父组件提供</li>
+<li>通过使用插槽 我们可以使<code>&lt;FancyButton&gt;</code>更加灵活和重用 我们可以在不同的地方使用它 具有不同的内部内容 但是都具有同样花哨的样式</li>
+</ul>
+<h4 id="渲染范围"><a href="#渲染范围" class="headerlink" title="渲染范围"></a>渲染范围</h4><ul>
+<li>插槽可以访问父组件的数据范围 因为它是在父组件中定义的</li>
+<li>插槽无权访问子组件的数据 因为父模板中的所有内容都在父范围内编译 子模板中的所有内容都在子范围内编译</li>
+</ul>
+<h4 id="命名插槽"><a href="#命名插槽" class="headerlink" title="命名插槽"></a>命名插槽</h4><p>可以通过使用 name 用来为不同的插槽分配一个唯一的 ID 这样可以控制在哪里呈现内容</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class="container"&gt;</span><br><span class="line">  &lt;header&gt;</span><br><span class="line">    &lt;slot name="header"&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/header&gt;</span><br><span class="line">  &lt;main&gt;</span><br><span class="line">    &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/main&gt;</span><br><span class="line">  &lt;footer&gt;</span><br><span class="line">    &lt;slot name="footer"&gt;&lt;/slot&gt;</span><br><span class="line">  &lt;/footer&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">//当我们要传递指定内容时 可以使用v-slot</span><br><span class="line">&lt;BaseLayout&gt;</span><br><span class="line">  &lt;template v-slot:header&gt;</span><br><span class="line">    &lt;!-- content for the header slot --&gt;</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line">&lt;/BaseLayout&gt;</span><br><span class="line">//可以使用“#”简写</span><br><span class="line">&lt;template #header&gt;。</span><br></pre></td></tr></tbody></table></figure>
+
+<p>当组件同时接受默认槽和命名槽时，所有顶级非<code>&lt;template&gt;</code>节点都被隐式视为默认槽的内容。</p>
+<h4 id="动态插槽名称"><a href="#动态插槽名称" class="headerlink" title="动态插槽名称"></a>动态插槽名称</h4><p>动态指令参数也适用于 v-slot 允许定义动态插槽的名称</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;base-layout&gt;</span><br><span class="line">  &lt;template v-slot:[dynamicSlotName]&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">  &lt;!-- with shorthand --&gt;</span><br><span class="line">  &lt;template #[dynamicSlotName]&gt;</span><br><span class="line">    ...</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line">&lt;/base-layout&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="命名插槽-1"><a href="#命名插槽-1" class="headerlink" title="命名插槽"></a>命名插槽</h4><p><img src="https://i.bmp.ovh/imgs/2022/04/10/06d1487ae8b60eaa.png"></p>
+<p>可以通过命名插槽访问子组件的数据</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;slot :text="greetingMessage" :count="1"&gt;&lt;/slot&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;MyComponent v-slot="slotProps"&gt;</span><br><span class="line">  {{ slotProps.text }} {{ slotProps.count }}</span><br><span class="line">&lt;/MyComponent&gt;</span><br><span class="line">//可以通过解构的方式来取值</span><br><span class="line">&lt;MyComponent v-slot="{ text, count }"&gt;</span><br><span class="line">  {{ text }} {{ count }}</span><br><span class="line">&lt;/MyComponent&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="命名范围插槽"><a href="#命名范围插槽" class="headerlink" title="命名范围插槽"></a><strong>命名范围插槽</strong></h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyComponent&gt;</span><br><span class="line">  &lt;template #header="headerProps"&gt;</span><br><span class="line">    {{ headerProps }}</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">  &lt;template #default="defaultProps"&gt;</span><br><span class="line">    {{ defaultProps }}</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line"></span><br><span class="line">  &lt;template #footer="footerProps"&gt;</span><br><span class="line">    {{ footerProps }}</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line">&lt;/MyComponent&gt;</span><br><span class="line">&lt;slot name="header" message="hello"&gt;&lt;/slot&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>name 不会包含在 prop 中 所以 headerProps 是<code>{ message: 'hello' }</code>.</p>
+<p><strong>作用域插槽的使用场景</strong></p>
+<p>如果需要一个<fancylist>渲染项目列表的组件–它可以封装加载远程数据的逻辑 使用数据显示列表 甚至是分页或无限滚动等高级功能 但是我们希望它能够灵活处理每个项目的外观 并将每个项目的样式留给使用它的父组件</fancylist></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;FancyList :api-url="url" :per-page="10"&gt;</span><br><span class="line">  &lt;template #item="{ body, username, likes }"&gt;</span><br><span class="line">    &lt;div class="item"&gt;</span><br><span class="line">      &lt;p&gt;{{ body }}&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;by {{ username }} | {{ likes }} likes&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line">&lt;/FancyList&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在内部，我们可以使用不同的项目数据多次<code>&lt;FancyList&gt;</code>渲染相同的内容（注意我们使用对象作为插槽道具传递）：<code>&lt;slot&gt;``v-bind</code></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">App.vue</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import FancyList from './FancyList.vue'</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;FancyList :api-url="url" :per-page="10"&gt;</span><br><span class="line">    &lt;template #item="{ body, username, likes }"&gt;</span><br><span class="line">      &lt;div class="item"&gt;</span><br><span class="line">        &lt;p&gt;{{ body }}&lt;/p&gt;</span><br><span class="line">        &lt;p class="meta"&gt;by {{ username }} | {{ likes }} likes&lt;/p&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">  &lt;/FancyList&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">.meta {</span><br><span class="line">  font-size: 0.8em;</span><br><span class="line">  color: #42b883;</span><br><span class="line">}</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">FancyList.vue</span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">import { ref } from 'vue'</span><br><span class="line"></span><br><span class="line">const props = defineProps(['api-url', 'per-page'])</span><br><span class="line"></span><br><span class="line">const items = ref([])</span><br><span class="line"></span><br><span class="line">// mock remote data fetching</span><br><span class="line">setTimeout(() =&gt; {</span><br><span class="line">  items.value = [</span><br><span class="line">    { body: 'Scoped Slots Guide', username: 'Evan You', likes: 20 },</span><br><span class="line">	  { body: 'Vue Tutorial', username: 'Natalia Tepluhina', likes: 10 }</span><br><span class="line">  ]</span><br><span class="line">}, 1000)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li v-if="!items.length"&gt;</span><br><span class="line">      Loading...</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">    &lt;li v-for="item in items"&gt;</span><br><span class="line">      &lt;slot name="item" v-bind="item"/&gt;</span><br><span class="line">    &lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  ul {</span><br><span class="line">    list-style-type: none;</span><br><span class="line">    padding: 5px;</span><br><span class="line">    background: linear-gradient(315deg, #42d392 25%, #647eff);</span><br><span class="line">  }</span><br><span class="line">  li {</span><br><span class="line">    padding: 5px 20px;</span><br><span class="line">    margin: 10px;</span><br><span class="line">    background: #fff;</span><br><span class="line">  }</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="Provide-Inject"><a href="#Provide-Inject" class="headerlink" title="Provide/Inject"></a>Provide/Inject</h2><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">script setup&gt;</span><br><span class="line"><span class="keyword">import</span> { provide } <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">provide</span>(<span class="comment">/* key */</span> <span class="string">'message'</span>, <span class="comment">/* value */</span> <span class="string">'hello!'</span>)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>提供响应式值允许使用提供的值的后代组件建立到提供程序组件的响应式连接。</p>
+<p>如果提供的值是 ref 它是按原样注入 不会自动解构 这允许注入器组件保留与提供者组件的反应性连接</p>
+<h4 id="注入默认值"><a href="#注入默认值" class="headerlink" title="注入默认值"></a>注入默认值</h4><p>如果想要让注入的属性和可选提供者一起工作 那么就需要声明一个默认值 类似于 props</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> value = <span class="title function_">inject</span>(<span class="string">"message"</span>, <span class="string">"default value"</span>);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>在某些情况下，可能需要通过调用函数或实例化新类来创建默认值。为了避免在不使用可选值的情况下产生不必要的计算或副作用，我们可以使用<strong>工厂函数来创建默认值：</strong></p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> value = <span class="title function_">inject</span>(<span class="string">"key"</span>, <span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">ExpensiveClas</span>());</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="使用响应式数据"><a href="#使用响应式数据" class="headerlink" title="使用响应式数据"></a>使用响应式数据</h4><p>尽可能将任何对响应式状态的突变保留在提供程序内部 这确保了提供的状态以及可能的突变位于同一组件 从而更容易在将来维护</p>
+<p>有时我们可能从租入器组件更新数据 这种情况我们一般提供一个负责改变状态的函数</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line"><span class="keyword">import</span> { provide, ref } <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> location = <span class="title function_">ref</span>(<span class="string">'North Pole'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">updateLocation</span>(<span class="params"></span>) {</span><br><span class="line">  location.<span class="property">value</span> = <span class="string">'South Pole'</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="title function_">provide</span>(<span class="string">'location'</span>, {</span><br><span class="line">  location,</span><br><span class="line">  updateLocation</span><br><span class="line">})</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">------------------------</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> { inject } <span class="keyword">from</span> <span class="string">'vue'</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> { location, updateLocation } = <span class="title function_">inject</span>(<span class="string">'location'</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"updateLocation"</span>&gt;</span>{{ location }}<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>最后 我们想确保 provide 的数据不会被改变 可以使用 readonly</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">provide</span>(<span class="string">"read-only-count"</span>, <span class="title function_">readonly</span>(count));</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>最好使用符号注入密钥来避免潜在的冲突 可以将符号到处到专有文件中</strong></p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// keys.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> myInjectionKey = <span class="title class_">Symbol</span>();</span><br><span class="line"><span class="comment">// in provider component</span></span><br><span class="line"><span class="keyword">import</span> { provide } <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"><span class="keyword">import</span> { myInjectionKey } <span class="keyword">from</span> <span class="string">"./keys.js"</span>;</span><br><span class="line"></span><br><span class="line"><span class="title function_">provide</span>(myInjectionKey, {</span><br><span class="line">  <span class="comment">/* data to provide */</span></span><br><span class="line">});</span><br><span class="line"><span class="comment">// in injector component</span></span><br><span class="line"><span class="keyword">import</span> { inject } <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"><span class="keyword">import</span> { myInjectionKey } <span class="keyword">from</span> <span class="string">"./keys.js"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> injected = <span class="title function_">inject</span>(myInjectionKey);</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="异步组件"><a href="#异步组件" class="headerlink" title="异步组件"></a>异步组件</h2><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { defineAsyncComponent } <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">AsyncComp</span> = <span class="title function_">defineAsyncComponent</span>(<span class="function">() =&gt;</span></span><br><span class="line">  <span class="title function_">import</span>(<span class="string">"./components/MyComponent.vue"</span>)</span><br><span class="line">);</span><br></pre></td></tr></tbody></table></figure>
+
+<p>结果<code>AsyncComp</code>是一个包装器组件，它仅在实际呈现在页面上时才调用加载器函数。此外，它会将任何 props 传递给内部组件，因此您可以使用异步包装器无缝替换原始组件，同时实现延迟加载。</p>
+<h4 id="加载和错误状态"><a href="#加载和错误状态" class="headerlink" title="加载和错误状态"></a>加载和错误状态</h4><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">AsyncComp</span> = <span class="title function_">defineAsyncComponent</span>({</span><br><span class="line">  <span class="comment">// the loader function</span></span><br><span class="line">  <span class="attr">loader</span>: <span class="function">() =&gt;</span> <span class="title function_">import</span>(<span class="string">"./Foo.vue"</span>),</span><br><span class="line"></span><br><span class="line">  <span class="comment">// A component to use while the async component is loading</span></span><br><span class="line">  <span class="attr">loadingComponent</span>: <span class="title class_">LoadingComponent</span>,</span><br><span class="line">  <span class="comment">// Delay before showing the loading component. Default: 200ms.</span></span><br><span class="line">  <span class="attr">delay</span>: <span class="number">200</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// A component to use if the load fails</span></span><br><span class="line">  <span class="attr">errorComponent</span>: <span class="title class_">ErrorComponent</span>,</span><br><span class="line">  <span class="comment">// The error component will be displayed if a timeout is</span></span><br><span class="line">  <span class="comment">// provided and exceeded. Default: Infinity.</span></span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">3000</span>,</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果提供了加载组件，它将在加载内部组件时首先显示。在显示加载组件之前有一个默认的 200 毫秒延迟 - 这是因为在快速网络上，即时加载状态可能会被替换得太快并最终看起来像闪烁。</p>
+<p>如果提供了错误组件，当 loader 函数返回的 Promise 被拒绝时会显示。您还可以指定超时以在请求时间过长时显示错误组件。</p>
+<h2 id="Composables"><a href="#Composables" class="headerlink" title="Composables"></a>Composables</h2><p>Composables 是一种可以利用 Vue 组合 API 封装和重用有状态逻辑的函数</p>
+<ul>
+<li><p>鼠标跟踪器示例</p>
+</li>
+<li><p>```js<br>// mouse.js<br>import { ref, onMounted, onUnmounted } from ‘vue’</p>
+<p>// by convention, composable function names start with “use”<br>export function useMouse() {<br>  // state encapsulated and managed by the composable<br>  const x = ref(0)<br>  const y = ref(0)</p>
+<p>  // a composable can update its managed state over time.<br>  function update(event) {</p>
+<pre><code>x.value = event.pageX
+y.value = event.pageY
+</code></pre>
+<p>  }</p>
+<p>  // a composable can also hook into its owner component’s<br>  // lifecycle to setup and teardown side effects.<br>  onMounted(() =&gt; window.addEventListener(‘mousemove’, update))<br>  onUnmounted(() =&gt; window.removeEventListener(‘mousemove’, update))</p>
+<p>  // expose managed state as return value<br>  return { x, y }<br>}<br>//组件中的使用方式</p>
+<script setup="">
+import { useMouse } from './mouse.js'
+
+const { x, y } = useMouse()
+</script>
+
+<p><template>Mouse position is at: , </template></p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">COmposables 还可以嵌套使用：一个可组合函数可以调用另一个或多个其他可组合函数 这是的我们能够使用小的、隔离的单元来组合复杂的逻辑 了类似于使用组件来整合整个应用程序的方式</span><br><span class="line"></span><br><span class="line">实例 2：我们可以将添加和清理 DOM 事件监听器的逻辑提取到它自己的可组合中</span><br><span class="line"></span><br><span class="line">```js</span><br><span class="line">// event.js</span><br><span class="line">import { onMounted, onUnmounted } from "vue";</span><br><span class="line"></span><br><span class="line">export function useEventListener(target, event, callback) {</span><br><span class="line">  // if you want, you can also make this</span><br><span class="line">  // support selector strings as target</span><br><span class="line">  onMounted(() =&gt; target.addEventListener(event, callback));</span><br><span class="line">  onUnmounted(() =&gt; target.removeEventListener(event, callback));</span><br><span class="line">}</span><br><span class="line">//现在我们的useMouse（）可以简化为</span><br><span class="line">// mouse.js</span><br><span class="line">import { ref } from "vue";</span><br><span class="line">import { useEventListener } from "./event";</span><br><span class="line"></span><br><span class="line">export function useMouse() {</span><br><span class="line">  const x = ref(0);</span><br><span class="line">  const y = ref(0);</span><br><span class="line"></span><br><span class="line">  useEventListener(window, "mousemove", (event) =&gt; {</span><br><span class="line">    x.value = event.pageX;</span><br><span class="line">    y.value = event.pageY;</span><br><span class="line">  });</span><br><span class="line"></span><br><span class="line">  return { x, y };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>**tips:**每个组件实例调用<code>useMouse()</code>都将创建自己的副本<code>x</code>和<code>y</code>状态，因此它们不会相互干扰。如果想管理组件之间的共享状态 可以使用 vuex</p>
+<h4 id="异步状态示例"><a href="#异步状态示例" class="headerlink" title="异步状态示例"></a>异步状态示例</h4><p>在进行异步数据获取时 我们经常需要处理不同的状态：加载、成功和错误 我们可以将其提取到可组合中</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fetch.js</span></span><br><span class="line"><span class="keyword">import</span> { ref } <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useFetch</span>(<span class="params">url</span>) {</span><br><span class="line">  <span class="keyword">const</span> data = <span class="title function_">ref</span>(<span class="literal">null</span>);</span><br><span class="line">  <span class="keyword">const</span> error = <span class="title function_">ref</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">fetch</span>(url)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">(<span class="params">json</span>) =&gt;</span> (data.<span class="property">value</span> = json))</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> (error.<span class="property">value</span> = err));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> { data, error };</span><br><span class="line">}</span><br><span class="line"><span class="comment">//现在在我们的组件中 可以这样做</span></span><br><span class="line">&lt;script setup&gt;</span><br><span class="line">  <span class="keyword">import</span> {useFetch} <span class="keyword">from</span> <span class="string">'./fetch.js'</span> <span class="keyword">const</span> {(data, error)} = <span class="title function_">useFetch</span>(<span class="string">'...'</span>)</span><br><span class="line">&lt;/script&gt;;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果我们希望在 URL 更改时重新获取数据 可以使用响应式数据作为参数</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fetch.js</span></span><br><span class="line"><span class="keyword">import</span> { ref, isRef, unref, watchEffect } <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useFetch</span>(<span class="params">url</span>) {</span><br><span class="line">  <span class="keyword">const</span> data = <span class="title function_">ref</span>(<span class="literal">null</span>);</span><br><span class="line">  <span class="keyword">const</span> error = <span class="title function_">ref</span>(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">doFetch</span>(<span class="params"></span>) {</span><br><span class="line">    <span class="comment">// reset state before fetching..</span></span><br><span class="line">    data.<span class="property">value</span> = <span class="literal">null</span>;</span><br><span class="line">    error.<span class="property">value</span> = <span class="literal">null</span>;</span><br><span class="line">    <span class="comment">// unref() unwraps potential refs</span></span><br><span class="line">    <span class="title function_">fetch</span>(<span class="title function_">unref</span>(url))</span><br><span class="line">      .<span class="title function_">then</span>(<span class="function">(<span class="params">res</span>) =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">      .<span class="title function_">then</span>(<span class="function">(<span class="params">json</span>) =&gt;</span> (data.<span class="property">value</span> = json))</span><br><span class="line">      .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> (error.<span class="property">value</span> = err));</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="title function_">isRef</span>(url)) {</span><br><span class="line">    <span class="comment">// setup reactive re-fetch if input URL is a ref</span></span><br><span class="line">    <span class="title function_">watchEffect</span>(doFetch);</span><br><span class="line">  } <span class="keyword">else</span> {</span><br><span class="line">    <span class="comment">// otherwise, just fetch once</span></span><br><span class="line">    <span class="comment">// and avoid the overhead of a watcher</span></span><br><span class="line">    <span class="title function_">doFetch</span>();</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> { data, error };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>useFetch（）接收静态 URL 以及 URL 字符串的引用 当检测到 URL 是一个动态引用即 isRef（）时 会设置一个响应式效果 WatchEffect()效果将立即运行 并在这个过程中将 URL ref 作为依赖项进行跟踪 每当 URL 更改时 数据将被重置并再次获取</strong></p>
+</li>
+</ul>
+<h4 id="Conventions-and-Best-Practices"><a href="#Conventions-and-Best-Practices" class="headerlink" title="Conventions and Best Practices"></a>Conventions and Best Practices</h4><ul>
+<li><p>以 use 开头 如 useFetch();</p>
+</li>
+<li><p>如果正在编写一个可能被其他开发人员使用的组合 在处理输入参数时 refs 而不是原始值时是一个好主意 可以使用 unref</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { unref } <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">useFeature</span>(<span class="params">maybeRef</span>) {</span><br><span class="line">  <span class="comment">// if maybeRef is indeed a ref, its .value will be returned</span></span><br><span class="line">  <span class="comment">// otherwise, maybeRef is returned as-is</span></span><br><span class="line">  <span class="keyword">const</span> value = <span class="title function_">unref</span>(maybeRef);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果在输入是<code>ref</code>是创建响应性 请确保使用<code>watch()</code>来跟踪<code>ref</code>数据 或者使用<code>unref</code>并在内部使用<code>watchEffect()</code></p>
+</li>
+<li><p>我们推荐返回一个 refs 对象 以便在组件中对其进行解构并保持响应性 如果更喜欢返回对象属性 可以使用<code>reactive()</code>以便解构引用</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mouse = <span class="title function_">reactive</span>(<span class="title function_">useMouse</span>());</span><br><span class="line"><span class="comment">// mouse.x is linked to original ref</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(mouse.<span class="property">x</span>);</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h4><ul>
+<li>如果正在开发服务端渲染（SSR）的原因程序 确保在安装后生命周期执行特定于 DOM 的副作用 如在 onMounted()确保可以访问 DOM</li>
+<li><strong>确保清除 onUnmounted 在设置事件监听器后记得清理</strong></li>
+</ul>
+<h4 id="使用限制"><a href="#使用限制" class="headerlink" title="使用限制"></a>使用限制</h4><p>只能在钩子中同步使用 可以在<code>&lt;script setup&gt;setup()onMounted()</code>中调用</p>
+<ul>
+<li>生命周期钩子可以注册到它</li>
+<li>计算属性和观察者可以追踪并在组件卸载时进行处理</li>
+<li>你只能在<code>&lt;script setup&gt;</code>中使用 await 编译器会在执行异步操作后自动恢复活动实例上下文</li>
+</ul>
+<h4 id="为代码组织提取可组合项"><a href="#为代码组织提取可组合项" class="headerlink" title="为代码组织提取可组合项"></a>为代码组织提取可组合项</h4><p>可组合项不仅可以提取用于重用 还可以用于代码组织</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">  <span class="keyword">import</span> {useFeatureA} <span class="keyword">from</span> <span class="string">'./featureA.js'</span> <span class="keyword">import</span> {useFeatureB} <span class="keyword">from</span></span><br><span class="line">  <span class="string">'./featureB.js'</span> <span class="keyword">import</span> {useFeatureC} <span class="keyword">from</span> <span class="string">'./featureC.js'</span> <span class="keyword">const</span> {(foo, bar)} =</span><br><span class="line">  <span class="title function_">useFeatureA</span>() <span class="keyword">const</span> {baz} = <span class="title function_">useFeatureB</span>(foo) <span class="keyword">const</span> {qux} = <span class="title function_">useFeatureC</span>(baz)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h4><p><strong>自定义指令主要用于重用涉及对普通元素进行低级 DOM 访问的逻辑</strong></p>
+<p>自定义指令被定义为包含类似于组件的生命周期钩子的对象 钩子接收指令绑定的元素</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line"><span class="comment">// enables v-focus in templates</span></span><br><span class="line"><span class="keyword">const</span> vFocus = {</span><br><span class="line">  <span class="attr">mounted</span>: <span class="function">(<span class="params">el</span>) =&gt;</span> el.<span class="title function_">focus</span>()</span><br><span class="line">}</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">v-focus</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></tbody></table></figure>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">olddog</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://23olddog.github.io/2022/04/10/chong-xue-vue2.0/">https://23olddog.github.io/2022/04/10/chong-xue-vue2.0/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">olddog</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Vue-TS-%E6%A1%86%E6%9E%B6/">
+                                    <span class="chip bg-color">Vue TS 框架</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/04/10/chong-xue-vue2.0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="重学Vue第二天">
+                        
+                        <span class="card-title">重学Vue第二天</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Vue/" class="post-category">
+                                    Vue
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Vue-TS-%E6%A1%86%E6%9E%B6/">
+                        <span class="chip bg-color">Vue TS 框架</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/09/vue-xiang-ying-shi-yuan-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="你不知道的reactive">
+                        
+                        <span class="card-title">你不知道的reactive</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Vue/" class="post-category">
+                                    Vue
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Vue-%E5%8E%9F%E7%90%86-%E6%A1%86%E6%9E%B6/">
+                        <span class="chip bg-color">Vue 原理 框架</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: olddog<br />'
+            + '文章作者: olddog<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <a href="/about" target="_blank">olddog</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">19.3k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/23olddog" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:3056085618@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3056085618" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3056085618" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
