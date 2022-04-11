@@ -4,9 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Vue的原理实现, 前端">
-    <meta name="description" content="权衡的艺术1.3 虚拟 dom虚拟 dom 的耗时：创建 javascript 的计算量 + 创建真实 dom 的计算量 （数据变化量有关）
-innerHtml 的耗时：拼接字符串的计算量 + innerHtml 的 DOM 计算量 （模板">
+    <meta name="keywords" content="项目还能这样优化?, 前端">
+    <meta name="description" content="Performance1.页面加载优化1.1Bundle Size and Tree-shaking
+发布使用性能更加全面的 JavaScript 包
+如果通过现代构建工具捆绑 许多 Vue 的 API 都是 Tree-shaking。例如">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -29,7 +30,7 @@ innerHtml 的耗时：拼接字符串的计算量 + innerHtml 的 DOM 计算量 
     </style>
 
 
-    <title>Vue的原理实现 | olddog</title>
+    <title>项目还能这样优化? | olddog</title>
     <link rel="icon" type="image/png" href="/medias/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -322,12 +323,12 @@ innerHtml 的耗时：拼接字符串的计算量 + innerHtml 的 DOM 计算量 
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Vue的原理实现</h1>
+                    <h1 class="description center-align post-title">项目还能这样优化?</h1>
                 </div>
             </div>
         </div>
@@ -443,8 +444,8 @@ innerHtml 的耗时：拼接字符串的计算量 + innerHtml 的 DOM 计算量 
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Vue-%E5%8E%9F%E7%90%86/">
-                                <span class="chip bg-color">Vue 原理</span>
+                            <a href="/tags/Vue-%E4%BC%98%E5%8C%96/">
+                                <span class="chip bg-color">Vue 优化</span>
                             </a>
                         
                     </div>
@@ -468,28 +469,28 @@ innerHtml 的耗时：拼接字符串的计算量 + innerHtml 的 DOM 计算量 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-09
+                    2022-04-11
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-04-09
+                    2022-04-11
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    4 分
                 </div>
                 
 
@@ -509,156 +510,49 @@ innerHtml 的耗时：拼接字符串的计算量 + innerHtml 的 DOM 计算量 
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="权衡的艺术"><a href="#权衡的艺术" class="headerlink" title="权衡的艺术"></a>权衡的艺术</h1><h2 id="1-3-虚拟-dom"><a href="#1-3-虚拟-dom" class="headerlink" title="1.3 虚拟 dom"></a>1.3 虚拟 dom</h2><p>虚拟 dom 的耗时：创建 javascript 的计算量 + 创建真实 dom 的计算量 （数据变化量有关）</p>
-<p>innerHtml 的耗时：拼接字符串的计算量 + innerHtml 的 DOM 计算量 （模板大小有关）</p>
-<p><strong>原生 JavaScript &gt; 虚拟 dom &gt; innerHTML</strong></p>
-<h2 id="1-4-运行和编译时"><a href="#1-4-运行和编译时" class="headerlink" title="1.4 运行和编译时"></a>1.4 运行和编译时</h2><h1 id="1-框架设计的核心要素"><a href="#1-框架设计的核心要素" class="headerlink" title="1 框架设计的核心要素"></a>1 框架设计的核心要素</h1><h2 id="2-1-缩减框架代码的体积"><a href="#2-1-缩减框架代码的体积" class="headerlink" title="2.1 缩减框架代码的体积"></a>2.1 缩减框架代码的体积</h2><p>例：vue3 源码的 warn 函数</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if(_DEV_ &amp;&amp; ires) {</span><br><span class="line">	warn(</span><br><span class="line">	'faile to ....')</span><br><span class="line">};</span><br><span class="line">//vue.js使用rolllup.js对项目进项构建 这里的_DEV_实际上就是通过rollup.js的设置来预定义的 类似于webpack的DefinePlugin插件</span><br><span class="line">当用于开发环境时 _DEV_为true 即 if(true &amp;&amp; ires)</span><br><span class="line">而在构建生产环境中 _DEV_会被翻译为false 即 if(false &amp;&amp; _DEV_) 这样就永远不会执行</span><br><span class="line">**这种永远不会执行的代码称之为dead code 在构建最终项目的时候就会被移除 从而可以在开发环境中提供友好的提示 生产环境中减少代码的体积</span><br><span class="line">**vue3源码多出利用相似逻辑保证了开发环境的友好体验和生产环境的代码体积控制</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="2-2Tree-Shaking"><a href="#2-2Tree-Shaking" class="headerlink" title="2.2Tree-Shaking"></a>2.2Tree-Shaking</h2><p>Tree-Shaking：消除永远不会使用到的代码 如上面说的<em>DEV</em></p>
-<p><strong>能使用 Tree-Shaking 的必须是满足 ESM</strong></p>
-<p>Tree-Shaking 会产生副作用</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">**加上标记来告诉系统可以安心清除副作用</span><br><span class="line">import {foo} from './utils';</span><br><span class="line">/*#_PURE_*/ foo();//   /*#_PURE_*/会告诉roupull.js可以放心进行Tree-Shaking</span><br><span class="line">vue3的源码多出使用/*#_PURE_*/来标记 都用于顶级调用</span><br><span class="line">export const isHTMLTag = /*#_PURE_*/ makeMap(HTML_TAGS);</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="2-3-框架输出的产物"><a href="#2-3-框架输出的产物" class="headerlink" title="2.3 框架输出的产物"></a>2.3 框架输出的产物</h2><p>无论是 rollup.js 还是 webpack 在寻找资源文件的时候 如果 package.json 中存在 module 字段 都会优先使用 module 字段指向的资源代替 main 字段指向的资源</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">	"main": 'index.js',</span><br><span class="line">	"module": 'dist/vue.runtime.esm-bundler.js'</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>用处：当我们使用构建提供工具打包的 ESM 格式的资源时 不能直接把<em>DEV</em>转换成 true 或 false 需要使用(process.env.NODE* !== ‘production’)替换—DEV*常量</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if((process.env.NODE) !== 'production') {</span><br><span class="line">....</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>需求场景：当进行服务端渲染时 vue.js 的代码是在 Node.js 的环境中运行的 但是 Node.js 时 CommonJS 形式 所以可以更改 roullup.js 中的 format 配置</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">format: 'cjs'//指定模块形式</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="2-4-特定开关"><a href="#2-4-特定开关" class="headerlink" title="2.4 特定开关"></a>2.4 特定开关</h2><h2 id="2-5-错误处理"><a href="#2-5-错误处理" class="headerlink" title="2.5 错误处理"></a>2.5 错误处理</h2><h1 id="VUE-JS3-的设计思路"><a href="#VUE-JS3-的设计思路" class="headerlink" title="VUE.JS3 的设计思路"></a>VUE.JS3 的设计思路</h1><h2 id="3-2-渲染器"><a href="#3-2-渲染器" class="headerlink" title="3.2 渲染器"></a>3.2 渲染器</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">function renderer(vnode, container) {</span><br><span class="line">  // 使用 vnode.tag 作为标签名称创建 DOM 元素</span><br><span class="line">	const el = document.createElement(vnode.tag)</span><br><span class="line">  // 遍历 vnode.props 将属性、事件添加到 DOM 元素</span><br><span class="line">  for (const key in vnode.props) {</span><br><span class="line">    if (/^on/.test(key)) {</span><br><span class="line">      // 如果 key 以 on 开头，那么说明它是事件</span><br><span class="line">      el.addEventListener(</span><br><span class="line">        key.substr(2).toLowerCase(), // 事件名称 onClick ---&gt; click</span><br><span class="line">        vnode.props[key] // 事件处理函数</span><br><span class="line">      )</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  // 处理 children</span><br><span class="line">  if (typeof vnode.children === 'string') {</span><br><span class="line">    // 如果 children 是字符串，说明是元素的文本子节点</span><br><span class="line">    el.appendChild(document.createTextNode(vnode.children))</span><br><span class="line">  } else if (Array.isArray(vnode.children)) {</span><br><span class="line">    // 递归地调用 renderer 函数渲染子节点，使用当前元素 el 作为挂载点</span><br><span class="line">    vnode.children.forEach(child =&gt; renderer(child, el))</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  // 将元素添加到挂载点下</span><br><span class="line">  container.appendChild(el)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">const vnode = {</span><br><span class="line">  tag: 'div',</span><br><span class="line">  props: {</span><br><span class="line">    onClick: () =&gt; alert('hello')</span><br><span class="line">  },</span><br><span class="line">  children: 'click me'</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">renderer(vnode, document.body)；</span><br></pre></td></tr></tbody></table></figure>
-
-<h1 id="响应系统的作用和实现"><a href="#响应系统的作用和实现" class="headerlink" title="响应系统的作用和实现"></a>响应系统的作用和实现</h1><h2 id="4-1-响应式数据与副作用"><a href="#4-1-响应式数据与副作用" class="headerlink" title="4.1 响应式数据与副作用"></a>4.1 响应式数据与副作用</h2><p>副作用函数：会产生副作用的函数 即该函数的执行会直接或间接地影响到其他函数或变量的执行</p>
-<h2 id="4-2-响应式数据的基本实现"><a href="#4-2-响应式数据的基本实现" class="headerlink" title="4.2 响应式数据的基本实现"></a>4.2 响应式数据的基本实现</h2><ul>
-<li><p>通过拦截一个对象的读取和设置操作</p>
+                <h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><h3 id="1-页面加载优化"><a href="#1-页面加载优化" class="headerlink" title="1.页面加载优化"></a>1.页面加载优化</h3><h4 id="1-1Bundle-Size-and-Tree-shaking"><a href="#1-1Bundle-Size-and-Tree-shaking" class="headerlink" title="1.1Bundle Size and Tree-shaking"></a>1.1Bundle Size and Tree-shaking</h4><ul>
+<li>发布使用性能更加全面的 JavaScript 包<ul>
+<li>如果通过现代构建工具捆绑 许多 Vue 的 API 都是 Tree-shaking。例如如果不使用内置的<code>&lt;Transition&gt;</code>组件 他将不会包含在最终的生产包中 Tree-shaking 还可以删除源代码中其他未使用的模块</li>
+<li>使用构建步骤时 模板是预编译的 因此我们不需要将 Vue 编译器发送到浏览器中 这避免了运行时编译成本</li>
+</ul>
+</li>
+<li>引入依赖时要注意大小<ul>
+<li>使用支持 ES 模块格式并且对 Tree-shaking 友好的依赖项 如引入 lodash-es 而不是 lodash</li>
+<li>检查依赖项的大小并评估它是否值得它提供的功能 bundle.js.org 之类的工具可用于快速检查 但使用实际构建设置进行测量始终是最准确的</li>
+</ul>
+</li>
+<li>如果使用 VUE 进行渐进式增强并希望避免构建步骤 可以考虑使用 petite-vue</li>
+</ul>
+<h4 id="1-2-代码拆分"><a href="#1-2-代码拆分" class="headerlink" title="1.2.代码拆分"></a>1.2.代码拆分</h4><p>通过适当的代码拆分 可以立即下载页面加载所需的功能 仅再需要时才延迟加载额外的块 从而提高性能</p>
 <ul>
-<li><p>```<br>//当读取obj.text的时候 就将副作用函数储存到一个桶里面<br>//当设置obj.text的时候 就将副作用从桶里面取出执行便可<br>/ 存储副作用函数的桶<br>const bucket = new Set()</p>
-<p>// 原始数据<br>const data = { text: ‘hello world’ }<br>// 对原始数据的代理<br>const obj = new Proxy(data, {<br>  // 拦截读取操作<br>  get(target, key) {</p>
-<pre><code>// 将副作用函数 effect 添加到存储副作用函数的桶中
-bucket.add(effect)
-// 返回属性值
-return target[key]
-</code></pre>
-<p>  },<br>  // 拦截设置操作<br>  set(target, key, newVal) {</p>
-<pre><code>// 设置属性值
-target[key] = newVal
-// 把副作用函数从桶里取出并执行
-bucket.forEach(fn =&gt; fn())
-</code></pre>
-<p>  }<br>})</p>
-<p>function effect() {<br>  document.body.innerText = obj.text<br>}<br>effect()</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    **缺陷**：如果副作用改名或者是匿名函数 则该响应系统失效</span><br><span class="line"></span><br><span class="line">- 设计一个完善的响应系统</span><br><span class="line"></span><br><span class="line">  - 提供一个用来注册副作用函数的机制来解决上面的问题</span><br><span class="line"></span><br><span class="line">  - ```</span><br><span class="line">    //用一个变量春促当前激活的effect函数</span><br><span class="line">    let activeEffect;</span><br><span class="line">    function effect(fn) {</span><br><span class="line">    	//当调用effect注册副作用函数是 将副作用函数赋值给activeEffect</span><br><span class="line">    	activeEffect = fn;</span><br><span class="line">    	fn(0);//执行副作用函数</span><br><span class="line">    };</span><br><span class="line">    effect(() =&gt; {</span><br><span class="line">    	console.log('effect do');</span><br><span class="line">    	documrnt.body.innerText = obj.text;//进行读取操作</span><br><span class="line">    })</span><br><span class="line">    const obj = new Proxy(data, {</span><br><span class="line">    	get(target, key) {</span><br><span class="line">    	//将当前被调用的副作用函数加入到桶中</span><br><span class="line">    	if(activeEffect) {</span><br><span class="line">    		bucket.add(activeEffect)//新增</span><br><span class="line">    	}</span><br><span class="line">    	return target[key];</span><br><span class="line">    	},</span><br><span class="line">    	set(target, key, newVal) {</span><br><span class="line">    		target[key] = newVal;</span><br><span class="line">    		bucket.forEach( fn =&gt; fn());</span><br><span class="line">    		return true;</span><br><span class="line">    	}</span><br><span class="line">    })</span><br></pre></td></tr></tbody></table></figure>
+<li><p>Rollup（基于 Vite）或 webpack 之类的打包工具可以通过检查 ESM 动态导入元自动创建拆分块</p>
+</li>
+<li><p>```vue<br>function loadLazy() { return import(‘./lazy.js’) }</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 延迟加载最好用于初始页面加载后不需要立即使用的功能。在 Vue 应用程序中 这通常与 vue 的异步组件结合使用 为组件树创建拆分快</span><br><span class="line"></span><br><span class="line">- ```vue</span><br><span class="line">  import { defineAsyncComponent } from 'vue' // a separate chunk is created for</span><br><span class="line">  Foo.vue and its dependencies. // it is only fetched on demand when the async</span><br><span class="line">  component is // rendered on the page. const Foo = defineAsyncComponent(() =&gt;</span><br><span class="line">  import('./Foo.vue'))</span><br></pre></td></tr></tbody></table></figure>
 
-<p><strong>完成了可以添加匿名或任意名字的副作用函数</strong></p>
-<p><strong>缺陷：无法监听指定属性，即如果进行类似于新增不存在的属性 该副作用函数依然会被执行（正常不应该被执行）</strong></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">测试：新增不存在的obj.text2属性</span><br><span class="line">effect(() =&gt; {</span><br><span class="line">	obj.body.innerText = obj.text</span><br><span class="line"></span><br><span class="line">	console.log('effect done')</span><br><span class="line">});</span><br><span class="line">setTimeout(() =&gt; {</span><br><span class="line">	obj.text2 = 'none exists';//新增一个不存在的属性</span><br><span class="line">})</span><br><span class="line">//运行结果：effect done 执行两次</span><br><span class="line">//分析：每次修改对象obj都会将effect存入桶中 导致读取时执行不该执行的副作用</span><br><span class="line">//没有在副作用函数与被操作的目标之间建立明确的联系</span><br><span class="line">**解决方法：在副作用函数与被操作的字段之间建立联系 可以使用weakMap</span><br><span class="line">//储存副作用的桶</span><br><span class="line">const bucket = new WeakMap();</span><br><span class="line">//修改拦截器</span><br><span class="line">const obj = new Proxy(data, {</span><br><span class="line">	//拦截读取行为</span><br><span class="line">	get(target, key) {</span><br><span class="line">		//没有activeEffect 直接return</span><br><span class="line">		if(!activeEffect) return;</span><br><span class="line">		//根据traget从桶中取得desMap， ：key --&gt; effects</span><br><span class="line">		let desMap = bucket.get(target);</span><br><span class="line">		//如果不存在desMap 那么就创建一个WeakMap</span><br><span class="line">		if(!desMap) {</span><br><span class="line">			bucket.set(target, (desMap = new Map()))</span><br><span class="line">		}</span><br><span class="line">		//根据key自从desMap中读取deps deps时一个set类型</span><br><span class="line">		//里面储存着所有与当前key有相关的副作用函数:effects</span><br><span class="line">		let deps = desMap.get(key);</span><br><span class="line">		if(!deps) {</span><br><span class="line">			desMap.set(key, (deps = new Set()));</span><br><span class="line">		}</span><br><span class="line">		deps.add(activeEffect);//将激活的副作用函数存储到桶里</span><br><span class="line">		return target[key];//返回属性值</span><br><span class="line">	};</span><br><span class="line">	//拦截设置操作</span><br><span class="line">	set(target, key, newVal) {</span><br><span class="line">		//设置属性值</span><br><span class="line">		target[key] = newVal;</span><br><span class="line">		//根据target从decket中取出desMap</span><br><span class="line">		let desMap = ducket.get(target);</span><br><span class="line">		if(!desMap) return;</span><br><span class="line">		//根据key取得所有的副作用函数并依次执行</span><br><span class="line">		let deps = desMap.get(key);</span><br><span class="line">		deps &amp;&amp; deps.forEach( fn =&gt; fn());//判空再执行</span><br><span class="line"></span><br><span class="line">	}</span><br><span class="line">})</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>如果使用 Vue Router</strong>强烈建议使用异步组件作为路由组件</p>
+</li>
+</ul>
+<h4 id="1-3-SSR-SSG"><a href="#1-3-SSR-SSG" class="headerlink" title="1.3.SSR/SSG"></a>1.3.SSR/SSG</h4><p>纯客户端渲染会遇到内容生成时间缓慢的问题。这可以通过服务器端渲染 (SSR) 或静态站点生成 (SSG) 来缓解。</p>
+<h3 id="2-更新优化"><a href="#2-更新优化" class="headerlink" title="2.更新优化"></a>2.更新优化</h3><h4 id="2-1Props-Stability"><a href="#2-1Props-Stability" class="headerlink" title="2.1Props Stability"></a>2.1Props Stability</h4><p>在 Vue 中 子组件仅在接收到至少一个 props 发生改变时才更新</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;ListItem v-for="item in list" :id="item.id" :active-id="activeId" /&gt;</span><br><span class="line">//在listItem组件内部 它使用的id和activeId来确定它是否是当前活跃的项目</span><br><span class="line">但是这会导致在activeId更改时 列表中的每个listItem都必须更新 //理想状态下</span><br><span class="line">只有活动状态发生变化的项目才必须更新</span><br><span class="line">我们可以通过将活动状态计算移至父级来实现这一点</span><br><span class="line">&lt;ListItem v-for="item in list" :id="item.id" :active="item.id === activeId" /&gt;</span><br><span class="line">//现在 对于大多数组件来说 prop的active在activeId更改时将保持不变</span><br><span class="line">因此它们不再更新</span><br></pre></td></tr></tbody></table></figure>
 
-<img src="https://i.bmp.ovh/imgs/2022/04/01/5648b7ab427b5fd9.jpg" style="zoom: 50%;"></li>
-<li><p><strong>为什么使用 WeakMap 不使用 Map</strong></p>
+<p><strong>思想：保持传递给子组件的 prop 尽量稳定</strong></p>
+<h4 id="2-2-v-once"><a href="#2-2-v-once" class="headerlink" title="2.2 v-once"></a>2.2 v-once</h4><p>依赖于运行时数据但是从不需要高兴的内容 它所使用的整个子树将跳过以进行所有未来的更新</p>
+<h4 id="2-3v-memo"><a href="#2-3v-memo" class="headerlink" title="2.3v-memo"></a>2.3v-memo</h4><p>可用于有条件地跳过大型子树或者 v-for 列表的更新</p>
+<h3 id="3-一般优化：会影响页面加载和更新性能"><a href="#3-一般优化：会影响页面加载和更新性能" class="headerlink" title="3.一般优化：会影响页面加载和更新性能"></a>3.一般优化：会影响页面加载和更新性能</h3><h4 id="3-1-虚拟化大型列表"><a href="#3-1-虚拟化大型列表" class="headerlink" title="3.1 虚拟化大型列表"></a>3.1 虚拟化大型列表</h4><p>我们可以跳过列表虚拟化来极大地提高性能 该技术仅在大列表中呈现当前位于或靠近视口的视图</p>
 <ul>
-<li>weakMap 是弱引用 不会影响垃圾回收</li>
-<li>只有当 key 所引用的对象存在时（没有被回收时）才有价值的信息都优先使用 weakMap 来存储</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Akryum/vue-virtual-scroller">vue-虚拟滚动条</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rocwang/vue-virtual-scroll-grid">vue-虚拟滚动网络</a></li>
 </ul>
-</li>
-<li><p>**存在问题：代码耦合度高 **</p>
-</li>
-<li><p><strong>解决方法： 抽离封装</strong></p>
-</li>
-<li><pre><code>function track(target, key) {
-  let depsMap = bucket.get(target)
-  if (!depsMap) {
-    bucket.set(target, (depsMap = new Map()))
-  }
-  let deps = depsMap.get(key)
-  if (!deps) {
-    depsMap.set(key, (deps = new Set()))
-  }
-  deps.add(activeEffect)
-}
+<h4 id="3-2-减少大型不可变结构的响应式开销"><a href="#3-2-减少大型不可变结构的响应式开销" class="headerlink" title="3.2 减少大型不可变结构的响应式开销"></a>3.2 减少大型不可变结构的响应式开销</h4><p>vue 的反应系统默认是深度的 可以使用 shallowReactive（）来退出深度响应性</p>
+<p>浅响应性 API 创建仅在根级别具有响应性 并未追踪嵌套对象 这是的嵌套属性访问保持快速 但是我们必须将所有的嵌套对象视为不可变的 并且只能通过替换根状态来触发更新</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> shallowArray = <span class="title function_">shallowRef</span>([</span><br><span class="line">  <span class="comment">/* big list of deep objects */</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// this won't trigger updates...</span></span><br><span class="line">shallowArray.<span class="property">value</span>.<span class="title function_">push</span>(newObject);</span><br><span class="line"><span class="comment">// this does:</span></span><br><span class="line">shallowArray.<span class="property">value</span> = [...shallowArr.<span class="property">value</span>, newObject];</span><br><span class="line"></span><br><span class="line"><span class="comment">// this won't trigger updates...</span></span><br><span class="line">shallowArray.<span class="property">value</span>[<span class="number">0</span>].<span class="property">foo</span> = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// this does:</span></span><br><span class="line">shallowArray.<span class="property">value</span> = [</span><br><span class="line">  {</span><br><span class="line">    ...shallowArray.<span class="property">value</span>[<span class="number">0</span>],</span><br><span class="line">    <span class="attr">foo</span>: <span class="number">1</span>,</span><br><span class="line">  },</span><br><span class="line">  ...shallowArray.<span class="property">value</span>.<span class="title function_">slice</span>(<span class="number">1</span>),</span><br><span class="line">];</span><br></pre></td></tr></tbody></table></figure>
 
-function trigger(target, key) {
-  const depsMap = bucket.get(target)
-  if (!depsMap) return
-  const effects = depsMap.get(key)
-  effects &amp;&amp; effects.forEach(fn =&gt; fn())
-}
-// 对原始数据的代理
-const obj = new Proxy(data, {
-  // 拦截读取操作
-  get(target, key) {
-    // 将副作用函数 activeEffect 添加到存储副作用函数的桶中
-    track(target, key)
-    // 返回属性值
-    return target[key]
-  },
-  // 拦截设置操作
-  set(target, key, newVal) {
-    // 设置属性值
-    target[key] = newVal
-    // 把副作用函数从桶里取出并执行
-    trigger(target, key)
-  }
-})
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 4.4 切换分支与 cleanup</span><br><span class="line"></span><br><span class="line">分支切换可能会产生遗留的副作用函数</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-effect(function effectFn() {
-    document.body.innerText = obj.ok? obj.text : 'not'
-})
-//此时依赖函数被obj.ok和obj.text同时依赖 当obj.ok为false时 无论obj.text怎么变化 都是'not' 所以不应该触发副作用函数
-//解决方法：每次副作用函数执行时 都把它从所有与之关联的依赖集合中删除
-//当副作用执行完毕后 会建立联系 但再新的联系中不会包含遗留的副作用函数
+<p><code>shallowRef()</code>通常用于大型数据结构的性能优化 或者于外部状态管理系统的集成</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = <span class="title function_">shallowRef</span>({ <span class="attr">count</span>: <span class="number">1</span> });</span><br><span class="line"></span><br><span class="line"><span class="comment">// does NOT trigger change</span></span><br><span class="line">state.<span class="property">value</span>.<span class="property">count</span> = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// does trigger change</span></span><br><span class="line">state.<span class="property">value</span> = { <span class="attr">count</span>: <span class="number">2</span> };</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**副作用依赖函数集合**</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-//用一个全局变量储存被注册的副作用函数
-let activeEffect;
-function effect(fn) {
-//当effectFn被执行时 将其设置为当前的激活的副作用函数
-    const effectFn = () =&gt; {
-        activeEffect = effectFn;
-        fn();
-    }
-    //effectEffect.deps 用来储存所有与该副作用函数想关联的依赖集合
-    effectEn.dep = [];
-    //执行副作用函数
-    effectFn();
-}
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- **Track 函数**</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  function track(target, key) {</span><br><span class="line">  	if(!activeEffect) return;</span><br><span class="line">  	let depsMap = bucket.get(key);</span><br><span class="line">  	if(!depsMap) {</span><br><span class="line">  		bucket.set(target, (desMap =&gt; new Map()));</span><br><span class="line">  	}</span><br><span class="line">  	let deps = depsMap.get(key);</span><br><span class="line">  	if(!deps) {</span><br><span class="line">  		depsMap.set(key, ( deps =&gt; new Set()))</span><br><span class="line">  	};</span><br><span class="line">  	//把当前激活的副作用函数添加到依赖集合deps中</span><br><span class="line">  	deps.add(activeEffect);</span><br><span class="line">  	//deps就是一个与当前副作用函数存在联系的集合</span><br><span class="line">  	//将其添加到activeEffects.deps中</span><br><span class="line">  	activeEffect.deps.push(deps);</span><br><span class="line">  }</span><br></pre></td></tr></tbody></table></figure>
-
-- 有了这个联系后 再每次执行副作用函数时 根据 effectFn.deps 获取所有的相关联的依赖集合 从而将副作用函数从依赖集合中清除
-
-- ```
-  let activeEffect;
-  function effect(fn) {
-      const effectFn = () =&gt; {
-          //调用cleanUp函数完成清除依赖
-          cleanup(effectFn);
-          activeEffect = effectFn;
-          fn();
-      }
-  }
-
-  function cleanup(effectFn) {
-  //遍历effectFn.deps数组
-    for (let i = 0; i &lt; effectFn.deps.length; i++) {
-    //deps时依赖集合
-      const deps = effectFn.deps[i]
-      //将effectFn从依赖集合中删除
-      deps.delete(effectFn)
-    }
-    //重置effectFn.deps数组
-    effectFn.deps.length = 0
-  }
-  <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    -</span><br><span class="line"></span><br><span class="line"># 非原始值的响应式方案</span><br><span class="line"></span><br><span class="line">## 5.1Proxy 以及 Reflect</span><br><span class="line"></span><br><span class="line">**proxy 只能代理对象 不能代理其他类型的数据**</span><br><span class="line"></span><br><span class="line">### 5.1.2 Reflect</span><br><span class="line"></span><br><span class="line">Reflect 可以接受第三个参数 即 receiver 相当于函数调用过程中的 this</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
-const obj = {foo: 1};
-Reflect.get(obj, foo, {foo: 2});//输出2
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-
+<h4 id="3-3-避免不必要的组件抽象"><a href="#3-3-避免不必要的组件抽象" class="headerlink" title="3.3 避免不必要的组件抽象"></a>3.3 避免不必要的组件抽象</h4>
                 
             </div>
             <hr/>
@@ -684,7 +578,7 @@ Reflect.get(obj, foo, {foo: 2});//输出2
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://23olddog.github.io/2022/04/09/vue-kuang-jia-jie-du-1.0/">https://23olddog.github.io/2022/04/09/vue-kuang-jia-jie-du-1.0/</a>
+                    <a href="https://23olddog.github.io/2022/04/11/xiang-mu-you-hua/">https://23olddog.github.io/2022/04/11/xiang-mu-you-hua/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -722,8 +616,8 @@ Reflect.get(obj, foo, {foo: 2});//输出2
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Vue-%E5%8E%9F%E7%90%86/">
-                                    <span class="chip bg-color">Vue 原理</span>
+                                <a href="/tags/Vue-%E4%BC%98%E5%8C%96/">
+                                    <span class="chip bg-color">Vue 优化</span>
                                 </a>
                             
                         </div>
@@ -897,17 +791,18 @@ Reflect.get(obj, foo, {foo: 2});//输出2
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/04/09/qian-tan-she-ji-mo-shi/">
+                <a href="/2022/04/11/xiang-mu-you-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="带你剖析设计模式">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="项目还能这样优化?">
                         
-                        <span class="card-title">带你剖析设计模式</span>
+                        <span class="card-title">项目还能这样优化?</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -917,26 +812,27 @@ Reflect.get(obj, foo, {foo: 2});//输出2
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/Vue/" class="post-category">
+                                    Vue
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
+                    <a href="/tags/Vue-%E4%BC%98%E5%8C%96/">
+                        <span class="chip bg-color">Vue 优化</span>
                     </a>
                     
                 </div>
@@ -950,13 +846,13 @@ Reflect.get(obj, foo, {foo: 2});//输出2
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/09/chong-xue-vue/">
+                <a href="/2022/04/10/chong-xue-vue2.0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="重学Vue第一天">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="重学Vue第二天">
                         
-                        <span class="card-title">重学Vue第一天</span>
+                        <span class="card-title">重学Vue第二天</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -967,14 +863,14 @@ Reflect.get(obj, foo, {foo: 2});//输出2
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/web%E5%89%8D%E7%AB%AF/" class="post-category">
-                                    -web前端
+                            <a href="/categories/Vue/" class="post-category">
+                                    Vue
                                 </a>
                             
                             
