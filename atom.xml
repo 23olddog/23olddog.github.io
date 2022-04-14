@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-04-11T11:47:28.052Z</updated>
+  <updated>2022-04-14T02:24:34.885Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>重学VueAPI</title>
+    <link href="https://23olddog.github.io/2022/04/14/vueapi/"/>
+    <id>https://23olddog.github.io/2022/04/14/vueapi/</id>
+    <published>2022-04-14T02:19:50.254Z</published>
+    <updated>2022-04-14T02:24:34.885Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;全局-API&quot;&gt;&lt;a href=&quot;#全局-API&quot; class=&quot;headerlink&quot; title=&quot;全局 API&quot;&gt;&lt;/a&gt;全局 API&lt;/h1&gt;&lt;h2 id=&quot;应用&quot;&gt;&lt;a href=&quot;#应用&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="-web前端" scheme="https://23olddog.github.io/categories/web%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="Vue TS 框架" scheme="https://23olddog.github.io/tags/Vue-TS-%E6%A1%86%E6%9E%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>项目还能这样优化?</title>
