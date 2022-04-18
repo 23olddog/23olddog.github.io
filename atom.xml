@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-04-15T15:19:12.469Z</updated>
+  <updated>2022-04-18T13:38:25.525Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>重学CSS第一天</title>
+    <link href="https://23olddog.github.io/2022/04/18/chong-xue-css1.0/"/>
+    <id>https://23olddog.github.io/2022/04/18/chong-xue-css1.0/</id>
+    <published>2022-04-18T13:37:35.265Z</published>
+    <updated>2022-04-18T13:38:25.525Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;值和单位&quot;&gt;&lt;a href=&quot;#值和单位&quot; class=&quot;headerlink&quot; title=&quot;值和单位&quot;&gt;&lt;/a&gt;值和单位&lt;/h2&gt;&lt;h4 id=&quot;em&quot;&gt;&lt;a href=&quot;#em&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="CSS" scheme="https://23olddog.github.io/categories/CSS/"/>
+    
+    
+    <category term="CSS" scheme="https://23olddog.github.io/tags/CSS/"/>
+    
+  </entry>
   
   <entry>
     <title>初学Git第一天</title>
