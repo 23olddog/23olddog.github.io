@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-04-18T14:54:01.847Z</updated>
+  <updated>2022-04-20T02:48:37.227Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>重学JS第一天</title>
+    <link href="https://23olddog.github.io/2022/04/20/chong-xue-js-di-yi-tian/"/>
+    <id>https://23olddog.github.io/2022/04/20/chong-xue-js-di-yi-tian/</id>
+    <published>2022-04-20T02:47:32.822Z</published>
+    <updated>2022-04-20T02:48:37.227Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;HTML-中的-JavaScript&quot;&gt;&lt;a href=&quot;#HTML-中的-JavaScript&quot; class=&quot;headerlink&quot; title=&quot;HTML 中的 JavaScript&quot;&gt;&lt;/a&gt;HTML 中的 JavaScript&lt;/h1&gt;&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="JS" scheme="https://23olddog.github.io/categories/JS/"/>
+    
+    
+    <category term="JS 基础" scheme="https://23olddog.github.io/tags/JS-%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
   
   <entry>
     <title>重学CSS第一天</title>
