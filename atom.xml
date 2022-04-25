@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-04-20T14:56:58.694Z</updated>
+  <updated>2022-04-25T11:42:21.078Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>重学JS2.0</title>
+    <link href="https://23olddog.github.io/2022/04/25/chong-xue-js-di-er-tian/"/>
+    <id>https://23olddog.github.io/2022/04/25/chong-xue-js-di-er-tian/</id>
+    <published>2022-04-25T11:41:35.116Z</published>
+    <updated>2022-04-25T11:42:21.078Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;对象、类与面向对象编程&quot;&gt;&lt;a href=&quot;#对象、类与面向对象编程&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JS" scheme="https://23olddog.github.io/categories/JS/"/>
+    
+    
+    <category term="JS 基础" scheme="https://23olddog.github.io/tags/JS-%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
   
   <entry>
     <title>重学JS第一天</title>
