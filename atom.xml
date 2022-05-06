@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-04-25T11:42:21.078Z</updated>
+  <updated>2022-05-06T01:06:41.873Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>重学ES6第一天</title>
+    <link href="https://23olddog.github.io/2022/05/06/chong-xue-es61.0/"/>
+    <id>https://23olddog.github.io/2022/05/06/chong-xue-es61.0/</id>
+    <published>2022-05-06T01:04:59.674Z</published>
+    <updated>2022-05-06T01:06:41.873Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;let-和-const&quot;&gt;&lt;a href=&quot;#let-和-const&quot; class=&quot;headerlink&quot; title=&quot;let 和 const&quot;&gt;&lt;/a&gt;let 和 const&lt;/h1&gt;&lt;figure class=&quot;highlight</summary>
+        
+      
+    
+    
+    
+    <category term="ES6" scheme="https://23olddog.github.io/categories/ES6/"/>
+    
+    
+    <category term="ES6" scheme="https://23olddog.github.io/tags/ES6/"/>
+    
+  </entry>
   
   <entry>
     <title>重学JS2.0</title>
