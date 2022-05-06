@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>olddog</title>
+  <title>MZCKCK</title>
   
   
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-05-06T01:06:41.873Z</updated>
+  <updated>2022-05-06T02:00:05.587Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>重学ES6第一天</title>
+    <title>深度学习6.0</title>
     <link href="https://23olddog.github.io/2022/05/06/chong-xue-es61.0/"/>
     <id>https://23olddog.github.io/2022/05/06/chong-xue-es61.0/</id>
     <published>2022-05-06T01:04:59.674Z</published>
-    <updated>2022-05-06T01:06:41.873Z</updated>
+    <updated>2022-05-06T02:00:05.587Z</updated>
     
     
       
@@ -34,19 +34,19 @@
     
     
     
-    <category term="ES6" scheme="https://23olddog.github.io/categories/ES6/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="ES6" scheme="https://23olddog.github.io/tags/ES6/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
-    <title>重学JS2.0</title>
+    <title>后台2.0</title>
     <link href="https://23olddog.github.io/2022/04/25/chong-xue-js-di-er-tian/"/>
     <id>https://23olddog.github.io/2022/04/25/chong-xue-js-di-er-tian/</id>
     <published>2022-04-25T11:41:35.116Z</published>
-    <updated>2022-04-25T11:42:21.078Z</updated>
+    <updated>2022-05-06T02:06:19.647Z</updated>
     
     
       
@@ -59,19 +59,19 @@
     
     
     
-    <category term="JS" scheme="https://23olddog.github.io/categories/JS/"/>
+    <category term="后台" scheme="https://23olddog.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-    <category term="JS 基础" scheme="https://23olddog.github.io/tags/JS-%E5%9F%BA%E7%A1%80/"/>
+    <category term="后台" scheme="https://23olddog.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   
   <entry>
-    <title>重学JS第一天</title>
+    <title>后台3.0</title>
     <link href="https://23olddog.github.io/2022/04/20/chong-xue-js-di-yi-tian/"/>
     <id>https://23olddog.github.io/2022/04/20/chong-xue-js-di-yi-tian/</id>
     <published>2022-04-20T02:47:32.822Z</published>
-    <updated>2022-04-20T14:56:58.694Z</updated>
+    <updated>2022-05-06T02:06:30.611Z</updated>
     
     
       
@@ -84,19 +84,19 @@
     
     
     
-    <category term="JS" scheme="https://23olddog.github.io/categories/JS/"/>
+    <category term="后台" scheme="https://23olddog.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-    <category term="JS 基础" scheme="https://23olddog.github.io/tags/JS-%E5%9F%BA%E7%A1%80/"/>
+    <category term="后台" scheme="https://23olddog.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   
   <entry>
-    <title>重学CSS第一天</title>
+    <title>深度学习5.0</title>
     <link href="https://23olddog.github.io/2022/04/18/chong-xue-css1.0/"/>
     <id>https://23olddog.github.io/2022/04/18/chong-xue-css1.0/</id>
     <published>2022-04-18T13:37:35.265Z</published>
-    <updated>2022-04-18T14:54:01.847Z</updated>
+    <updated>2022-05-06T01:59:59.410Z</updated>
     
     
       
@@ -109,19 +109,19 @@
     
     
     
-    <category term="CSS" scheme="https://23olddog.github.io/categories/CSS/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="CSS" scheme="https://23olddog.github.io/tags/CSS/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
-    <title>初学Git第一天</title>
+    <title>深度学习1.0</title>
     <link href="https://23olddog.github.io/2022/04/15/chu-xue-git-di-yi-tian/"/>
     <id>https://23olddog.github.io/2022/04/15/chu-xue-git-di-yi-tian/</id>
     <published>2022-04-15T15:17:38.222Z</published>
-    <updated>2022-04-15T15:19:12.469Z</updated>
+    <updated>2022-05-06T01:58:00.732Z</updated>
     
     
       
@@ -134,19 +134,19 @@
     
     
     
-    <category term="git" scheme="https://23olddog.github.io/categories/git/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="git 管理工具" scheme="https://23olddog.github.io/tags/git-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
-    <title>重学VueAPI</title>
+    <title>后台1.0</title>
     <link href="https://23olddog.github.io/2022/04/14/vueapi/"/>
     <id>https://23olddog.github.io/2022/04/14/vueapi/</id>
     <published>2022-04-14T02:19:50.254Z</published>
-    <updated>2022-04-15T11:39:58.566Z</updated>
+    <updated>2022-05-06T02:05:57.272Z</updated>
     
     
       
@@ -159,19 +159,19 @@
     
     
     
-    <category term="web前端" scheme="https://23olddog.github.io/categories/web%E5%89%8D%E7%AB%AF/"/>
+    <category term="后台" scheme="https://23olddog.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-    <category term="Vue TS 框架" scheme="https://23olddog.github.io/tags/Vue-TS-%E6%A1%86%E6%9E%B6/"/>
+    <category term="后台" scheme="https://23olddog.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   
   <entry>
-    <title>项目还能这样优化?</title>
+    <title>深度学习3.0</title>
     <link href="https://23olddog.github.io/2022/04/11/xiang-mu-you-hua/"/>
     <id>https://23olddog.github.io/2022/04/11/xiang-mu-you-hua/</id>
     <published>2022-04-11T11:46:08.179Z</published>
-    <updated>2022-04-11T11:47:28.052Z</updated>
+    <updated>2022-05-06T01:59:49.164Z</updated>
     
     
       
@@ -184,19 +184,19 @@
     
     
     
-    <category term="Vue" scheme="https://23olddog.github.io/categories/Vue/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="Vue 优化" scheme="https://23olddog.github.io/tags/Vue-%E4%BC%98%E5%8C%96/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
-    <title>重学Vue第二天</title>
+    <title>后台5.0</title>
     <link href="https://23olddog.github.io/2022/04/10/chong-xue-vue2.0/"/>
     <id>https://23olddog.github.io/2022/04/10/chong-xue-vue2.0/</id>
     <published>2022-04-10T13:56:54.839Z</published>
-    <updated>2022-04-10T13:58:24.401Z</updated>
+    <updated>2022-05-06T02:06:47.799Z</updated>
     
     
       
@@ -209,19 +209,19 @@
     
     
     
-    <category term="Vue" scheme="https://23olddog.github.io/categories/Vue/"/>
+    <category term="后台" scheme="https://23olddog.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-    <category term="Vue TS 框架" scheme="https://23olddog.github.io/tags/Vue-TS-%E6%A1%86%E6%9E%B6/"/>
+    <category term="后台" scheme="https://23olddog.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   
   <entry>
-    <title>你不知道的reactive</title>
+    <title>后台7.0</title>
     <link href="https://23olddog.github.io/2022/04/09/vue-xiang-ying-shi-yuan-li/"/>
     <id>https://23olddog.github.io/2022/04/09/vue-xiang-ying-shi-yuan-li/</id>
     <published>2022-04-09T08:55:08.115Z</published>
-    <updated>2022-04-09T09:20:20.907Z</updated>
+    <updated>2022-05-06T02:07:08.363Z</updated>
     
     
       
@@ -234,19 +234,19 @@
     
     
     
-    <category term="Vue" scheme="https://23olddog.github.io/categories/Vue/"/>
+    <category term="后台" scheme="https://23olddog.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-    <category term="Vue 原理 框架" scheme="https://23olddog.github.io/tags/Vue-%E5%8E%9F%E7%90%86-%E6%A1%86%E6%9E%B6/"/>
+    <category term="后台" scheme="https://23olddog.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   
   <entry>
-    <title>项目优化</title>
+    <title>深度学习4.0</title>
     <link href="https://23olddog.github.io/2022/04/09/xing-neng-you-hua/"/>
     <id>https://23olddog.github.io/2022/04/09/xing-neng-you-hua/</id>
     <published>2022-04-09T08:53:48.757Z</published>
-    <updated>2022-04-09T15:12:50.559Z</updated>
+    <updated>2022-05-06T01:59:53.515Z</updated>
     
     
       
@@ -259,19 +259,19 @@
     
     
     
-    <category term="项目" scheme="https://23olddog.github.io/categories/%E9%A1%B9%E7%9B%AE/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="优化 原理" scheme="https://23olddog.github.io/tags/%E4%BC%98%E5%8C%96-%E5%8E%9F%E7%90%86/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
-    <title>带你剖析设计模式</title>
+    <title>深度学习2.0</title>
     <link href="https://23olddog.github.io/2022/04/09/qian-tan-she-ji-mo-shi/"/>
     <id>https://23olddog.github.io/2022/04/09/qian-tan-she-ji-mo-shi/</id>
     <published>2022-04-09T08:51:41.164Z</published>
-    <updated>2022-04-09T09:18:41.137Z</updated>
+    <updated>2022-05-06T01:59:45.262Z</updated>
     
     
       
@@ -285,19 +285,19 @@
     
     
     
-    <category term="设计模式" scheme="https://23olddog.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="设计模式" scheme="https://23olddog.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="深度学习" scheme="https://23olddog.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
-    <title>Vue的原理实现</title>
+    <title>后台6.0</title>
     <link href="https://23olddog.github.io/2022/04/09/vue-kuang-jia-jie-du-1.0/"/>
     <id>https://23olddog.github.io/2022/04/09/vue-kuang-jia-jie-du-1.0/</id>
     <published>2022-04-09T08:49:01.526Z</published>
-    <updated>2022-04-09T09:19:51.690Z</updated>
+    <updated>2022-05-06T02:06:59.266Z</updated>
     
     
       
@@ -310,19 +310,19 @@
     
     
     
-    <category term="Vue" scheme="https://23olddog.github.io/categories/Vue/"/>
+    <category term="后台" scheme="https://23olddog.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-    <category term="Vue 原理" scheme="https://23olddog.github.io/tags/Vue-%E5%8E%9F%E7%90%86/"/>
+    <category term="后台" scheme="https://23olddog.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   
   <entry>
-    <title>重学Vue第一天</title>
+    <title>后台4.0</title>
     <link href="https://23olddog.github.io/2022/04/09/chong-xue-vue/"/>
     <id>https://23olddog.github.io/2022/04/09/chong-xue-vue/</id>
     <published>2022-04-09T08:45:09.527Z</published>
-    <updated>2022-04-20T02:51:49.899Z</updated>
+    <updated>2022-05-06T02:06:38.115Z</updated>
     
     
       
@@ -335,10 +335,10 @@
     
     
     
-    <category term="web前端" scheme="https://23olddog.github.io/categories/web%E5%89%8D%E7%AB%AF/"/>
+    <category term="后台" scheme="https://23olddog.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-    <category term="Vue TS 框架" scheme="https://23olddog.github.io/tags/Vue-TS-%E6%A1%86%E6%9E%B6/"/>
+    <category term="后台" scheme="https://23olddog.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   
