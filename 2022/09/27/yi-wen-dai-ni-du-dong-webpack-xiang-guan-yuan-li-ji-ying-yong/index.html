@@ -1,0 +1,1808 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="webpack相关原理及使用, 前端 | Android">
+    <meta name="description" content="
+theme: channing-cyan在前端技术发展日新月异的今天，前端工程化已经成了每个前端工作/学习者的必备知识，那说到工程化，不可避免地就会谈到webpack（虽然市面上已经有了很多成熟好用的打包工具，如rollup、vite，但">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+    <style>
+        body{
+            background-image: url(https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.jpg);
+            background-repeat:no-repeat;
+            background-size: 100% 100%;
+            background-attachment:fixed;
+        }
+    </style>
+
+
+    <title>webpack相关原理及使用 | olddog</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="olddog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">olddog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">olddog</div>
+        <div class="logo-desc">
+            
+            nothing but code
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/23olddog" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/23olddog" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">webpack相关原理及使用</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/webpack/">
+                                <span class="chip bg-color">webpack</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="post-category">
+                                前端工程化
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-09-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-09-27
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    8.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    31 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <hr>
+<h2 id="theme-channing-cyan"><a href="#theme-channing-cyan" class="headerlink" title="theme: channing-cyan"></a>theme: channing-cyan</h2><p>在前端技术发展日新月异的今天，前端工程化已经成了每个前端工作/学习者的必备知识，那说到工程化，不可避免地就会谈到webpack（虽然市面上已经有了很多成熟好用的打包工具，如<a target="_blank" rel="noopener" href="https://rollupjs.org/guide/en/">rollup</a>、<a target="_blank" rel="noopener" href="https://vitejs.dev/">vite</a>，但是目前来看<strong>webpack</strong>龙头地位依旧不可撼动）但是我们都知道，<strong>webpack</strong>的内容之多难度之大劝退了很多想要入门的人，但是难归难，又不能不学，至少被问到的时候得能说上几句吧！接下来我就带大家一起来看看<strong>webpack</strong>有哪些常见的知识点/原理/面试题吧！！！</p>
+<p><strong>温馨提示</strong>：本文近<strong>9000</strong>字，建议收藏反复学习！！！</p>
+<p><strong>通过本文，你将学到：</strong></p>
+<ol>
+<li><strong>webpack</strong>的常见知识点以及对应的原理</li>
+<li><strong>webpack</strong>常见面试题</li>
+</ol>
+<p>话不多说，接下来让我们一起进入今天的学习吧！！！</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7aec6d5cb5cd4f71862363fe97d2a7ce~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="1-webpack是啥？有啥作用"><a href="#1-webpack是啥？有啥作用" class="headerlink" title="1.webpack是啥？有啥作用"></a>1.webpack是啥？有啥作用</h2><p>概念：<strong>Webpack</strong> 是一种用于构建 JavaScript 应用程序的静态模块打包器，它能够以一种相对一致且开放的处理方式，加载应用中的所有资源文件（图片、CSS、视频、字体文件等），并将其合并打包成浏览器兼容的 Web 资源文件。</p>
+<p>功能：</p>
+<ul>
+<li>模块的打包：通过打包整合不同的模块文件保证各模块之间的引用和执行</li>
+<li>代码编译：通过丰富的<code>loader</code>可以将不同格式文件如<code>.sass/.vue/.jsx</code>转译为浏览器可以执行的文件</li>
+<li>扩展功能：通过社区丰富的<code>plugin</code>可以实现多种强大的功能，例如<strong>代码分割、代码混淆、代码压缩、按需加载…..等等</strong><h2 id="2-常见的loader及其作用？"><a href="#2-常见的loader及其作用？" class="headerlink" title="2.常见的loader及其作用？"></a>2.常见的loader及其作用？</h2></li>
+<li><code>babel-loader</code>：将es6转译为es5</li>
+</ul>
+<p>-<code> file-loader</code>：可以指定要复制和放置资源文件的位置，以及如何使用版本哈希命名以获得更好的缓存，并在代码中通过<strong>URL</strong>去引用输出的文件</p>
+<p>-<code>url-loader</code>：和<code>file-loader</code>功能相似，但是可以通过指定阈值来根据文件大小使用不同的处理方式（小于阈值则返回base64格式编码并将文件的 <code>data-url</code>内联到<code>bundle</code>中）</p>
+<p>-<code>raw-loader</code>：加载文件原始内容</p>
+<blockquote>
+<p>webpack5自身内置了<code>file-loader/ url-loader/ raw-loader</code>等loader，所以我们不需要再显示引入loader 只需要指定对应的type即可实现相同的功能 如<code>file-loader</code>等价于 <code>type= "asset/resource"'</code>  </p>
+</blockquote>
+<p>-<code>image-webpack-loader</code>： 加载并压缩图片资源</p>
+<p>-<code>awesome-typescirpt-loader</code>: 将typescript转换为javaScript 并且性能由于<code>ts-loader</code></p>
+<p>-<code>sass-loader</code>: 将SCSS/SASS代码转换为CSS</p>
+<p>-<code>css-loader</code>: 加载CSS代码 支持模块化、压缩、文件导入等功能特性</p>
+<p>-<code>style-loader</code>: 把CSS代码注入到js中，通过<code>DOM</code> 操作去加载CSS代码</p>
+<blockquote>
+<p>当我们使用类似于 <code>less</code> 或者 <code>scss</code> 等预处理器的时候，通常需要多个 <strong>loader</strong> 的配合使用如<code>test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] </code></p>
+</blockquote>
+<p>-<code>source-map-loader</code>: 加载额外的<code>Source Map</code>文件 </p>
+<p>-<code>eslint-loader</code>: 通过ESlint 检查js代码</p>
+<p>-<code>cache-loader</code>: 可以在一些开销较大的<code>Loader</code>之前添加可以将结果缓存到磁盘中，提高构建的效率</p>
+<p>-<code>thread-loader</code>: 多线程打包，加快打包速度</p>
+<p>以上便是常用的loader以及作用，对loader感兴趣的小伙伴之后可以自行了解</p>
+<h2 id="3-常见的plugin及作用"><a href="#3-常见的plugin及作用" class="headerlink" title="3.常见的plugin及作用"></a>3.常见的plugin及作用</h2><p>-<code>define-plugin</code>: 定义环境变量（webpack4之后可以通过指定<code>mode：production/development</code>实现同样效果）</p>
+<p>-<code>web-webpack-plugin</code>：为单页面应用输出HTML 性能优于<code>html-webpack-plugin</code></p>
+<p>-<code>clean-webpack-plugin</code>: 每次打包时删除上次打包的产物, 保证打包目录下的文件都是最新的</p>
+<p>-<code>webpack-merge</code>： 用来合并公共配置文件,常用（例如分别配置<code>webpack.common.config.js/ webpack.dev.config.js/webpack.production.config.js</code>并将其合并）</p>
+<p>-<code>ignore-plugin</code>: 忽略指定的文件，可以加快构建速度</p>
+<p>-<code>terser-webpack-plugin</code>：压缩ES6的代码（tree-shaking）</p>
+<p>-<code>uglifyjs-webpack-plugin</code>: 压缩js代码</p>
+<p>-<code>mini-css-extract-plugin</code>: 将CSS提取为独立文件，支持按需加载</p>
+<p>-<code>css-minimize-webpack-plugin</code>：压缩CSS代码</p>
+<blockquote>
+<p>css文件的压缩需要<code>mini-css-extract-plugin</code>和<code>css-minimize-webpack-plugin </code>的配合使用 即先使用<code>mini-css-extract-plugin</code>将css代码抽离成单独文件，之后使用<code> css-minimize-webpack-plugin</code>对css代码进行压缩</p>
+</blockquote>
+<p>-<code>serviceworker-webpack-plugin</code>: 为离线应用增加离线缓存功能</p>
+<p>-<code>ModuleconcatenationPlugin</code>: 开启<code>Scope Hositing</code> 用于合并提升作用域， 减小代码体积</p>
+<p>-<code>copy-webpack-plugin</code>： 在构建的时候，复制静态资源到打包目录。</p>
+<p>-<code>compression-webpack-plugin</code>: 生产环境采用<code>gzip</code>压缩JS和CSS</p>
+<p>-<code>ParalleUglifyPlugin</code>： 多进程并行压缩js</p>
+<p>-<code>webpack-bundle-analyzer</code>: 可视化webpack输出文件大小的根据</p>
+<p>-<code>speed-measure-webpack-plugin</code>: 用于分析各个loader和plugin的耗时，可用于性能分析</p>
+<p>-<code>webpack-dashboard</code>: 可以更友好地展示打包相关信息</p>
+<p>以上便是常见的插件及其作用，接下来讲解我自己使用过的觉得好用的插件/工具</p>
+<h2 id="4-有没有用过好用的工具-plugin"><a href="#4-有没有用过好用的工具-plugin" class="headerlink" title="4.有没有用过好用的工具/plugin"></a>4.有没有用过好用的工具/plugin</h2><p>-<code>splitChunkPlugin</code>：用于代码分割</p>
+<p>-<code>webpack-merge</code>: 提取公共配置，用于分别编写不同环境的配置文件（ `` ）</p>
+<p>-<code>HotModuleReplacementPlugin</code>:支持模块热替换</p>
+<p>-<code>ignore-plugin</code>: 忽略指定文件，可以加快构建速度</p>
+<p>-<code>clean-webpack-plugin</code>: 每次打包时删除上次打包的产物， 保证打包目录下的文件都是最新的</p>
+<p>-<code>speed-measure-webpack-plugin</code>: 分析出Webpack打包过程中的Loader和Plugin的耗时，用于性能分析</p>
+<p>-<code>mini-css-extract-plugin</code>: 将CSS代码抽离为独立文件，支持按需加载， 配合 <code>css-minimize-webpack-plugin</code>使用</p>
+<p>-<code>terser-webpack-plugin</code>: 实现更精细的代码压缩功能</p>
+<p>-<code>SourceMapDevtoolPlugin</code>:精细度配置<code>SourceMap</code>， 不能和<code>devtool</code>选项同时使用</p>
+<p>-<code>UnusedWebpackPlugin</code>: 反向查找项目中没被用到的文件，日常工作经常用到，可在重构或者性能分析时使用</p>
+<p>-<code>webpack-dashboard</code>: <a href="https://link.juejin.cn/?target=https://www.npmjs.com/package/webpack-dashboard" title="https://www.npmjs.com/package/webpack-dashboard">webpack-dashboard</a>&nbsp;是一个命令行可视化工具，能够在编译过程中实时展示编译进度、模块分布、产物信息等相关信息，性能分析时很有用。</p>
+<p>-<code> Webpack Analysis</code>：<a href="https://link.juejin.cn/?target=https://webpack.github.io/analyse/" title="https://webpack.github.io/analyse/">Webpack Analysis</a>&nbsp;是 webpack 官方提供的可视化分析工具。</p>
+<p>-<code>BundleAnalyzerPlugin</code>：性能分析插件，可以在运行后查看是否包含重复模块/不必要模块等</p>
+<p>以上便是我日常学习中经常用到的一些工具/插件，有用过其他好用的工具/插件的同学欢迎在评论区推荐讨论！</p>
+<h2 id="5-loader和plugin有啥区别？"><a href="#5-loader和plugin有啥区别？" class="headerlink" title="5.loader和plugin有啥区别？"></a>5.loader和plugin有啥区别？</h2><h4 id="Loader："><a href="#Loader：" class="headerlink" title="Loader："></a>Loader：</h4><p>Loader本质上是一个函数，负责代码的转译，即对接收到的内容进行转换后将转换后的结果返回<br>配置Loader通过在<code> modules.rules</code>中以数组的形式配置</p>
+<h4 id="Plugin："><a href="#Plugin：" class="headerlink" title="Plugin："></a>Plugin：</h4><p>Plugin本质上是一个带有<code>apply(compiler)</code>的函数，基于<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/tapable">tapable</a>这个事件流框架来监听<strong>webpack</strong>构建/打包过程中发布的hooks来通过自定义的逻辑和功能来改变输出结果。<br>Plugin通过<code>plugins</code> 以数组的形式配置</p>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p><strong>Loader</strong>主要负责将代码转译为<strong>webpack</strong> 可以处理的JavaScript代码，而 <strong>Plugin</strong> 更多的是负责通过接入<strong>webpack</strong> 构建过程来影响构建过程以及产物的输出，<strong>Loader</strong>的职责相对比较<strong>单一</strong>简单，而<strong>Plugin</strong>更为丰富多样</p>
+<h2 id="6-如何保证众多Loader按照想要的顺序执行？"><a href="#6-如何保证众多Loader按照想要的顺序执行？" class="headerlink" title="6.如何保证众多Loader按照想要的顺序执行？"></a>6.如何保证众多Loader按照想要的顺序执行？</h2><p>可以通过<code>enforce</code>来强制控制Loader的执行顺序 （<code>pre</code> 表示在所有正常的loader执行之前执行，<code>post</code>则表示在之后执行）</p>
+<blockquote>
+<p>Loader的执行有以下两个阶段：</p>
+<ol>
+<li> <strong>Pitching</strong>&nbsp;阶段: loader 上的 pitch 方法，按照&nbsp;<code>后置(post)、行内(inline)、普通(normal)、前置(pre)</code>&nbsp;的顺序调用。更多详细信息，请查看&nbsp;<a target="_blank" rel="noopener" href="https://webpack.docschina.org/api/loaders/#pitching-loader">Pitching Loader</a>。</li>
+<li> <strong>Normal</strong>&nbsp;阶段: loader 上的 常规方法，按照&nbsp;<code>前置(pre)、普通(normal)、行内(inline)、后置(post)</code>&nbsp;的顺序调用。模块源码的转换， 发生在这个阶段。</li>
+</ol>
+</blockquote>
+<h2 id="7-如何编写Loader"><a href="#7-如何编写Loader" class="headerlink" title="7.如何编写Loader"></a>7.如何编写Loader</h2><p>这也是面试官喜欢问的问题，而我们大部分人别说写了，可能连用都没咋用过，所以问这个问题更多是为了了解你对loader这方面的知识掌握程度，毕竟只有当你足够了解loader的知识，你才有自己编写loader的可能，那接下来我们就按照从loader的特性来分析如何编写loader这个思路来讲解</p>
+<ul>
+<li><p>loader支持链式调用，上一个loader的执行结果会作为下一个loader的入参。</p>
+<ul>
+<li>根据这个特性，我们知道我们的<strong>loader</strong>想要有返回值，并且这个返回值必须是标准的JavaScript字符串或者<code>AST</code>代码结构，这样才能保证下一个<strong>loader</strong>的正常调用。</li>
+</ul>
+</li>
+<li><p>loader的主要职责就是将代码转译为<strong>webpack</strong>可以理解的js代码。</p>
+<ul>
+<li>根据这个特性，loader内部一般需要通过<code>return / this.callback</code>来返回转换后的结果</li>
+</ul>
+</li>
+<li><p>单个loader一把只负责单一的功能。</p>
+<ul>
+<li>根据这个特性，我们的loader应该符合<strong>单一职责</strong>的原则，尽量别让单个loader执行太多职责</li>
+</ul>
+</li>
+<li><p>善于利用开发工具</p>
+<ul>
+<li><strong>loader-utils</strong>： <a href="https://link.juejin.cn/?target=https://github.com/webpack/loader-utils" title="https://github.com/webpack/loader-utils">loader-utils</a>&nbsp;是一个非常重要的 Loader 开发辅助工具，为开发中提供了诸如读取配置、<code>requestString</code>的序列化和反序列化、<code>getOptions/getCurrentRequest/parseQuery</code>等核心接口….等等功能，对于loader的开发十分有用</li>
+<li><strong>schema–utils</strong>：<a href="https://link.juejin.cn/?target=https://www.npmjs.com/package/schema-utils" title="https://www.npmjs.com/package/schema-utils">schema-utils</a>是用于校验用户传入loader的参数配置的校验工具，也是在开发中十分有用</li>
+</ul>
+</li>
+<li><p>loader是无状态的</p>
+<ul>
+<li>根据此特性，我们不应该在loader保存状态</li>
+</ul>
+</li>
+<li><p>webpack默认缓存loader的执行结果</p>
+<ul>
+<li><strong>webpack</strong>会默认<strong>缓存</strong>loader的执行结果直到资源/所依赖的资源发生变化 如果想要loader不缓存 可以通过<code>this.cacheble</code> 显式声明不做缓存</li>
+</ul>
+</li>
+<li><p>Loader接收三个参数</p>
+<ul>
+<li><code>source</code>： 资源输入 对于第一个执行的loader为资源文件的内容 后续执行的loader则为前一个loader的执行结果 也可能是字符串 或者是代码的<code>AST</code>结构</li>
+<li><code>sourceMap</code>： 可选参数 代码的<code>sourcemap</code>结构</li>
+<li><code>data</code>： 可选参数 其他需要在<code>Loader</code>链中传递的信息</li>
+</ul>
+</li>
+<li><p>正确上报loader的异常信息</p>
+<ul>
+<li>一般尽量使用<code>logger.error</code> 减少对用户的干扰</li>
+<li>对于需要明确警示用户的错误 优先使用 <code>this.emitError</code></li>
+<li>对于已经严重到不能继续往下编译的错误 使用 <code>callback</code></li>
+</ul>
+</li>
+<li><p>loader函数中的<code>this </code>由webpack提供 并且指向了<code>loader-runtime</code>的<code>loaderContext </code>对象</p>
+<ul>
+<li>可以通过<code>this</code>来获取loader需要的各种信息 <strong>Loader Context</strong>提供了许多实用的接口，我们不仅可以通过这些接口获取需要的信息，还可以通过这些接口改变webpack的运行状态（相当于产生 <strong>Side Effect</strong>）</li>
+</ul>
+</li>
+<li><p>loader由<code>pitch</code>和<code>normal</code>两个阶段</p>
+<ul>
+<li>根据此特性，我们可以在<code>pitch</code>阶段预处理一些操作</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p> webpack会按照 <code>use</code> 定义的顺序从前往后执行<code>Pitch</code> Loader 从后往前执行<code>Normal</code> <code>Loader</code> 我们可以将一些预处理的逻辑放在<code>Pitch</code>中</p>
+</blockquote>
+<ul>
+<li>正确处理日志 使用 <code>Loader Context``的getLogger接口（支持verbose/log/info/warn/error</code> 五种级别的日志 用户可以通过<a href="https://link.juejin.cn/?target=https://webpack.js.org/configuration/other-options/%23level">infrastructureLogging.level</a> 配置项筛选不同日志内容 ）</li>
+<li>充分调试你编写的<strong>loader</strong><ul>
+<li>创建出<strong>webpack</strong>实例 并运行<strong>laoder</strong></li>
+<li>获取<strong>loader</strong>执行结果 对比、分析判断是否符合预期</li>
+<li>判断执行过程中是否出错</li>
+</ul>
+</li>
+</ul>
+<p>以上便是开发loader需要的知识以及常规步骤，相信答出这些内容后，面试官变不会再为难你了！说完如何开发<strong>loader</strong>，接下来就趁热打铁讲解一下如何开发<strong>plugin</strong></p>
+<h2 id="8-如何编写Plugin"><a href="#8-如何编写Plugin" class="headerlink" title="8.如何编写Plugin"></a>8.如何编写Plugin</h2><p>上面我们已经讲完了如何编写<strong>loader</strong>，接下来我们还是按照分析plugin特性来讲解如何开发plugin，一起来看看吧！由于plugin比loader复杂不少，这里我们需要一些前置知识来作为支撑！</p>
+<p>我们都知道<strong>Plugin</strong>是通过监听webpack构建过程中发布的hooks来实施对应的操作从而影响更改构建逻辑以及生成的产物，而在这个过程中<code>compiler</code>和<code>compilation</code>可以说是最核心的两个对象了，其中<code>compiler</code>可以暴露了整个构建流程的200+个<code>hooks</code>，而<code>compilation</code>则暴露了更细粒度的<code>hooks</code>。</p>
+<p><code>compiler</code>对象是一个全局单例，代表了webpack从开启到关闭的整个生命周期，负责启动编译和监听文件，而<code>compilation</code>是每次构建过程的上下文对象，包含当次构建所需要的信息</p>
+<blockquote>
+<p>每次热更新和重新编译都会创建一个新的<code>compilation</code>对象，<code>compilation</code>对象只代表当次编译</p>
+</blockquote>
+<p>我们都知道插件是通过监听webpack构建过程中发布的<code>hooks</code>从而在特定阶段去执行特定功能来达到改变构建逻辑以及产物的目的，而这些都离不开<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/tapable">tapable</a> （一个专门用于处理各种发布订阅的库 有同步异步、熔断、循环、瀑布流等钩子），关于了解<strong>tapable</strong>的使用，这里推荐这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903895584473096#comment">Webpack tapable 使用研究 - 掘金 (juejin.cn)</a>。<br>讲完plugin的前置知识，接下来就让我们正式开始学习如何开发插件</p>
+<ul>
+<li><p>插件是通过监听webpack发布的hooks来工作的</p>
+<ul>
+<li>根据这个特性，我们的plugin一定是一个函数或者一个包含<code>apply（） </code>的对象，这样才可以监听<code>compiler </code>对象</li>
+</ul>
+</li>
+<li><p>传递给插件的<code>compiler </code> 和<code>compilation</code> 都是同一个引用</p>
+<ul>
+<li>根据此特性，我们知道我们的插件是会影响到其他插件的，所以我们在编写插件的时候应该分析会对其他插件造成啥影响</li>
+</ul>
+</li>
+<li><p>基于<strong>tapable</strong>来完成对<code>hooks</code>的复杂的订阅以及响应</p>
+<ul>
+<li>编译过程的特定节点会分发特定钩子，插件可以通过这些钩子来执行对应的操作</li>
+<li>通过 <strong>tapable</strong>的回调机制以参数形式传递上下文信息</li>
+<li>可以通过上下文的众多接口来影响构建流程</li>
+</ul>
+</li>
+<li><p>监听一些具有特定意义的<code>hook</code>来影响构建</p>
+<ul>
+<li> <code>compiler.hooks.compilation</code>:<strong>webpack</strong>刚启动完并创建<code>compilation</code>对象后触发</li>
+<li><code>compiler.hooks.make</code>:<strong>webpack</strong>开始构建时触发</li>
+<li><code>compiler.hooks.done</code>:<strong>webpack</strong> 完成编译时触发，此时可以通过<code>stats</code>对象得知编译过程中的各种信息</li>
+</ul>
+</li>
+<li><p>善于使用开发工具</p>
+<ul>
+<li>使用<code>schema-utils</code>用于校验参数（关于<code>schema-utils</code>的使用方法读者可以自行查阅）</li>
+</ul>
+</li>
+<li><p>正确处理插件日志信息以及插件信息</p>
+<ul>
+<li>使用 <code>stats</code>汇总插件的统计数据</li>
+<li>使用 <code>ProgressPlugin</code>插件的 <code>reportProgress</code>接口上报执行进度</li>
+<li>通过 <code>compilation.getLogger</code>获取分级日志管理器</li>
+<li>使用 <code>compilation.errors/warining</code>处理异常信息（<strong>eslint-webpack-plugin</strong>的做法）</li>
+</ul>
+</li>
+<li><p>测试插件</p>
+<ul>
+<li>通过分析<code>compilation.error/warn</code> 数组来判断webpack是否运行成功</li>
+<li>分析构建产物判断插件功能是否符合预期</li>
+</ul>
+</li>
+</ul>
+<p>以上便是如何编写plugin所需的知识和常规流程，建议可以阅读一些插件例如<code>eslint-webpack-plugin / DefinePlugin </code>等插件的源码来更深入地学习插件开发的知识和流程</p>
+<h2 id="9-什么是文件指纹？文件指纹有什么作用？怎么用？"><a href="#9-什么是文件指纹？文件指纹有什么作用？怎么用？" class="headerlink" title="9.什么是文件指纹？文件指纹有什么作用？怎么用？"></a>9.什么是文件指纹？文件指纹有什么作用？怎么用？</h2><p>概念：文件指纹是指文件打包后的一连串后缀</p>
+<p>作用：</p>
+<ul>
+<li>  <strong>版本管理：</strong> &nbsp;在发布版本时，通过文件指纹来区分 修改的文件 和 未修改的文件。</li>
+<li>  <strong>使用缓存：</strong> &nbsp;浏览器通过文件指纹是否改变来决定使用缓存文件还是请求新文件。</li>
+</ul>
+<p>种类：</p>
+<ul>
+<li><code>Hash</code>：和整个项目的构建相关，只要项目有修改（<code>compilation</code>实例改变），<code>Hash</code>就会更新</li>
+<li><code> Contenthash</code>：和文件的内容有关，只有内容发生改变时才会修改</li>
+<li><code> Chunkhash</code>：和<strong>webpack</strong>构架的chunk有关 不同的<strong>entry</strong>会构建出不同的<strong>chunk</strong> （不同 <code>ChunkHash</code>之间的变化互不影响）</li>
+</ul>
+<p>如何使用：</p>
+<ul>
+<li>JS文件：使用<code>Chunkhash </code></li>
+<li>CSS文件：使用<code>Contenthash </code></li>
+<li>图片等静态资源： 使用<code>hash </code></li>
+</ul>
+<blockquote>
+<p>生产环境的<strong>output</strong>为了区分版本变动，通过<code>Contenthash</code>来达到清理缓存及时更新的效果，而开发环境中为了加快构建效率，一般不引入<code>Contenthash </code></p>
+</blockquote>
+<h2 id="10-Babel的原理"><a href="#10-Babel的原理" class="headerlink" title="10.Babel的原理"></a>10.Babel的原理</h2><p><strong>babel</strong> 可以将代码转译为想要的目标代码，并且对目标环境不支持的<strong>api</strong> 自动<code> polyfill</code>。而<strong>babel</strong>实现这些功能的流程是<code> 解析（parse）-转换（transfrom）-生产（generator）</code>，接下来我们就看看每个流程都做了啥工作</p>
+<ul>
+<li><code>解析</code>：根据代码生成对应的<code>AST</code>结构<ul>
+<li>进行代码分析，将代码分割成<strong>token</strong>流（语法单元数组），再根据<strong>token</strong>流生成对应的<code>AST</code></li>
+</ul>
+</li>
+<li><code> 转换</code>：遍历<code>AST</code>节点并生成新的<code>AST</code>节点</li>
+<li><code>生成</code>：根据新的<code>AST</code>生成目标代码</li>
+</ul>
+<h2 id="11-文件监听的原理"><a href="#11-文件监听的原理" class="headerlink" title="11.文件监听的原理"></a>11.文件监听的原理</h2><p>开启文件监听后，webpack会轮询访问文件的最后修改时间，当发现文件修改时间发生变化后，会先缓存起来等到<code>aggregateTimeout</code>再统一执行</p>
+<p>开启文件监听方式：可以在构建时带上<code>--watch</code> 参数或者设置<code>watch：true</code>，而<code>watchOptions</code>则可以对监听的细节进行定制</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">watch</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="attr">watchOptions</span>: {</span><br><span class="line">    <span class="comment">//不监听的文件或者文件夹 忽略一些大型的不经常变化的文件可以提高构建速度</span></span><br><span class="line">    <span class="attr">ignored</span>: <span class="regexp">/node_modules/</span>,</span><br><span class="line">    <span class="comment">//监听到变化会等多少时间再执行</span></span><br><span class="line">    <span class="attr">aggregateTimeout</span>: <span class="number">300</span>,</span><br><span class="line">    <span class="comment">//判断文件是否发生变化是通过不断轮询指定文件有没有变化实现的</span></span><br><span class="line">    <span class="attr">poll</span>: <span class="number">1000</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="12-什么是Source-map？如何使用"><a href="#12-什么是Source-map？如何使用" class="headerlink" title="12.什么是Source map？如何使用"></a>12.什么是Source map？如何使用</h2><p><strong>source map</strong>是将编译打包后的代码映射回源码<br>可以通过<strong>devtool</strong>配置项来设置，还可以通过<a target="_blank" rel="noopener" href="https://webpack.docschina.org/plugins/source-map-dev-tool-plugin"><code>SourceMapDevToolPlugin</code></a>实现更加精细粒度的控制</p>
+<blockquote>
+<p><strong>devtool</strong>配置项和 <a target="_blank" rel="noopener" href="https://webpack.docschina.org/plugins/source-map-dev-tool-plugin"><code>SourceMapDevToolPlugin</code></a>不能同时使用，因为<strong>devtool</strong>选项已经内置了这些插件，如果同时使用相当于应用了两次插件</p>
+</blockquote>
+<p>devtool                                    | performance                              | production | quality        | comment                                                                               |<br>| —————————————— | —————————————- | ———- | ————– | ————————————————————————————- |<br>| (none)                                     | <strong>build</strong>: fastest  <strong>rebuild</strong>: fastest | yes        | bundle         | Recommended choice for production builds with maximum performance.                    |<br>| <strong><code>eval</code></strong>                                 | <strong>build</strong>: fast  <strong>rebuild</strong>: fastest    | no         | generated      | Recommended choice for development builds with maximum performance.                   |<br>| <code>eval-cheap-source-map</code>                    | <strong>build</strong>: ok  <strong>rebuild</strong>: fast         | no         | transformed    | Tradeoff choice for development builds.                                               |<br>| <code>eval-cheap-module-source-map</code>             | <strong>build</strong>: slow  <strong>rebuild</strong>: fast       | no         | original lines | Tradeoff choice for development builds.                                               |<br>| <strong><code>eval-source-map</code></strong>                      | <strong>build</strong>: slowest  <strong>rebuild</strong>: ok      | no         | original       | Recommended choice for development builds with high quality SourceMaps.               |<br>| <code>cheap-source-map</code>                         | <strong>build</strong>: ok  <strong>rebuild</strong>: slow         | no         | transformed    |                                                                                       |<br>| <code>cheap-module-source-map</code>                  | <strong>build</strong>: slow  <strong>rebuild</strong>: slow       | no         | original lines |                                                                                       |<br>| <strong><code>source-map</code></strong>                           | <strong>build</strong>: slowest  <strong>rebuild</strong>: slowest | yes        | original       | Recommended choice for production builds with high quality SourceMaps.                |<br>| <code>inline-cheap-source-map</code>                  | <strong>build</strong>: ok  <strong>rebuild</strong>: slow         | no         | transformed    |                                                                                       |<br>| <code>inline-cheap-module-source-map</code>           | <strong>build</strong>: slow  <strong>rebuild</strong>: slow       | no         | original lines |                                                                                       |<br>| <code>inline-source-map</code>                        | <strong>build</strong>: slowest  <strong>rebuild</strong>: slowest | no         | original       | Possible choice when publishing a single file                                         |<br>| <code>eval-nosources-cheap-source-map</code>          | <strong>build</strong>: ok  <strong>rebuild</strong>: fast         | no         | transformed    | source code not included                                                              |<br>| <code>eval-nosources-cheap-module-source-map</code>   | <strong>build</strong>: slow  <strong>rebuild</strong>: fast       | no         | original lines | source code not included                                                              |<br>| <code>eval-nosources-source-map</code>                | <strong>build</strong>: slowest  <strong>rebuild</strong>: ok      | no         | original       | source code not included                                                              |<br>| <code>inline-nosources-cheap-source-map</code>        | <strong>build</strong>: ok  <strong>rebuild</strong>: slow         | no         | transformed    | source code not included                                                              |<br>| <code>inline-nosources-cheap-module-source-map</code> | <strong>build</strong>: slow  <strong>rebuild</strong>: slow       | no         | original lines | source code not included                                                              |<br>| <code>inline-nosources-source-map</code>              | <strong>build</strong>: slowest  <strong>rebuild</strong>: slowest | no         | original       | source code not included                                                              |<br>| <code>nosources-cheap-source-map</code>               | <strong>build</strong>: ok  <strong>rebuild</strong>: slow         | no         | transformed    | source code not included                                                              |<br>| <code>nosources-cheap-module-source-map</code>        | <strong>build</strong>: slow  <strong>rebuild</strong>: slow       | no         | original lines | source code not included                                                              |<br>| <code>nosources-source-map</code>                     | <strong>build</strong>: slowest  <strong>rebuild</strong>: slowest | yes        | original       | source code not included                                                              |<br>| <code>hidden-nosources-cheap-source-map</code>        | <strong>build</strong>: ok  <strong>rebuild</strong>: slow         | no         | transformed    | no reference, source code not included                                                |<br>| <code>hidden-nosources-cheap-module-source-map</code> | <strong>build</strong>: slow  <strong>rebuild</strong>: slow       | no         | original lines | no reference, source code not included                                                |<br>| <code>hidden-nosources-source-map</code>              | <strong>build</strong>: slowest  <strong>rebuild</strong>: slowest | yes        | original       | no reference, source code not included                                                |<br>| <code>hidden-cheap-source-map</code>                  | <strong>build</strong>: ok  <strong>rebuild</strong>: slow         | no         | transformed    | no reference                                                                          |<br>| <code>hidden-cheap-module-source-map</code>           | <strong>build</strong>: slow  <strong>rebuild</strong>: slow       | no         | original lines | no reference                                                                          |<br>| <code>hidden-source-map</code>                        | <strong>build</strong>: slowest  <strong>rebuild</strong>: slowest | yes        | original       | no reference. Possible choice when using SourceMap only for error reporting purposes.</p>
+<p>这么多的选择，那么我们应该如何使用呢，根据我的实践，我觉得比较好的设置应该是下面这样</p>
+<ul>
+<li>开发环境：<code>cheap-eval-source-map</code>，生产这种<code>source map</code>速度最快，并且由于开发环境下没有代码压缩，所以不会影响断点调试</li>
+<li>生产环境：<code>hidden-source-map</code>，由于进行了代码压缩，所以并不会占用多大的体积</li>
+</ul>
+<blockquote>
+<p>避免在生产中使用 <code>inline-</code> 和 <code>eval-</code> 因为它们会增加 <strong>bundle</strong> 体积大小 并且降低整体性能</p>
+</blockquote>
+<h2 id="13-HMR（热更新）的原理"><a href="#13-HMR（热更新）的原理" class="headerlink" title="13.HMR（热更新）的原理"></a>13.HMR（热更新）的原理</h2><p>这个可以说是<strong>webpack</strong>的最高频考点之一了，同时也是<strong>webpack</strong>的难点，也是<strong>webpack</strong>的核心功能之一！接下来我将带大家先学习如何使用<strong>HMR</strong>再逐步分析<strong>HMR</strong>的原理。</p>
+<p><strong>如何开启HMR</strong>：<br>通过设置<code>devServer: {hot: true}</code> 开启 开启后便可以在发生改变后局部刷新改变的部分</p>
+<p><strong>原理：</strong></p>
+<ul>
+<li>  使用 <code>webpack-dev-server（WDS）</code> 托管静态资源 同时以<code>Runtime</code>方式注入<strong>HMR</strong>客户端代码</li>
+<li>  浏览器加载页面后 与<strong>WDS</strong>建立<code>WebSocket</code>连接</li>
+<li>  webpack监听到文件变化后 增量构建发生变更的模块 并通过<strong>WebSocket</strong>发送<code>hash</code>事件</li>
+<li>  浏览器接收到 <code>hash</code>事件后 请求 <code>manifest</code>资源文件 确认增量变更范围</li>
+<li>  浏览器加载发生变更的增量模块</li>
+<li>  <strong>webpack</strong>运行时触发变更模块的<code>module.hot.accept</code>回调 执行代码变更逻辑</li>
+<li>  <code>done</code>：构建完成，更新变化</li>
+</ul>
+<p><strong>总结</strong>就是<strong>webpack</strong>将静态资源托管在 <strong>WDS</strong> 上，而 <strong>WDS</strong> 又和浏览器通过<code> webSocket</code> 建立联系，而当<strong>webpack</strong>监听到文件变化时，就会向浏览器推送更新并携带新的<code>hash </code>与之前的<code>hash</code>进行对比，浏览器接收到<code>hash</code>事件后变化加载变更的增量模块并触发变更模块的 <code>module.hot.accept</code>回调执行变更逻辑。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/18e213aa683f4d06bff8bbe5974270ea~tplv-k3u1fbpfcp-zoom-1.image" alt="img"><br>（图片来自与范文杰大佬的<a target="_blank" rel="noopener" href="https://juejin.cn/post/7021729340945596424">Webpack 原理系列十：HMR 原理全解析 - 掘金 (juejin.cn)</a>，这篇写的很不错，对HMR感兴趣的小伙伴推荐阅读）</p>
+<h2 id="14-Tree-shaking的原理"><a href="#14-Tree-shaking的原理" class="headerlink" title="14.Tree shaking的原理"></a>14.Tree shaking的原理</h2><p>相信大家对于<strong>Tree shaking</strong>都不陌生吧，那你知道如何使用<strong>Tree shaking</strong>吗？你知道<strong>Tree shaking</strong>的原理吗？接下来就让我们一一学习</p>
+<h4 id="什么是-Tree-shaking？"><a href="#什么是-Tree-shaking？" class="headerlink" title="什么是 Tree shaking？"></a>什么是 Tree shaking？</h4><p><strong>Tree-Shaking</strong> 是一种基于 ES Module 规范的 <strong>Dead Code Elimination</strong> 技术，它会在运行过程中静态分析模块之间的导入导出，确定 ESM 模块中哪些导出值未曾其它模块使用，并将其删除，以此实现打包产物的优化。</p>
+<h4 id="使用-Tree-shaking"><a href="#使用-Tree-shaking" class="headerlink" title="使用 Tree shaking"></a>使用 Tree shaking</h4><p>使用 Tree shaking的三个必要条件</p>
+<ul>
+<li><p>  使用ESM规范编写模块代码</p>
+</li>
+<li><p>  配置 <code>optimization.usedExports</code>为 <code>true</code> 启动标记功能</p>
+</li>
+<li><p>启动代码优化功能 可以通过如下方法实现</p>
+<ul>
+<li>  配置 <code>mode = production</code></li>
+<li>  配置 <code>optimization.minimize = true</code></li>
+<li>  提供 <code>optimization.minimizer</code>数组</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>对于使用了<code>babel-loader</code> loader或者根据对代码进行转译的时候，注意应该关闭对于<strong>导入/导出</strong>语句的转译，因为这会影响到后续的 <strong>tree shaking</strong> 比如应该将<code> babel-loader</code> 的 <code>babel-preset-env</code>的<code>modules</code>配置为<code>false</code></p>
+</blockquote>
+<h4 id="必要条件："><a href="#必要条件：" class="headerlink" title="必要条件："></a>必要条件：</h4><p>所有导入导出语句只能在模块顶层 且导入导出的模块名必须为字符串常量 不能动态导入的（ESM模块之间的依赖关系是高度确定的 与运行状态无关 编译工具只需要对ESM模块做静态分析就可以从代码字面量中推断出哪些模块值没被使用）</p>
+<h4 id="Tree-shaking的原理"><a href="#Tree-shaking的原理" class="headerlink" title="Tree shaking的原理"></a>Tree shaking的原理</h4><p>Tree shaking的工作流程可以分为</p>
+<p>1.<strong>标记</strong>哪些导出值没有被使用； 2. 使用<strong>Terser</strong>将这些没用到的导出语句删除</p>
+<p><strong>标记</strong>的流程如下：</p>
+<ol>
+<li><strong>make</strong>阶段：收集模块导出变量并记录到模块依赖关系图中</li>
+<li><strong>seal</strong>阶段：遍历模块依赖关系图并标记那些导出变量有没有被使用</li>
+<li><strong>构建</strong>阶段：利用<strong>Terser</strong>将没有被用到的导出语句删除</li>
+</ol>
+<h4 id="开发中如何利用Tree-shaking？"><a href="#开发中如何利用Tree-shaking？" class="headerlink" title="开发中如何利用Tree shaking？"></a>开发中如何利用Tree shaking？</h4><ul>
+<li>避免无作用的重复赋值</li>
+<li>使用<code> #pure</code>标记函数无副作用（这种做法在开源项目的源码中经常出现，如<strong>pinia、reactive….等</strong>）</li>
+<li>禁止转译 <strong>导入/导出</strong>语句（使用了<code>babel-loader</code>需要将 <code>babel-preset-env</code>的<code>modules</code>配置为<code>false</code> ）</li>
+<li>使用支持 <strong>Tree shaking</strong>的包</li>
+<li>优化导出值的粒度</li>
+</ul>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正确做法</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="string">'a'</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="string">'b'</span>;</span><br><span class="line"><span class="keyword">export</span> {</span><br><span class="line">a,</span><br><span class="line">b</span><br><span class="line">}</span><br><span class="line"><span class="comment">//错误做法</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> {</span><br><span class="line"><span class="attr">a</span>: <span class="string">'a'</span>,</span><br><span class="line"><span class="attr">b</span>: <span class="string">'b'</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>关于tree shaking的原理，这里同样推荐范文杰大佬写的<a target="_blank" rel="noopener" href="https://juejin.cn/post/7019104818568364069">原理系列九：Tree-Shaking 实现原理</a></p>
+<h2 id="15-如何用webpack来优化项目的性能"><a href="#15-如何用webpack来优化项目的性能" class="headerlink" title="15.如何用webpack来优化项目的性能"></a>15.如何用webpack来优化项目的性能</h2><p>说到优化，我们应该想到可以分为<strong>开发环境</strong>和<strong>生产环境</strong>的不同优化。</p>
+<ul>
+<li><strong>开发</strong>环境：开发环境我们需要的是更快的构建速度、模块热替换、更加友好的<strong>Source map</strong><ul>
+<li>通过<code>cache： { type: 'systemfile'} </code> 开启缓存构建可以加快二次构建的效率</li>
+<li>通过模块热替换可以做到局部更新变化，提高开发效率</li>
+<li>根据设置 <code>devtool： cheap-eval-source-map</code> 在保证构建效率的同时又能进行代码调试</li>
+<li>使用<a href="https://link.juejin.cn/?target=https://webpack.js.org/loaders/thread-loader/" title="https://webpack.js.org/loaders/thread-loader/">Thread-loader</a>以多进程的方式运行资源加载逻辑</li>
+<li>通过 <strong>stats</strong> 来分析性能做优化</li>
+</ul>
+</li>
+<li><strong>生产</strong>环境：生产环境我们需要的是更小的体积，更稳定又快的性能<ul>
+<li>压缩代码：使用<code>UglifyJsPlugin</code>和<code>ParallelUglifyPlugin</code>来压缩代码 利用<code>cssnano(css-loader? minimize)</code>来压缩css</li>
+<li>利用<strong>CDN</strong>：可以使用<strong>CDN</strong>来加快对静态资源的访问，提高用户的使用体验</li>
+<li><code>Tree Shaking</code>: 删除没用到的代码</li>
+<li>提取公共第三方库： 使用<code>SplitChunksPlugin</code>插件来进行公共模块抽取</li>
+<li>使用<a href="https://link.juejin.cn/?target=https://www.npmjs.com/package/terser-webpack-plugin%23terseroptions" title="https://www.npmjs.com/package/terser-webpack-plugin#terseroptions">TerserWebpackPlugin</a>多进程执行代码压缩、uglify 功能</li>
+</ul>
+</li>
+</ul>
+<h2 id="16-webpack构建流程是什么？"><a href="#16-webpack构建流程是什么？" class="headerlink" title="16.webpack构建流程是什么？"></a>16.webpack构建流程是什么？</h2><p>相信经过上面的那么多讲解，大家对于webpack应该有一个不错的认识，接下来就让我们化零为整，从整体来看看webpack整个构建流程究竟发生了什么？话不多说，赶紧开始！</p>
+<h4 id="构建流程"><a href="#构建流程" class="headerlink" title="构建流程"></a>构建流程</h4><ul>
+<li>  <strong>初始化参数</strong>： 从配置文件和<code>Shell</code>语句中读取与合并并计算出最终的参数</li>
+<li>  <strong>开始编译</strong>： 用上一步得到的初始化参数初始化<code>Complier</code>对象，加载所有配置的插件，执行<code>compiler</code>对象的<code>run</code>方法开始编译流程</li>
+<li>  <strong>确定入口</strong>： 根据<code>entry</code>找出入口文件</li>
+<li>  <strong>编译模块</strong>：从入口文件开始，根据配置的 <code>loader</code> 对模块进行转译，如果该模块还有依赖的模块，则<strong>递归</strong>对这些模块进行翻译，通过递归上述操作直到对所有模块都进行转译</li>
+<li>  <strong>完成模块编译</strong>： 在经过<code>Loader</code>翻译完所有模块后，得到了每个模块转译后的内容以及模块之间的依赖关系图（<strong>ModuleGraph</strong>）</li>
+<li>  <strong>输出资源</strong>： 根据入口和模块之间的依赖关系 生成一个个包含多个模块的<code>Chunk</code>， 再把每个<code>Chunk</code>转换成一个单独的文件加入到输出列表中</li>
+<li>  <strong>输出完成</strong>： 根据输出项的配置，将文件内容写到文件系统</li>
+</ul>
+<h4 id="流程简化："><a href="#流程简化：" class="headerlink" title="流程简化："></a>流程简化：</h4><p>  <strong>初始化阶段</strong>： 合并计算配置参数，创建<code>Compiler</code>、<code>Compilation</code>等基础对象，并初始化<strong>Plugin</strong>，并最终根据<code>entry</code>配置，找到所有入口模块</p>
+<p> <strong>构建模块</strong>： 从<code>entry</code>开始，调用<code>loader</code>转译对应的模块，调用 <code>Acorn</code>将代码转换为<code>AST</code>结构， 遍历<code>AST</code>从中 构建出完整的模块依赖关系图（递归操作）</p>
+<p>  <strong>生成阶段</strong>： 根据<code>entry</code>配置，根据模块生成一个个<code>chunk</code>对象，之后转译<code>Chunk</code>代码并封装为<code>Asset</code>， 最后写出到文件系统</p>
+<blockquote>
+<p>  单次构建过程<strong>自上而下</strong>按顺序执行 如果启动了<code>watch</code> 则构建完成后不会退出webpack进程 而是持续监听文件内容 发生变化时回到构建阶段重新执行构建</p>
+</blockquote>
+<h4 id="从资源转换角度看"><a href="#从资源转换角度看" class="headerlink" title="从资源转换角度看"></a>从资源转换角度看</h4><ul>
+<li><p><code>compiler.make</code>阶段</p>
+<ul>
+<li>  <code>entry</code> 文件以 <code>dependence</code> 对象形式加入 <code>compilation</code> 的依赖列表 ，<code>dependence</code> 对象记录了 <code>entry</code> 的相关信息</li>
+<li>  根据 <code>dependency</code> 创建 对应的<code>module</code> 对象，之后读入 <code>module</code> 对应的文件内容， 调用 <code>loader-runner</code>对内容做转化， 转化结果若有对其他依赖则继续读入依赖资源， 重复此过程直到所有的依赖均被转换为 <code>module</code></li>
+</ul>
+</li>
+<li><p><code>compilation.seal</code> 阶段</p>
+<ul>
+<li>  遍历 <code>module</code> 集合， 根据 <code>entry</code>配置以及引入资源的方式， 将 <code>module</code> 分配到不同的 <code>Chunk</code></li>
+<li>  <code>Chunk</code>之间最终形成<code>ChunkGraph</code>结构</li>
+<li>  遍历<code>ChunkGraph</code> 调用 <code>compilation.emitAssets</code> 方法标记 <code>chunk</code> 的输出规则， 及转换为 <code>assets</code>集合</li>
+</ul>
+</li>
+<li><p><code>compiler.emitAssets</code>阶段</p>
+<ul>
+<li>  将 <code>assets</code>写入文件系统</li>
+</ul>
+</li>
+</ul>
+<h4 id="总结：-1"><a href="#总结：-1" class="headerlink" title="总结："></a>总结：</h4><p>以上便是<strong>webpack</strong>整个构建流程的学习，虽然一眼看过去很多也很复杂，但是相信经过重复学习，我们一定可以熟练掌握的，这是我们深入学习<strong>webpack</strong>的必经之路</p>
+<h2 id="17-你知道哪些优化webpack构建的手段或者知识？"><a href="#17-你知道哪些优化webpack构建的手段或者知识？" class="headerlink" title="17.你知道哪些优化webpack构建的手段或者知识？"></a>17.你知道哪些优化webpack构建的手段或者知识？</h2><p>梳理完<strong>webpack</strong>的整体构建流程后，接下来让我们看看日常工作中如何优化<strong>webpack</strong>的配置来提高我们的性能！！！</p>
+<ul>
+<li><p>使用高版本的 <strong>webpack</strong> 和<strong>node</strong></p>
+</li>
+<li><p>多进程构建：使用<strong>thread-loader</strong>（<strong>HappyPack</strong>不维护了，这里不推荐）</p>
+</li>
+<li><p>使用<strong>Tree shaking</strong> 删除多余模块导出</p>
+<ul>
+<li>配置&nbsp;<code>optimization.usedExports</code>为&nbsp;<code>true</code>&nbsp;启动标记功能</li>
+<li>启动代码优化功能 可以通过如下方法实现<ul>
+<li>配置&nbsp;<code>mode = production</code></li>
+<li>配置&nbsp;<code>optimization.minimize = true</code></li>
+<li>提供&nbsp;<code>optimization.minimizer</code>数组</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>使用<strong>Scope Hoisting</strong>合并模块</p>
+<ul>
+<li> <strong>Scope Hoisting</strong>用于&nbsp;<strong>将符合条件的多个模块合并到同一个函数空间</strong>&nbsp;中，从而减少产物体积，优化性能。</li>
+<li>开启方法：<ul>
+<li><code> mode = 'production'</code>开启生产模式</li>
+<li>使用 <code>optimization.concatenateModules</code>配置项</li>
+<li>使用&nbsp;<code>ModuleConcatenationPlugin</code>&nbsp;插件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>开启模块热替换</p>
+<ul>
+<li>可以通过<code> devServer：{hot：true}</code>或者 使用 <code>HotModuleReplacementPlugin</code>开启模块热替换</li>
+<li>忽略部分很少变化的大文件如<strong>node_modules</strong>提高构建效率</li>
+</ul>
+</li>
+<li><p>监控产物体积</p>
+<ul>
+<li>监控产物体积可以帮助我们分析项目的性能，避免项目体积过大带来的资源消耗</li>
+<li>通过 <strong>performance</strong> 配置项来自定义各种阈值或参数</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>业内认为一般情况下应该保证关键路径的资源体积始终小于 <strong>170kb</strong>，如果超过这个大小，可能就需要考虑优化来减小体积</p>
+</blockquote>
+<ul>
+<li><p>缩小文件的搜索范围</p>
+<ul>
+<li><p>优化loader配置：可以通过<code>test/ include / exclude</code>来指定文件的loader命中的文件范围，可以通过指定<code>include</code>来使 loader只处理那些需要被处理的模块</p>
+</li>
+<li><p>优化 <code>resolves.modules</code> 配置:用于指定<strong>webpack</strong>去哪些路径下寻找第三方模块</p>
+<ul>
+<li>例如当所有第三方模块都放在 <strong>node_modules</strong>时 可以配置<code>resolve: {modules: path.resolve(__dirname, 'node_modules')} </code></li>
+</ul>
+</li>
+<li><p>优化resolve.mainFilelds配置：用于配置第三方模块使用哪个入口文件<br>  -为了减少搜索范围，可以使用<code>resolve: {mainFields: ['main']}</code></p>
+<p>  -如果想优先使用ESModule版本的话，设置<code>resolve: {mainFields: ['jsnext:main', 'main']}         </code></p>
+</li>
+<li><p>配置<code>resolve.alias</code>:<code>resolve.alias</code>通过别名将原导入路径映射成一个新的导入路径</p>
+</li>
+<li><p>配置<code>resolve.extensions </code>: 引入文件时省略数组内的后缀名</p>
+</li>
+<li><p>配置<code>resolve.noParse </code>: 省略对指定文件的处理，如（<strong>JQuery</strong>等大型库）可以提高构建性能（被忽略的文件不能包含导入语句如<code>require / import / define</code>）</p>
+</li>
+</ul>
+</li>
+<li><p>设置环境</p>
+<ul>
+<li>设置<code>mode: production/development </code>可以开启对应的优化</li>
+</ul>
+</li>
+<li><p>代码压缩</p>
+<ul>
+<li>使用 <code>terser-webpack-plugin</code>压缩ES6代码</li>
+<li>使用<code>ParalleUglifyPlugin</code>多进程压缩代码</li>
+<li>使用<code> css-minimize-webpack-plugin</code>对css代码进行压缩</li>
+<li>使用<code>html-minimizer-webpack-plugin </code>压缩html代码</li>
+</ul>
+</li>
+<li><p>使用<strong>CDN</strong>加速</p>
+<ul>
+<li>将静态资源存储在 <strong>CDN</strong>上可以加快对静态资源的访问速度，减少流量消耗<ul>
+<li> 通过<code>output.publicPath</code>设置JavaScript文件地址</li>
+<li>  通过<code>WebPlugin.stylePublicPath</code>设置CSS文件的地址</li>
+<li>  通过<code>css-loader.publicPath</code>设置被CSS导入的资源的地址</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>为不同的环境配置对应的配置文件</p>
+<ul>
+<li>使用<code>webpack-merge </code> 分别书写<strong>development/ production / test</strong>环境下的配置文件</li>
+</ul>
+</li>
+<li><p>使用缓存构建</p>
+<ul>
+<li>配置<code>cache: {type: 'systemfile'} </code>开启构建缓存，可以大幅提高二次构建的速度</li>
+</ul>
+</li>
+<li><p> 使用DllPlugin：使用<strong>DllPlugin</strong>进行分包，使用 <code>DllReferencePlugin</code>引用<code>mainfext.json </code>, 通过将一些很少变动的代码先打包成静态资源，避免重复编译来提高构建性能</p>
+</li>
+<li><p>提取公共代码</p>
+<ul>
+<li>使用<code>splitChunkPlugin </code> 提取公共代码，减少代码体积 （webpack3通过<code>CommonsChunkPlugin</code>）</li>
+</ul>
+</li>
+<li><p>动态Polyfill：使用<code>polyfill-service</code>只返回给用户需要的<strong>polyfill</strong></p>
+</li>
+<li><p>使用可视化工具来分析性能</p>
+<ul>
+<li>使用<strong>UnusedWebpackPlugin</strong>分析未被使用到的文件</li>
+<li>使用<strong>Webpack Dashboard</strong> 以命令行的形式输出编译过程的各种信息</li>
+<li>使用<strong>Webpack Bundle Analyzer</strong>分析重复的模块或者没被用到的模块</li>
+<li>使用<code> --json=stats,json</code>将构建过程中的信息都输出到指定文件</li>
+<li>使用<a href="https://link.juejin.cn/?target=https://webpack.github.io/analyse/" title="https://webpack.github.io/analyse/">Webpack Analysis</a>：官方提供的可视化分析工具</li>
+</ul>
+</li>
+</ul>
+<p>以上便是我们开发中可以使用的用来优化webpack的配置和手段，已经可以满足大部分情况了，如果评论区有同学有其他好的建议，可以在评论区分享讨论！</p>
+<h1 id="总结：-2"><a href="#总结：-2" class="headerlink" title="总结："></a>总结：</h1><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/55fbb2d4134b49a1b996a268aa6b234b~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<p>好了，不知不觉已经写了接近9000个字了，笔者近期学习<strong>webpack</strong>，写这篇的目的也是为了复习和牢固自己的知识，同时帮助有需要的同学，<strong>webpack</strong>的学习是一个漫长困难的过程，希望我们可以坚持下来，文章中若有出现错误，请各位在评论区指出一起学习讨论，笔者后续将更新其他关于<strong>webpack</strong>和<strong>vite</strong>的文章，感兴趣的同学可以点个关注一起学习！！！</p>
+<p><strong>ps</strong>：创作不易，请点赞支持哈哈哈！！！</p>
+<p><strong>引用文章/ 资源</strong>：</p>
+<p><a target="_blank" rel="noopener" href="http://webpack.wuhaolin.cn/">深入浅出webpack</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/book/7115598540721618944">webpack5核心原理与应用实践</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">olddog</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://23olddog.github.io/2022/09/27/yi-wen-dai-ni-du-dong-webpack-xiang-guan-yuan-li-ji-ying-yong/">https://23olddog.github.io/2022/09/27/yi-wen-dai-ni-du-dong-webpack-xiang-guan-yuan-li-ji-ying-yong/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">olddog</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/webpack/">
+                                    <span class="chip bg-color">webpack</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/09/27/tan-tan-qian-duan-chang-jian-xing-neng-you-hua-fang-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="前端常见性能优化方式及手段">
+                        
+                        <span class="card-title">前端常见性能优化方式及手段</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-category">
+                                    性能优化
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+                        <span class="chip bg-color">性能优化</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/27/qian-duan-she-ji-mo-shi-zhi-fa-bu-ding-yue-zhe-mo-shi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="前端设计模式之发布-订阅模式">
+                        
+                        <span class="card-title">前端设计模式之发布-订阅模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    前端基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: olddog<br />'
+            + '文章作者: olddog<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <a href="/about" target="_blank">olddog</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">95.4k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/23olddog" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:3056085618@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3056085618" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3056085618" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

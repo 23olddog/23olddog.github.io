@@ -1,0 +1,1472 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="一文带你读懂this、作用域和原型链, 前端 | Android">
+    <meta name="description" content="变量提升的原理：JavaScript的执行顺序变量提升：JavaScript代码执行过程中 JavaScript引擎把变量的声明部分和函数的声明部分提升到代码开头的行为 （变量提升后以undefined设为默认值）
+123456789101">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    
+    <style>
+        body{
+            background-image: url(https://cdn.jsdelivr.net/gh/Tokisaki-Galaxy/res/site/medias/background.jpg);
+            background-repeat:no-repeat;
+            background-size: 100% 100%;
+            background-attachment:fixed;
+        }
+    </style>
+
+
+    <title>一文带你读懂this、作用域和原型链 | olddog</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.2">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="olddog" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">olddog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">olddog</div>
+        <div class="logo-desc">
+            
+            nothing but code
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/23olddog" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/23olddog" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">一文带你读懂this、作用域和原型链</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/">
+                                <span class="chip bg-color">浏览器原理</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-category">
+                                浏览器
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-09-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-09-27
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    15 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="变量提升的原理：JavaScript的执行顺序"><a href="#变量提升的原理：JavaScript的执行顺序" class="headerlink" title="变量提升的原理：JavaScript的执行顺序"></a>变量提升的原理：JavaScript的执行顺序</h2><p>变量提升：<code>JavaScript</code>代码执行过程中 <strong>JavaScript引擎</strong>把<strong>变量</strong>的声明部分和<strong>函数</strong>的声明部分提升到代码开头的行为 （变量提升后以<code>undefined</code>设为默认值）</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">callName</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">callName</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'callName Done!'</span>);</span><br><span class="line">}</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(personName);</span><br><span class="line"><span class="keyword">var</span> personName = <span class="string">'james'</span>;</span><br><span class="line"><span class="comment">//变量提升后 类似以下代码</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">callName</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'callName Done!'</span>);</span><br><span class="line">};</span><br><span class="line"><span class="keyword">var</span> personName = <span class="literal">undefined</span>;</span><br><span class="line"><span class="title function_">callName</span>();<span class="comment">//callName已声明 所以正常输出calName Done!</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(personName);<span class="comment">//undefined</span></span><br><span class="line">personName = <span class="string">'james'</span>;</span><br><span class="line"><span class="comment">//代码所作改变：</span></span><br><span class="line"><span class="number">1.</span>将声明的变量和函数移到了代码顶部</span><br><span class="line"><span class="number">2.</span>去除变量的<span class="keyword">var</span> 声明</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>JavaScript代码的执行流程：</strong>有些人认为 变量提升就是将声明部分提升到了最前面的位置 其实这种说法是错的 <strong>因为变量和函数声明在代码中的位置是不会变的 之所以会变量提升是因为在编译阶段被JavaScript引擎放入内存中</strong>（换句话来说 js代码在执行前会先被JavaScript引擎<strong>编译</strong>   然后才会进入<strong>执行</strong>阶段）流程大致如下图</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4dfcd86ca68d4b3abb12e5b8cac36ff8~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517150046749"></p>
+<p>那么编译阶段究竟是如何做到变量提升的呢 接下来我们一起来看看 我们还是以上面的那段代码作为例子</p>
+<h5 id="第一部分：变量提升部分的代码"><a href="#第一部分：变量提升部分的代码" class="headerlink" title="第一部分：变量提升部分的代码"></a>第一部分：变量提升部分的代码</h5><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">callName</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'callName Done!'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="keyword">var</span> personName = <span class="literal">undefined</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="第二部分：代码执行部分"><a href="#第二部分：代码执行部分" class="headerlink" title="第二部分：代码执行部分"></a>第二部分：代码执行部分</h5><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">callName</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(personName);</span><br><span class="line">personName = <span class="string">'james'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>执行图如下</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/23c1d27f19e74543949aa485ff0000bf~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517151048844"></p>
+<p>可以看到 结果编译后 会在生成<strong>执行上下文</strong>和<strong>可执行代码</strong>两部分内容</p>
+<p>执行上下文：JavaScript代码执行时的运行环境（比如调用一个函数 就会进入这个函数的执行上下文 确定函数执行期间的<code>this</code>、<strong>变量</strong>、<strong>对象</strong>等）在<strong>执行上下文</strong>中包含着<strong>变量环境</strong>（Viriable Environment）以及<strong>词法环境</strong>（Lexicol Environment） 变量环境保存着变量提升的内容 例如上面的<code>myName</code> 以及<code>callName</code></p>
+<p>那既然变量环境保存着这些变量提升 那变量环境对象时怎么生成的呢 我们还是用上面的代码来举例子</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">callName</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">callName</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'callName Done!'</span>);</span><br><span class="line">}</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(personName);</span><br><span class="line"><span class="keyword">var</span> personName = <span class="string">'james'</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>第一、三行不是变量声明 JavaScript引擎不做任何处理</li>
+<li>第二行 发现了function定义的函数 将函数定义储存在堆中 并在变量环境中创建一个<code>callName</code>的属性 然后将该属性指向<strong>堆</strong>中函数的位置</li>
+<li>第四行 发现<code>var</code>定义 于是在变量环境中创建一个<code>personName</code>的属性 并使用<code>undefined</code>初始化</li>
+</ul>
+<p>经过上面的步骤后 变量环境对象就生成了 现在已经有了执行上下文和可执行代码了 接下来就是代码执行阶段了</p>
+<h3 id="代码执行阶段"><a href="#代码执行阶段" class="headerlink" title="代码执行阶段"></a>代码执行阶段</h3><p>总所周知 js执行代码是按照顺序一行一行从上往下执行的 接下来还是使用上面的例子来分析</p>
+<ul>
+<li>执行到<code>callName()</code>是 JavaScript引擎便在变量环境中寻找该函数 由于变量环境中存在该函数的引用 于是引擎变开始执行该函数 并输出<code>"callName Done!"</code></li>
+<li>接下来执行到<code>console.log(personName)</code>; 引擎在变量环境中找到<code>personName</code>变量 但是这时候它的值是<code>undefined</code> 于是输出<code>undefined</code></li>
+<li>接下来执行到了<code>var personName = 'james'</code>这一行 在变量环境中找到<code>personName</code> 并将其值改成<code>james</code></li>
+</ul>
+<p>以上便是一段代码的编译和执行流程了 相信看到这里你对JavaScript引擎是如何执行代码的应该有了更深的了解</p>
+<p><strong>Q</strong>：如果代码中出现了相同的变量或者函数怎么办？</p>
+<p><strong>A</strong>：首先是编译阶段 如果遇到同名变量或者函数 在变量环境中后面的同名变量或者函数会将之前的覆盖掉 所以最后只会剩下一个定义</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">func</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'我是第一个定义的'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="title function_">func</span>();</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">func</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'我是将你覆盖掉的'</span>)</span><br><span class="line">}</span><br><span class="line"><span class="title function_">func</span>();</span><br><span class="line"><span class="comment">//输出两次"我是将你覆盖掉的"</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="调用栈：栈溢出的原理"><a href="#调用栈：栈溢出的原理" class="headerlink" title="调用栈：栈溢出的原理"></a>调用栈：栈溢出的原理</h2><p>你在日常开发中有没有遇到过这样的报错</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9c69b9c0c05942ba9999a99c8fe5a635~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517152840833"></p>
+<p>根据报错我们可以知道是出现了栈溢出的问题 那什么是栈溢出呢？为什么会栈溢出呢？</p>
+<p><strong>Q1</strong>：什么是栈呢？</p>
+<p><strong>A1</strong>：一种后进先出的数据结构队列</p>
+<p><strong>Q2</strong>：什么是调用栈？</p>
+<p><strong>A2</strong>：代码中通常会有很多函数 也有函数中调用另一个函数的情况 调用栈就是用来管理调用关系的一种数据结构</p>
+<p>当我们在函数中调用另一个函数（如调用自身的递归）然后处理不当的话 就很容易产生栈溢出 比如下面这段代码</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">stackOverflow</span>(<span class="params">n</span>) {</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="title function_">stackOverflow</span>(n - <span class="number">2</span>);</span><br><span class="line">}</span><br><span class="line"><span class="title function_">stackOverflow</span>(<span class="number">10000</span>);<span class="comment">//栈溢出</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>既然知道了什么是调用栈和栈溢出 那代码执行过程中调用栈又是如何工作的呢？我们用下面这个例子来举例</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> personName = <span class="string">'james'</span>;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">findName</span>(<span class="params">name, address</span>) {</span><br><span class="line">	<span class="keyword">return</span> name + address;</span><br><span class="line">}</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">findOneDetail</span> (name, adress) {</span><br><span class="line">	<span class="keyword">var</span> tel = <span class="string">'110'</span>;</span><br><span class="line">	detail = <span class="title function_">findName</span>(name, address);</span><br><span class="line">	<span class="keyword">return</span> personName + detail + tel</span><br><span class="line">};</span><br><span class="line"><span class="title function_">findOneDetail</span>(<span class="string">'james'</span>, <span class="string">'Lakers'</span>)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以看到 我们在<code>findOneDetail</code>中调用了<code>findName</code>函数 那么调用栈是怎么变化的</p>
+<p><strong>第一步</strong>：创建全局上下文 并将其压入栈底</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/246d36298c0c4bf98c0b181ca5099b3a~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517154455415"></p>
+<p>接下来开始执行<code>personName = 'james'</code>的操作 将变量环境中的<code>personName</code>设置为<code>james</code> </p>
+<p><strong>第二步</strong>：执行<code>findOneDetail</code>函数 这个时候<code>JavaScript</code>会为其创建一个执行上下文 最后将其函数的执行上下文压入栈中 </p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7a3981e2d84841cb9181d1bfbec6da9d~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517155137696"></p>
+<p>接下来执行完<code>tel = ‘110'</code>后 将变量环境中的<code>tel</code>设置为<code>110</code></p>
+<p><strong>第三步</strong>：当执行<code>detail = findName（）</code>时 会为<code>findName</code>创建执行上下文并压入栈中</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8a015be5b8de4073ac991a63308ba125~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517155425992"></p>
+<p>接下来执行完<code>findName</code>函数后 将其执行上下文弹出调用栈 接下来再弹出<code>findOneDetail</code>的执行上下文以及全局执行上下文 至此整个<code>JavaScript</code>的执行流程结束</p>
+<p><strong>所以调用栈是JavaScript引擎追踪函数执行的一个机制 当一次有多个函数被调用时 通过调用栈就能追踪到哪个函数正在被执行以及各函数之间的调用关系</strong></p>
+<h3 id="如何利用调用栈"><a href="#如何利用调用栈" class="headerlink" title="如何利用调用栈"></a>如何利用调用栈</h3><h4 id="1-使用浏览器查看调用栈的信息"><a href="#1-使用浏览器查看调用栈的信息" class="headerlink" title="1.使用浏览器查看调用栈的信息"></a>1.使用浏览器查看调用栈的信息</h4><p>点击source并打上断点刷新后就可以再Call Stack查到调用栈的信息（也可以通过代码中输入<code>console.track()</code>查看）</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/94d5cf96bc0c4442824f1795edf7f026~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517155835891"></p>
+<h4 id="2-小心栈溢出"><a href="#2-小心栈溢出" class="headerlink" title="2.小心栈溢出"></a>2.小心栈溢出</h4><p>当我们在写递归的时候 很容易发生栈溢出 可以通过<strong>尾调用优化</strong>来避免栈溢出</p>
+<h2 id="块级作用域：var、let以及const"><a href="#块级作用域：var、let以及const" class="headerlink" title="块级作用域：var、let以及const"></a>块级作用域：var、let以及const</h2><h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p><strong>作用域是指在程序中定义变量的区域，该位置决定了变量的生命周期。通俗地理解，作用域就是变量与函数的可访问范围，即作用域控制着变量和函数的可见性和生命周期</strong></p>
+<p>我们都知道 使用var会产生变量提升 而变量提升会引发很多问题 比如变量覆盖 本应被销毁的变量依旧存在等等问题 而ES6引入了let 和const两种声明方式 让js有了块级作用域 那let和const时如何实现块级作用域的呢 其实很简单 原来还是从理解执行上下文开始</p>
+<p>我们都知道 JavaScript引擎在编译阶段 会将使用var定义的变量以及function定义的函数声明在对应的执行上下文中的变量环境中创建对应的属性 当时我们发现执行上下文中还有一个词法环境对象没有用到 其实 词法环境对象便是关键之处 我们还是通过举例子来说明一下</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>){</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> b = <span class="number">2</span></span><br><span class="line">    {</span><br><span class="line">      <span class="keyword">let</span> b = <span class="number">3</span></span><br><span class="line">      <span class="keyword">var</span> c = <span class="number">4</span></span><br><span class="line">      <span class="keyword">let</span> d = <span class="number">5</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(a)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(b)</span><br><span class="line">    }</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(b) </span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(c)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(d)</span><br><span class="line">}   </span><br><span class="line"><span class="title function_">foo</span>()</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li><strong>第一步：执行并创建上下文</strong></li>
+</ul>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7767853e8e834b4595359ddf04d16a7a~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517161310897"></p>
+<ul>
+<li>函数内部通过var声明的变量  在编译阶段全都被存放到变量环境里面了</li>
+<li>通过let声明的变量  在编译阶段会被存放到词法环境（Lexical Environment）中</li>
+<li>在函数的作用域内部  通过let声明的变量并没有被存放到词法环境中</li>
+<li>接下来  第二步继续执行代码  当执行到代码块里面时  变量环境中a的值已经被设置成了1  词法环境中b的值已经被设置成了2</li>
+</ul>
+<p>这时候函数的执行上下文就如下图所示：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1a3dd940ab3c4fe681eccb9ad2140e27~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517161335971"></p>
+<p>可以看到 当进入函数的作用域块是 作用域块中通过let声明的变量 会被放到词法环境中的一个单独的区域中 这个区域并不邮箱作用域块外面的变量 （比如声明了<code>b = undefined </code>但是不影响外面的<code>b = 2</code>）</p>
+<p>其实 在词法作用域内部 维护了一个小型的栈结构 栈底是函数最外层的变量 进入一个作用域块后 便会将过海作用域内部耳朵变量压到栈顶 当作用域执行完之后 就会弹出（通过<code>let</code>和<code>const</code>声明的变量）</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1899d826927b4199ae65156b312ff6ad~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517161748842"></p>
+<p>当作用域块执行完之后 其内部定义的变量就会从词法作用域的栈顶弹出</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cb41ac6510b44ce0bf3bbd422b2a3065~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517161843353"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>块级作用域就是通过词法环境的栈结构来实现的 而变量提升是通过变量环境来实现 通过这两者的结合 JavaScript引擎也就同时支持了变量提升和块级作用域了。</strong></p>
+<h2 id="作用域链和闭包"><a href="#作用域链和闭包" class="headerlink" title="作用域链和闭包"></a>作用域链和闭包</h2><p>在开始作用域链和闭包的学习之前 我们先来看下这部分代码</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">callName</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(personName);</span><br><span class="line">}</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">findName</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="keyword">var</span> personName = <span class="string">'james'</span>;</span><br><span class="line">	<span class="title function_">callName</span>();</span><br><span class="line">}</span><br><span class="line"><span class="keyword">var</span> personName = <span class="string">'curry'</span>;</span><br><span class="line"><span class="title function_">findName</span>();<span class="comment">//curry</span></span><br><span class="line"><span class="comment">//你是否以为输出james 猜想callName不是在findName中调用的吗 那findName中已经定义了personName = 'james' 那为什么是输出外面的curry呢 这其实是和作用域链有关的</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>在每个执行上下文的变量环境中 都包含了一个外部引用 用来执行外部的执行上下文 称之为outer</strong></p>
+<p>当代码使用一个变量时 会先从当前执行上下文中寻找该变量 如果找不到 就会向outer指向的执行上下文查找</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/085a8dc8679745c3aef4729030746536~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517163149167"></p>
+<p>可以看到<code>callName</code>和<code>findName</code>的outer都是指向全局上下文的 所以当在<code>callName</code>中找不到<code>personName</code>的时候 会去全局找 而不是调用<code>callName</code>的<code>findName</code>中找 所以输出的是<code>curry</code>而不是<code>james</code></p>
+<p><strong>作用域链是由词法作用域决定的</strong></p>
+<blockquote>
+<p>词法作用域就是指作用域是由代码中函数声明的位置来决定的 所以词法作用域是静态的作用域 通过它就能够预测代码在执行过程中如何查找表示符</p>
+</blockquote>
+<p><strong>所以词法作用域是代码阶段就决定好的 和函数怎么调用的没有关系</strong></p>
+<h3 id="块级作用域中的变量查找"><a href="#块级作用域中的变量查找" class="headerlink" title="块级作用域中的变量查找"></a>块级作用域中的变量查找</h3><p>我们来看下下面这个例子</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bar</span>(<span class="params"></span>) {</span><br><span class="line">    <span class="keyword">var</span> myName = <span class="string">" 极客世界 "</span></span><br><span class="line">    <span class="keyword">let</span> test1 = <span class="number">100</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">1</span>) {</span><br><span class="line">        <span class="keyword">let</span> myName = <span class="string">"Chrome 浏览器 "</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(test)</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) {</span><br><span class="line">    <span class="keyword">var</span> myName = <span class="string">" 极客邦 "</span></span><br><span class="line">    <span class="keyword">let</span> test = <span class="number">2</span></span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">let</span> test = <span class="number">3</span></span><br><span class="line">        <span class="title function_">bar</span>()</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">var</span> myName = <span class="string">" 极客时间 "</span></span><br><span class="line"><span class="keyword">let</span> myAge = <span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> test = <span class="number">1</span></span><br><span class="line"><span class="title function_">foo</span>()</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我们知道 如果是<code>let</code>或者<code>const</code>定义的 就会储存在词法环境中 所以寻找也是从该执行上下文的词法环境找 如果找不到 就去变量环境 还是找不到则去outer指向的执行上下文寻找 如下图</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0e16d18de8274687ae2a0f846810b129~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517163831591"></p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p> JavaScript 中 根据词法作用域的规则 内部函数总是可以访问其外部函数中声明的变量 当通过调用一个外部函数返回一个内部函数后 即使该外部函数已经执行结束了 但是内部函数引用外部函数的变量依然保存在内存中 我们就把这些变量的集合称为闭包</p>
+<p>举个例子</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) {</span><br><span class="line">    <span class="keyword">var</span> myName = <span class="string">" 极客时间 "</span></span><br><span class="line">    <span class="keyword">let</span> test1 = <span class="number">1</span></span><br><span class="line">    <span class="keyword">const</span> test2 = <span class="number">2</span></span><br><span class="line">    <span class="keyword">var</span> innerBar = {</span><br><span class="line">        <span class="attr">getName</span>:<span class="keyword">function</span>(<span class="params"></span>){</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(test1)</span><br><span class="line">            <span class="keyword">return</span> myName</span><br><span class="line">        },</span><br><span class="line">        <span class="attr">setName</span>:<span class="keyword">function</span>(<span class="params">newName</span>){</span><br><span class="line">            myName = newName</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> innerBar</span><br><span class="line">}</span><br><span class="line"><span class="keyword">var</span> bar = <span class="title function_">foo</span>()</span><br><span class="line">bar.<span class="title function_">setName</span>(<span class="string">" 极客邦 "</span>)</span><br><span class="line">bar.<span class="title function_">getName</span>()</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(bar.<span class="title function_">getName</span>())</span><br></pre></td></tr></tbody></table></figure>
+
+<p>首先我们看看当执行到 <code>foo </code>函数内部的<code>return innerBar</code>这行代码时调用栈的情况 你可以参考下图：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c2783d4751c24f68a5acee2d84b15b40~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517164204469"></p>
+<p>从上面的代码可以看出 <code>innerBar</code> 是一个对象 包含了 <code>getName</code> 和<code>setName</code>的两个方法 这两个方法都是内部定义的 且都引用了函数内部的变量</p>
+<p>根据词法作用域的规则<code> getName</code>和<code>setName</code>总是可以访问到外部函数<code>foo</code>中的变量 所以当<code>foo</code>执行结束时 <code>getName</code>和<code>setName</code>依然可以以后使用变量<code>myName</code>和<code>test</code> 如下图所示</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/748119073d1643a0912112583978ed15~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517164450416"></p>
+<p>可以看出 虽然<code>foo</code>从栈顶弹出 但是变量依然存在内存中 这个时候 除了<code>setName</code>和<code>getName</code> 其他任何地方都不能访问到这两个变量 所以形成了闭包</p>
+<p>那如何使用这些闭包呢 可以通过bar来使用 当调用了<code>bar.seyName</code>时 如下图</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/54070dc6a2714ef2b6e3ff15b326cf24~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220517164641086"></p>
+<p>可以使用chrome的Clourse查看闭包情况</p>
+<h3 id="闭包怎么回收"><a href="#闭包怎么回收" class="headerlink" title="闭包怎么回收"></a>闭包怎么回收</h3><p>通常 如果引用闭包的函数是一个全局变量 那么闭包会一直存在直到页面关闭 但如果这个闭包以后不再使用的话 就会造成内存泄漏</p>
+<p>如果引用闭包的函数是各局部变量 等函数销毁后 在下次JavaScript引擎执行垃圾回收的时候 判断闭包这块内容不再被使用了 就会回收</p>
+<p>所以在使用闭包的时候 请记住一个原则：<strong>如果该闭包一直使用 可以作为全局变量而存在 如果使用频率不高且占内存 考虑改成局部变量</strong></p>
+<h4 id="小练"><a href="#小练" class="headerlink" title="小练"></a>小练</h4><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> per = {</span><br><span class="line">	<span class="attr">name</span>: <span class="string">'curry'</span>;</span><br><span class="line">	<span class="attr">callName</span>: <span class="keyword">function</span>(<span class="params"></span>) {</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(name);</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">askName</span>(<span class="params"></span>){</span><br><span class="line">	<span class="keyword">let</span> name = <span class="string">'davic'</span>;</span><br><span class="line">	<span class="keyword">return</span> per.<span class="property">callName</span></span><br><span class="line">}</span><br><span class="line"><span class="keyword">let</span> name = <span class="string">'james'</span>;</span><br><span class="line"><span class="keyword">let</span> _callName = <span class="title function_">askName</span>()</span><br><span class="line"><span class="title function_">_callName</span>();</span><br><span class="line">per.<span class="title function_">callName</span>();</span><br><span class="line"><span class="comment">//打印两次james</span></span><br><span class="line"><span class="comment">//只需要确定好调用栈就好 调用了askName（）后 返回的是per.callName 后续就和askName没关系了（出栈） 所以结果就是调用了两次per.callName 根据词法作用域规则 结果都是james 也不会形成闭包</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="this：从执行上下文分析this"><a href="#this：从执行上下文分析this" class="headerlink" title="this：从执行上下文分析this"></a>this：从执行上下文分析this</h2><p>相信大家都有被<code>this</code>折磨的时候 而this确实也是比较难理解和令人头疼的问题 接下来我将从执行上下文的角度来分析JavaScript中的<code>this</code> 这里先抛出结论：<strong>this是和执行上下文绑定的 每个执行上下文都有一个this</strong></p>
+<p>接下来 我将带大家一起理清全局执行上下文的<code>this</code>和函数执行上下文的<code>this</code>、</p>
+<h4 id="全局执行上下文的this"><a href="#全局执行上下文的this" class="headerlink" title="全局执行上下文的this"></a>全局执行上下文的this</h4><p>全局执行上下文的<code>this</code>和作用域链的最底端一样 都是指向<code>window</code>对象</p>
+<h3 id="函数执行上下文的this"><a href="#函数执行上下文的this" class="headerlink" title="函数执行上下文的this"></a>函数执行上下文的this</h3><p>我们通过一个例子来看一下</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">func</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)<span class="comment">//window对象</span></span><br><span class="line">}</span><br><span class="line"><span class="title function_">func</span>();</span><br></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<p>默认情况下调用一个函数 其执行上下文的this也是指向window对象</p>
+</blockquote>
+<p>那如何改变执行上下文的<code>this</code>值呢 可以通过<code>apply call 和bind</code>实现 这里讲下如何使用<code>call</code>来改变</p>
+<h4 id="1-通过call"><a href="#1-通过call" class="headerlink" title="1.通过call"></a>1.通过call</h4><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> per = {</span><br><span class="line">	<span class="attr">name</span>: <span class="string">'james'</span>,</span><br><span class="line">	<span class="attr">address</span>: <span class="string">'Lakers'</span></span><br><span class="line">}</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">callName</span>(<span class="params"></span>) {</span><br><span class="line">	<span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">'curry'</span></span><br><span class="line">}</span><br><span class="line">callName.<span class="title function_">call</span>(per);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(per)<span class="comment">//name: 'curry', address: 'Lakers'</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以看到这里<code>this</code>的指向已经改变了</p>
+<h4 id="2-通过对象调用"><a href="#2-通过对象调用" class="headerlink" title="2.通过对象调用"></a>2.通过对象调用</h4><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = {</span><br><span class="line">	<span class="attr">name</span>: <span class="string">'james'</span>;</span><br><span class="line">	<span class="attr">callName</span>: <span class="keyword">function</span>(<span class="params"></span>) {</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>)</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line">person.<span class="title function_">callName</span>();<span class="comment">//james </span></span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>使用对象来调用其内部方法 该方法的this指向对象本身的</strong></p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">person.<span class="title function_">callName</span>() === person.<span class="property">callName</span>.<span class="title function_">call</span>(person)</span><br></pre></td></tr></tbody></table></figure>
+
+<p>这个时候我们如果讲对象赋给另一个全局变量<code> this</code>又会怎样变化呢</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var person = {</span><br><span class="line">	name: 'james';</span><br><span class="line">	callName: function() {</span><br><span class="line">		this.name = 'curry';</span><br><span class="line">		console.log(this.name);</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line">var per1 = person;//this又指向window</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>在全局环境中调用一个函数 函数内部的<code>this</code>指向全局变量<code>window</code></li>
+<li>通过一个对象调用内部的方法 该方法的<code>this</code>指向对象本身</li>
+</ul>
+<h4 id="3-通过构造函数设置"><a href="#3-通过构造函数设置" class="headerlink" title="3.通过构造函数设置"></a>3.通过构造函数设置</h4><p>当使用<code>new</code>关键字构建好了一个新的对象 构造函数的<code>this</code>其实就是对象本身</p>
+<h3 id="this的缺陷以及应对方案"><a href="#this的缺陷以及应对方案" class="headerlink" title="this的缺陷以及应对方案"></a>this的缺陷以及应对方案</h3><h4 id="1-嵌套函数的this不会从外层函数中继承"><a href="#1-嵌套函数的this不会从外层函数中继承" class="headerlink" title="1.嵌套函数的this不会从外层函数中继承"></a>1.嵌套函数的this不会从外层函数中继承</h4><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = {</span><br><span class="line">	<span class="attr">name</span>: <span class="string">'james'</span>,</span><br><span class="line">	<span class="attr">callName</span>: <span class="keyword">function</span>(<span class="params"></span>) {</span><br><span class="line">		<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);<span class="comment">//指向person</span></span><br><span class="line">		<span class="keyword">function</span> <span class="title function_">innerFunc</span>(<span class="params"></span>) {</span><br><span class="line">			<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)<span class="comment">//指向window</span></span><br><span class="line">		}</span><br><span class="line">		<span class="title function_">innerFunc</span>()</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line">person.<span class="title function_">callName</span>();</span><br><span class="line"><span class="comment">//如何解决</span></span><br><span class="line"><span class="number">1.</span>使用一个变量保存</span><br><span class="line"><span class="keyword">let</span> _this = <span class="variable language_">this</span> <span class="comment">//保存指向person的this</span></span><br><span class="line"><span class="number">2.</span>使用箭头函数</span><br><span class="line">() =&gt; {</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)<span class="comment">//箭头函数不会创建其自身的执行上下文 所以箭头函数中的this指向外部函数</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="2-普通函数中的this指向全局对象window"><a href="#2-普通函数中的this指向全局对象window" class="headerlink" title="2.普通函数中的this指向全局对象window"></a>2.普通函数中的this指向全局对象window</h4><p>在默认情况下调用一个函数 其指向上下文的<code>this</code>默认就是指向全局对象<code>window</code></p>
+<p><strong>总结：</strong>相信看到这里 大家对于作用域 作用域链 执行上下文和this都有了更深的理解 笔者后期还会更新更多关于浏览器的原理和实践 感兴趣的小伙伴可以点波关注一起学习 文中错误之处请在评论区指出！</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">olddog</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://23olddog.github.io/2022/09/27/yi-wen-dai-ni-du-dong-this-zuo-yong-yu-he-yuan-xing/">https://23olddog.github.io/2022/09/27/yi-wen-dai-ni-du-dong-this-zuo-yong-yu-he-yuan-xing/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">olddog</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/">
+                                    <span class="chip bg-color">浏览器原理</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/09/27/shen-ru-jie-xi-liu-lan-qi-shi-jian-xun-huan-ji-zhi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="深入解析浏览器事件循环机制">
+                        
+                        <span class="card-title">深入解析浏览器事件循环机制</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-category">
+                                    浏览器
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">浏览器原理</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/27/liu-lan-qi-di-ceng-xuan-ran-yuan-li/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="浏览器是如何将HTML、CSS、JavaScript变成可视的页面的">
+                        
+                        <span class="card-title">浏览器是如何将HTML、CSS、JavaScript变成可视的页面的</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-category">
+                                    浏览器
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">浏览器原理</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE' || selection.getRangeAt(0).commonAncestorContainer.nodeName === 'CODE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: olddog<br />'
+            + '文章作者: olddog<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022</span>
+            
+            <a href="/about" target="_blank">olddog</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                        class="white-color">95.4k</span>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/23olddog" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:3056085618@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=3056085618" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 3056085618" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+    <script type="text/javascript" src="/libs/background/ribbon-dynamic.js" async="async"></script>
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
