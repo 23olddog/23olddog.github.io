@@ -4,10 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="重学Git第一天, 前端 | Android">
-    <meta name="description" content="运行 Git 前的配置查看所有的配置及它们所在的文件1git config --list --show-origin
-
-用户信息12$ git config --global user.name &#34;John Doe&#34;$ git config">
+    <meta name="keywords" content="浏览器原理系列（一）：关于架构、TCP/HTTP、缓存以及渲染流程的原理, 前端 | Android">
+    <meta name="description" content="我们都知道前端工程师每天都需要和浏览器打交道，浏览器对于我们的重要程度不言而喻。但是不知道各位在日常开发（摸鱼bushi）中有没有和笔者有一些共同的疑惑，比如为什么我只是打开了一个标签页却开了好几个进程（可通过浏览器的任务管理器查看）、为什">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -30,7 +28,7 @@
     </style>
 
 
-    <title>重学Git第一天 | olddog</title>
+    <title>浏览器原理系列（一）：关于架构、TCP/HTTP、缓存以及渲染流程的原理 | olddog</title>
     <link rel="icon" type="image/png" href="/medias/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -323,12 +321,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">重学Git第一天</h1>
+                    <h1 class="description center-align post-title">浏览器原理系列（一）：关于架构、TCP/HTTP、缓存以及渲染流程的原理</h1>
                 </div>
             </div>
         </div>
@@ -444,8 +442,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Git/">
-                                <span class="chip bg-color">Git</span>
+                            <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
+                                <span class="chip bg-color">浏览器</span>
                             </a>
                         
                     </div>
@@ -456,8 +454,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%89%8D%E7%AB%AF%E8%BF%87%E7%A8%8B%E5%8C%96/" class="post-category">
-                                前端过程化
+                            <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-category">
+                                浏览器
                             </a>
                         
                     </div>
@@ -469,28 +467,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-15
+                    2022-10-05
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-09-27
+                    2022-10-05
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.7k
+                    5.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    18 分
                 </div>
                 
 
@@ -510,270 +508,247 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="运行-Git-前的配置"><a href="#运行-Git-前的配置" class="headerlink" title="运行 Git 前的配置"></a>运行 Git 前的配置</h2><h3 id="查看所有的配置及它们所在的文件"><a href="#查看所有的配置及它们所在的文件" class="headerlink" title="查看所有的配置及它们所在的文件"></a>查看所有的配置及它们所在的文件</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list --show-origin</span><br></pre></td></tr></tbody></table></figure>
-
-<h3 id="用户信息"><a href="#用户信息" class="headerlink" title="用户信息"></a>用户信息</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name "John Doe"</span><br><span class="line">$ git config --global user.email johndoe@example.com</span><br></pre></td></tr></tbody></table></figure>
-
-<p>使用了–global 代表全局配置 如果想根据不同项目使用不同的用户名和邮件地址 可以在该项目目录下运行不带–global</p>
-<h3 id="检查配置信息"><a href="#检查配置信息" class="headerlink" title="检查配置信息"></a>检查配置信息</h3><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --list //查看所有配置</span><br><span class="line">git config &lt;key&gt;//查看某一项配置 eg: git config user.name</span><br><span class="line">git config --show-origin rerere.autoUpdate //查看原始配置</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="获取帮助"><a href="#获取帮助" class="headerlink" title="获取帮助"></a>获取帮助</h2><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git help &lt;verb&gt;</span><br><span class="line">$ git &lt;verb&gt; --help</span><br><span class="line">$ man git-&lt;verb&gt;</span><br><span class="line">//以上三种命令都是等价的</span><br><span class="line">//eg: 想要获取git config的命令手册 执行 git help config</span><br><span class="line">//如果只需要可用选项的快速参考 可以使用-h来获取更简明的</span><br><span class="line">eg: git add -h</span><br></pre></td></tr></tbody></table></figure>
-
-<h1 id="Git-基础"><a href="#Git-基础" class="headerlink" title="Git 基础"></a>Git 基础</h1><h2 id="获取-Git-仓库"><a href="#获取-Git-仓库" class="headerlink" title="获取 Git 仓库"></a>获取 Git 仓库</h2><h3 id="获取-Git-仓库-1"><a href="#获取-Git-仓库-1" class="headerlink" title="获取 Git 仓库"></a>获取 Git 仓库</h3><ul>
-<li>将未进行版本控制的本地目录转换为 Git 仓库</li>
-<li>从其它服务器 <strong>克隆</strong> 一个已存在的 Git 仓库。</li>
+                <p>我们都知道前端工程师每天都需要和浏览器打交道，浏览器对于我们的重要程度不言而喻。但是不知道各位在日常开发（摸鱼bushi）中有没有和笔者有一些共同的疑惑，比如为什么我只是打开了一个标签页却开了好几个进程（可通过浏览器的任务管理器查看）、为什么大家都倾向于使用 <strong>chrome</strong>而不是其他浏览器、为什么同一个资源第二次、第三次访问往往会比第一次快很多、为什么资源可以完整安全地送达到浏览器、从输入一个 <code>URL</code>到看到渲染好地页面这中间到底发生了什么？如果你对于上面的问题都能回答上来，那你对于浏览器的知识储备应该比我强不少哈哈哈，如果你对于这些问题也有疑问，那我相信这篇文章或许可以解答你的疑惑！！！接下来我们就按照问题一个一个来解决大家的疑惑并学习背后的知识原理。（<code>ps：</code>先 <code>赞</code>后看，这是我创作的动力！！！</p>
+<h3 id="你将学到："><a href="#你将学到：" class="headerlink" title="你将学到："></a>你将学到：</h3><ul>
+<li>浏览器的工作原理</li>
+<li><strong>chrome</strong>的进程、线程相关知识和架构</li>
+<li>浏览器缓存</li>
+<li>TCP/HTTP 相关知识</li>
+<li>浏览器的导航过程（从输入 <code>URL</code>到渲染出完整的 <code>页面</code>）</li>
 </ul>
-<h4 id="1-从已存在的目录初始化仓库"><a href="#1-从已存在的目录初始化仓库" class="headerlink" title="1.从已存在的目录初始化仓库"></a>1.从已存在的目录初始化仓库</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. cd project // cd /c/user/my_project</span><br><span class="line">2. git init //初始化 将创建一个.git文件 包含Git仓库的所有文件 此时只是初始化 还未被追踪</span><br><span class="line">3 git add // eg: git add *c 追踪指定的文件</span><br><span class="line">4 git commit -m "..."//初始提交 这样我们就已经得到一个被追踪文件与初始提交的Git仓库</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="2-克隆现有的仓库"><a href="#2-克隆现有的仓库" class="headerlink" title="2.克隆现有的仓库"></a>2.克隆现有的仓库</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1. git clone "url" //git clone https://github.com/libgit2/libgit2 会在当前目录初始化.git 并将所有拉取的所有数据都存到.git文件夹 当你想自定义拉下来的仓库名 git clone url yourName</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="记录每次更新到仓库"><a href="#记录每次更新到仓库" class="headerlink" title="记录每次更新到仓库"></a>记录每次更新到仓库</h2><p>每一个文件都是两种状态之一：<strong>已跟踪</strong>或<strong>未跟踪</strong></p>
-<p>编辑过某些文件之后，由于自上次提交后你对它们做了修改，Git 将它们标记为已修改文件。 在工作时，你可以选择性地将这些修改过的文件放入暂存区，然后提交所有已暂存的修改，如此反复。</p>
-<p><img src="https://s3.bmp.ovh/imgs/2022/04/15/fd2225fd7d24e098.png"></p>
-<h4 id="检查当前的状态"><a href="#检查当前的状态" class="headerlink" title="检查当前的状态"></a>检查当前的状态</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="跟踪新文件"><a href="#跟踪新文件" class="headerlink" title="跟踪新文件"></a>跟踪新文件</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add fileName // eg: git add README.md</span><br><span class="line">git status // 只要出现changes to be committed 就说明已经是暂存状态 如果此时提交 那么该文件在你运行git add时的版本将被留存在后续的历史记录中</span><br></pre></td></tr></tbody></table></figure>
-
-<p><code>git add</code> 命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。</p>
-<h4 id="暂存已修改的文件"><a href="#暂存已修改的文件" class="headerlink" title="暂存已修改的文件"></a>暂存已修改的文件</h4><p>要暂存这次更新，需要运行 <code>git add</code> 命令。 这是个多功能命令：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等。 将这个命令理解为“精确地将内容添加到下一次提交中”而不是“将一个文件添加到项目中”要更加合适。</p>
-<p>提交时提交的版本是最后一次 git add 的版本而不是运行 git commit 时的版本</p>
-<h4 id="状态简览"><a href="#状态简览" class="headerlink" title="状态简览"></a>状态简览</h4><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status -s</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="忽略文件"><a href="#忽略文件" class="headerlink" title="忽略文件"></a>忽略文件</h4><p>一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。 通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。 在这种情况下，我们可以创建一个名为 <code>.gitignore</code> 的文件，列出要忽略的文件的模式。 来看一个实际的 <code>.gitignore</code> 例子：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat .gitignore</span><br><span class="line">*.[oa]</span><br><span class="line">*~</span><br></pre></td></tr></tbody></table></figure>
-
-<p><code>gitignore</code>的格式规范如下</p>
+<p>话不多说，让我们进入今天的学习吧！</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9dbf2e06b3d1448c9ec3896bfe43be60~tplv-k3u1fbpfcp-watermark.image" alt="image.png"></p>
+<h2 id="chrome的进程、线程以及架构"><a href="#chrome的进程、线程以及架构" class="headerlink" title="chrome的进程、线程以及架构"></a>chrome的进程、线程以及架构</h2><p>如果你现在打开浏览器的任务管理器，就会看到下面这样的图片</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/81016709f03f47428393acacac0df3fd~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220928205430775"></p>
+<p>你可能会产生疑惑，明明我只是打开了掘金，明明 <code>js</code>是单线程的，为什么会开了这么多的进程？为了解开这个疑惑，我们需要先看下 <code>线程</code>和 <code>进程</code>的基本概念</p>
+<p><strong>进程</strong>：系统进行资源调度和分配的基本单位，实现了操作系统的并发</p>
+<p><strong>线程</strong>：进程的子任务，是<code>CPU</code>调度和分派的基本单位，用于保证程序的实时性，实现 <code>进程</code>内部的并发</p>
+<p>看完 <code>进程</code>和 <code>线程</code>的概念，接下来我们来看下 <code>chrome</code>的多进程架构图</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5844b341a06f4fcd91b9dc7b2fbbad56~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220928210943153"></p>
+<p>可以看到，<code>chrome</code>包含以下进程</p>
 <ul>
-<li>所有空行或者以 <code>#</code> 开头的行都会被 Git 忽略。</li>
-<li>可以使用标准的 glob 模式匹配，它会递归地应用在整个工作区中。</li>
-<li>匹配模式可以以（<code>/</code>）开头防止递归。</li>
-<li>匹配模式可以以（<code>/</code>）结尾指定目录。</li>
-<li>要忽略指定模式以外的文件或目录，可以在模式前加上叹号（<code>!</code>）取反。</li>
+<li><strong>插件进程</strong>：负责插件的运行（隔离插件进程和其他进程可以防止因为插件进程的奔溃或错误影响浏览器和其他页面，因为你不能保证你的插件是绝对安全稳定的）</li>
+<li><strong>渲染进程</strong>：将 <code>HTML/CSS/JS</code>转换为交互的页面（排版引擎 <code>Blink</code>和 JavaScript引擎 <code>V8</code>都是运行在这里），默认情况下 <code>chrome</code>会为每个 <code>Tab</code>开启一个渲染进程（渲染进程通过在沙箱中运行来保证安全）</li>
+<li><strong>网络进程</strong>：负责网络资源的加载，比如请求和响应，浏览器缓存等功能</li>
+<li><strong>浏览器主进程</strong>：负责显式、交互、子进程管理以及存储等功能</li>
+<li><strong>GPU进程</strong>：实现 <code>3DCSS</code>等效果以及 <code>UI界面</code>的绘制</li>
 </ul>
-<p>所谓的 glob 模式是指 shell 所使用的简化了的正则表达式。 星号（<code>*</code>）匹配零个或多个任意字符；<code>[abc]</code> 匹配任何一个列在方括号中的字符 （这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（<code>?</code>）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 <code>[0-9]</code> 表示匹配所有 0 到 9 的数字）。 使用两个星号（<code>**</code>）表示匹配任意中间目录，比如 <code>a/**/z</code> 可以匹配 <code>a/z</code> 、 <code>a/b/z</code> 或 <code>a/b/c/z</code> 等。</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 忽略所有的 .a 文件</span><br><span class="line">*.a</span><br><span class="line"></span><br><span class="line"># 但跟踪所有的 lib.a，即便你在前面忽略了 .a 文件</span><br><span class="line">!lib.a</span><br><span class="line"></span><br><span class="line"># 只忽略当前目录下的 TODO 文件，而不忽略 subdir/TODO</span><br><span class="line">/TODO</span><br><span class="line"></span><br><span class="line"># 忽略任何目录下名为 build 的文件夹</span><br><span class="line">build/</span><br><span class="line"></span><br><span class="line"># 忽略 doc/notes.txt，但不忽略 doc/server/arch.txt</span><br><span class="line">doc/*.txt</span><br><span class="line"></span><br><span class="line"># 忽略 doc/ 目录及其所有子目录下的 .pdf 文件</span><br><span class="line">doc/**/*.pdf</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="查看已暂存和未暂存的修改"><a href="#查看已暂存和未暂存的修改" class="headerlink" title="查看已暂存和未暂存的修改"></a>查看已暂存和未暂存的修改</h4><p>查看未暂存部分更新了哪些部分 不加参数直接输入 git diff</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br></pre></td></tr></tbody></table></figure>
-
-<p>若要查看已暂存的将要添加到下次提交的内容 可以使用<code>git diff --staged</code> 将对比已暂存文件与最后一次提交的文件差异</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff --staged</span><br></pre></td></tr></tbody></table></figure>
-
-<p><strong>请注意，git diff 本身只显示尚未暂存的改动，而不是自上次提交以来所做的所有改动。 所以有时候你一下子暂存了所有更新过的文件，运行 <code>git diff</code> 后却什么也没有，就是这个原因。</strong></p>
-<h4 id="提交更新"><a href="#提交更新" class="headerlink" title="提交更新"></a>提交更新</h4><p><code>git commit</code></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit</span><br></pre></td></tr></tbody></table></figure>
-
-<p>可以在<code>commit</code>命令后面添加<code>-m</code> 将提交信息与命令行放在同一行</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m "Story 182: Fix benchmarks for speed"</span><br></pre></td></tr></tbody></table></figure>
-
-<p>请记住，提交时记录的是放在暂存区域的快照。 任何还未暂存文件的仍然保持已修改状态，可以在下次提交时纳入版本管理。 每一次运行提交操作，都是对你项目作一次快照，以后可以回到这个状态，或者进行比较。</p>
-<h4 id="跳过使用暂存区域"><a href="#跳过使用暂存区域" class="headerlink" title="跳过使用暂存区域"></a>跳过使用暂存区域</h4><p>只要在<code>git commit</code>加上<code>-a</code>选项 Git 就会自动把之前所有已经跟踪的文件暂存起来一并提交 从而跳过<code>git add</code>步骤：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -a -m 'added new benchmarks'</span><br></pre></td></tr></tbody></table></figure>
-
-<p><strong>需要小心使用 有时这个选项会将不需要的文件添加到提交中</strong></p>
-<h4 id="移除文件"><a href="#移除文件" class="headerlink" title="移除文件"></a>移除文件</h4><p>要从 Git 中移除某文件 需要先从已跟踪的文件清单（暂存区域）移除 然后提交 可以使用<code>git rm</code> 并连带从工作目录中删除指定的文件 以后不会出现在未跟踪的清单中</p>
-<p>如果只是从工作目录中删除文件 运行<code>git status</code>时就会在“Changes not staged for commit” 部分（也就是 _未暂存清单_）看到：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ rm PROJECTS.md</span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up-to-date with 'origin/master'.</span><br><span class="line">Changes not staged for commit:</span><br><span class="line">  (use "git add/rm &lt;file&gt;..." to update what will be committed)</span><br><span class="line">  (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)</span><br><span class="line"></span><br><span class="line">        deleted:    PROJECTS.md</span><br><span class="line"></span><br><span class="line">no changes added to commit (use "git add" and/or "git commit -a")</span><br></pre></td></tr></tbody></table></figure>
-
-<p>然后再运行<code>git rm</code>记录此次移除文件的操作</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git rm PROJECTS.md</span><br><span class="line">rm 'PROJECTS.md'</span><br><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up-to-date with 'origin/master'.</span><br><span class="line">Changes to be committed:</span><br><span class="line">  (use "git reset HEAD &lt;file&gt;..." to unstage)</span><br><span class="line"></span><br><span class="line">    deleted:    PROJECTS.md</span><br></pre></td></tr></tbody></table></figure>
-
-<p>如果要删除之前修改过或已经放到暂存区的文件 则必须强制使用<code>-f</code> 用于防止误删尚未添加到快照的数据 这样的数据不能被 Git 恢复</p>
-<p>如果想要将文件从 Git 仓库删除但是又想保留在当前工作目录中（文件留在磁盘但是不再追踪 Git）例如你忘记添加<code>.gitignore</code>文件 但是一不小心将日志文件或<code>.a</code>这样的编译文件添加到暂存区 这一方法很有用</p>
-<p>使用<code>--cached</code>选项</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached README</span><br></pre></td></tr></tbody></table></figure>
-
-<p><code>git rm</code> 命令后面可以列出文件或者目录的名字，也可以使用 <code>glob</code> 模式。比如：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rm log/\*.log</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="移动文件"><a href="#移动文件" class="headerlink" title="移动文件"></a>移动文件</h4><p>要在 Git 中对文件改名</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git mv file_from file_to</span><br></pre></td></tr></tbody></table></figure>
-
-<p>可以使用<code>git status</code>查看状态信息以及重命名操作的说明</p>
-<p><code>git mv</code>相当于以下的命令</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mv README.md README</span><br><span class="line">$ git rm README.md</span><br><span class="line">$ git add README</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="查看提交历史"><a href="#查看提交历史" class="headerlink" title="查看提交历史"></a>查看提交历史</h2><h4 id="查看提交历史-1"><a href="#查看提交历史-1" class="headerlink" title="查看提交历史"></a>查看提交历史</h4><p><code>git log</code></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></tbody></table></figure>
-
+<p>看完上面对各进程的知识讲解，你现在应该可以知道为啥我们打开一个网页会开启这么多进程了吧，关于这些进程一些实际应用场景将在后面的几个小节中穿插详解。</p>
+<p><strong>Q</strong>：为什么JS是<code>单线程</code>的，为什么不适用多线程的并行能力？</p>
+<p><strong>A</strong>：由于JS经常要操作 <code>DOM</code>以及和用户互动，如果是多线程的话，可能会出现A线程在修改 <code>DOMA</code>结果B线程删除了 <code>DOMA</code>这样的情况，这个时候就会出现线程冲突（<code>HTML5</code>提出了 <code>Web Worker</code>允许js创建多个子线程在后台进行并行操作，但是这些子线程并不能操作 <code>DOM</code> 所以这个标准并不能说让js变成多线程），而为了使js也能像其他语言那样拥有异步和并行的能力，浏览器通过 <code>事件队列、事件循环</code>来解决这个问题，推荐看这篇文章 <a target="_blank" rel="noopener" href="https://juejin.cn/post/7097142990044889102">一文带你读懂浏览器的事件循环机制 - 掘金 (juejin.cn)</a></p>
+<blockquote>
+<p><code>Chorme</code>团队正在设计新的 <code>Chrome</code>架构，目的是构建一个 <code>更内聚、松耦合、易于维护和扩展的系统</code>，感兴趣的朋友可以去网上查找相关资料</p>
+</blockquote>
+<h2 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h2><p>你在日常生活中是否有留意过这样一个现象，当我们第一次打开一个网站时，往往需要等待数秒的加载，而之后我们再打开这个网站时，就会比之前快很多，这其中其实是 <code>浏览器缓存</code>的功劳。</p>
+<p><code>浏览器</code>是指浏览器根据 <code>url</code>第一次访问资源之后，根据缓存策略将 <code>html、css、js、图片等资源</code>保存在浏览器本地，之后你再访问这些资源时，便可以根据缓存策略决定是使用本地的缓存还是重新请求。</p>
+<blockquote>
+<p><code>浏览器缓存</code>是前端性能优化必不可少的重要一环！！！</p>
+</blockquote>
+<p>那如何查看自己的请求是使用缓存还是重新访问呢？我们直接打开掘金的首页并打开控制台</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/17846fcabb5e46969ab746fdbdf0bda1~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" alt="image.png"></p>
+<p>（红色框里的就是用了<strong>memory cache</strong> 或<strong>disk cache</strong> 的 像这些就是使用了缓存的）</p>
+<h4 id="缓存分类："><a href="#缓存分类：" class="headerlink" title="缓存分类："></a><strong>缓存分类：</strong></h4><p>1.<strong>Memory Cache</strong>：在浏览器内存中的缓存，访问优先级最高，访问速度也是最快的（和渲染进程共存，进程关闭就清除缓存，所以有效期比较短）</p>
+<p>2.<strong>service worker Cache</strong>：独立的js线程，可实现离线缓存、消息推送等功能</p>
+<p>3.<strong>Disk Cache</strong>：磁盘中的缓存，容量较大，但是相对的访问速度较慢</p>
+<p>4.<strong>push Cache</strong>：<code>HTTP2</code>的新特新，优先级最低（前面三种缓存无法命中后才会命中这个）</p>
+<h4 id="缓存策略："><a href="#缓存策略：" class="headerlink" title="缓存策略："></a><strong>缓存策略：</strong></h4><p>浏览器的缓存策略可以分为<strong>强缓存</strong> 和<strong>协商缓存</strong>两种</p>
 <ul>
-<li><p><code>-p</code> 或 <code>-patch</code> 显式每次提交所引入的差异（按补丁的形式输出） 也可以限制显式的日志条目数量</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log -p -2</span><br></pre></td></tr></tbody></table></figure></li>
-<li><p><code>--stat</code> 查看每次提交的简略统计信息</p>
+<li>强缓存： 不用向服务器请求。可以通过设置 <code>HTTP Header</code>的 <code>expries</code>和 <code>cache-control</code>实现<ul>
+<li><code>expries</code>： 服务器第一次响应时，会将过期的时间戳写在 <code>expries</code>的请求头中返回，当我们再次请求时，如果本地时间小于 <code>expries</code>的时间戳，就直接去缓存中读取资源<ul>
+<li>缺点：如果更改了本地时间，可能会导致缓存失效</li>
+</ul>
+</li>
+<li><code>cache-control</code>： 通过 <code>max-age</code>控制本地资源的有效期，<code>s-maxage</code>控制代理服务器（<code>CDN缓存</code>）的有效期（<code>s-maxage</code>仅在代理服务器中生效，<code>max-age</code>仅在客户端生效），设置成<code>no-store</code> 则表示拒绝一切形式的缓存<ul>
+<li>缺点：如果更改了本地时间，同样会导致缓存失效，但是解决了 <code>expires</code>会因为客户端和服务器直接时差不一导致的缓存时间不一致的问题</li>
+</ul>
 </li>
 </ul>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --stat</span><br></pre></td></tr></tbody></table></figure>
-
-<ul>
-<li><code>--pretty</code>使用不同的默认格式的方式展示提交信息</li>
+</li>
 </ul>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git log --pretty=oneline</span><br><span class="line">git log --pretty=format:"%h - %an, %ar : %s";//定制记录的显式格式 对后期提取分析格外有用</span><br></pre></td></tr></tbody></table></figure>
-
+<blockquote>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`cache-control`优先级高于 `expries</span><br></pre></td></tr></tbody></table></figure>
+</blockquote>
 <ul>
-<li><code>git log --pretty=format</code> 常用的选项</li>
+<li><strong>协商缓存</strong>：浏览器需要先向服务器发起请求，在判断是否从本地获取缓存资源。可以通过设置 <code>HTTP Header</code>的 <code>Last-Modified</code>和 <code>ETag</code>实现<ul>
+<li><code>Last-Modified</code>：首次响应时会返回 <code>Last-Modified</code>字段，之后客户端每次请求都会带上 <code>If-Modified-Since</code>的字段（上一次<code>response</code>中的 <code>Last-Modified</code>的值），服务器根据该时间戳和资源在服务器上最后的修改时间是否一致来判断是否使用缓存（返回 <code>304</code>表示使用本地缓存，返回新的 <code>Last-Modified</code>表示不使用缓存）<ul>
+<li><strong>缺点</strong>：如果服务器没有及时感知到文件的变化（比如在毫秒级时间内完成了改动，但是因为 <code>Last-Modified</code>是秒级导致无法感知）</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th><code>%H</code></th>
-<th>提交的完整哈希值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>%h</code></td>
-<td>提交的简写哈希值</td>
-</tr>
-<tr>
-<td><code>%T</code></td>
-<td>树的完整哈希值</td>
-</tr>
-<tr>
-<td><code>%t</code></td>
-<td>树的简写哈希值</td>
-</tr>
-<tr>
-<td><code>%P</code></td>
-<td>父提交的完整哈希值</td>
-</tr>
-<tr>
-<td><code>%p</code></td>
-<td>父提交的简写哈希值</td>
-</tr>
-<tr>
-<td><code>%an</code></td>
-<td>作者名字</td>
-</tr>
-<tr>
-<td><code>%ae</code></td>
-<td>作者的电子邮件地址</td>
-</tr>
-<tr>
-<td><code>%ad</code></td>
-<td>作者修订日期（可以用 –date=选项 来定制格式）</td>
-</tr>
-<tr>
-<td><code>%ar</code></td>
-<td>作者修订日期，按多久以前的方式显示</td>
-</tr>
-<tr>
-<td><code>%cn</code></td>
-<td>提交者的名字</td>
-</tr>
-<tr>
-<td><code>%ce</code></td>
-<td>提交者的电子邮件地址</td>
-</tr>
-<tr>
-<td><code>%cd</code></td>
-<td>提交日期</td>
-</tr>
-<tr>
-<td><code>%cr</code></td>
-<td>提交日期（距今多长时间）</td>
-</tr>
-<tr>
-<td><code>%s</code></td>
-<td>提交说明</td>
-</tr>
-</tbody></table>
+</li>
+<li><code>ETag</code>：既然上面的 <code>Last-Modified</code>存在着缺点，那 <code>ETag</code>就是他的解决方案（服务器根据文件内容编码生成唯一标识符，可以精确感知文件的变化），首次响应会返回 <code>ETag</code>标识，下一次请求就带上 <code>If-None-Match</code>与服务端进行比较来判断是否使用缓存<ul>
+<li><strong>缺点</strong>：服务端需要额外的开销来生成 <code>ETag</code>标识</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>Etag 在感知文件变化上比 Last-Modified 更加准确，优先级也更高。当 Etag 和 Last-Modified 同时存在时，以 Etag 为准。</strong></p>
+</blockquote>
+<h4 id="HTTP决策"><a href="#HTTP决策" class="headerlink" title="HTTP决策"></a><strong>HTTP决策</strong></h4><p>关于HTTP请求的决策，这里我们通过<strong>Chrome</strong>给出的官方流程图来给大家讲解</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a976c759466647dc9d23636bbac9f81b~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp" alt="image.png"></p>
+<p>接下来我给大家解释下上面的步骤</p>
+<ol>
+<li>考虑资源是否可复用<ol>
+<li>如果不可以复用，则直接设置 <code>Cache-Control</code> 成 <code>no-store</code>表示拒绝一切形式的缓存</li>
+<li>如果可以复用，考虑是否设置成每次都需要向浏览器进行缓存的有效确认<ol>
+<li>如果需要，则设置 <code>Cache-Control</code>为 <code>no-cache</code></li>
+<li>如果不需要，则考虑是否可以被代理服务器缓存<ol>
+<li>如果可以，设置成 <code>public</code></li>
+<li>如果不行，设置成 <code>private</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>考虑资源有效时长<ol>
+<li>设置对应的 <code>max-age</code>和 <code>s-maxage</code>等值</li>
+<li>最后再设置协商缓存需要用到的 <code>ETag</code>和 <code>Last-Modified</code></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<p>以上便是对于一个<strong>HTTP请求</strong>是否要用缓存以及如何使用缓存的决策过程，我们在考虑是否使用缓存的时候也可以按着这个思路来考虑。</p>
+<h4 id="网页刷新对缓存的影响"><a href="#网页刷新对缓存的影响" class="headerlink" title="网页刷新对缓存的影响"></a>网页刷新对缓存的影响</h4><p>接下来我们看看网页刷新对各类缓存的影响，帮助大家更好地使用缓存</p>
 <ul>
-<li><code>git log</code> 的常用选项</li>
+<li><strong>强制刷新</strong>： 直接从服务器请求，跳过强缓存和协商缓存（比如 <code>Ctrl + F5</code>）</li>
+<li><strong>地址栏回车或正常刷新</strong>：跳出强缓存，检查协商缓存</li>
+<li><strong>新窗口的URL访问</strong>： 按照正常的缓存策略，即先检查强缓存</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th><code>-p</code></th>
-<th>按补丁格式显示每个提交引入的差异。</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>--stat</code></td>
-<td>显示每次提交的文件修改统计信息。</td>
-</tr>
-<tr>
-<td><code>--shortstat</code></td>
-<td>只显示 –stat 中最后的行数修改添加移除统计。</td>
-</tr>
-<tr>
-<td><code>--name-only</code></td>
-<td>仅在提交信息后显示已修改的文件清单。</td>
-</tr>
-<tr>
-<td><code>--name-status</code></td>
-<td>显示新增、修改、删除的文件清单。</td>
-</tr>
-<tr>
-<td><code>--abbrev-commit</code></td>
-<td>仅显示 SHA-1 校验和所有 40 个字符中的前几个字符。</td>
-</tr>
-<tr>
-<td><code>--relative-date</code></td>
-<td>使用较短的相对时间而不是完整格式显示日期（比如“2 weeks ago”）。</td>
-</tr>
-<tr>
-<td><code>--graph</code></td>
-<td>在日志旁以 ASCII 图形显示分支与合并历史。</td>
-</tr>
-<tr>
-<td><code>--pretty</code></td>
-<td>使用其他格式显示历史提交信息。可用的选项包括 oneline、short、full、fuller 和 format（用来定义自己的格式）。</td>
-</tr>
-<tr>
-<td><code>--oneline</code></td>
-<td><code>--pretty=oneline --abbrev-commit</code> 合用的简写。</td>
-</tr>
-</tbody></table>
-<h4 id="限制输出长度"><a href="#限制输出长度" class="headerlink" title="限制输出长度"></a>限制输出长度</h4><p><code>--since</code> 和 <code>--until</code> 这种按照时间作限制的选项很有用</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log --since=2.weeks //列出最近两周的所有提交</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="撤销操作"><a href="#撤销操作" class="headerlink" title="撤销操作"></a>撤销操作</h2><h4 id="撤销操作-1"><a href="#撤销操作-1" class="headerlink" title="撤销操作"></a>撤销操作</h4><p>有时候我们漏提交了东西或者提交信息写错了 可以使用<code>--amend</code>选项来重新提交</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br></pre></td></tr></tbody></table></figure>
-
-<p>这个命令会将暂存区的文件提交 如果自从上次提交以来未做任何操修改（上次提交后立马执行次命令）那么快照会保存不变 所修改的只是提交信息</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m 'initial commit'</span><br><span class="line">$ git add forgotten_file</span><br><span class="line">$ git commit --amend</span><br></pre></td></tr></tbody></table></figure>
-
-<p>最终你只会有一个提交——第二次提交将代替第一次提交的结果。</p>
-<p>从效果上来说，就像是旧有的提交从未存在过一样，它并不会出现在仓库的历史中。</p>
-<p>修补提交最明显的价值是可以稍微改进你最后的提交，而不会让“啊，忘了添加一个文件”或者 “小修补，修正笔误”这种提交信息弄乱你的仓库历史。</p>
-<h4 id="取消暂存的操作"><a href="#取消暂存的操作" class="headerlink" title="取消暂存的操作"></a>取消暂存的操作</h4><p>如果已经修改了两个文件并且想要将它们作为两次独立的修改提交 但是却意外地输入了 <code>git add .</code> 如果想取消暂存中的一个 使用 git reset HEAD <file>… 来取消暂存</file></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD &lt;file&gt;</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="撤销对文件的修改"><a href="#撤销对文件的修改" class="headerlink" title="撤销对文件的修改"></a>撤销对文件的修改</h4><p>使用 git checkout –<file></file></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -- CONTRIBUTING.md</span><br></pre></td></tr></tbody></table></figure>
-
-<p><strong>请务必记得 <code>git checkout -- &lt;file&gt;</code> 是一个危险的命令。 你对那个文件在本地的任何修改都会消失——Git 会用最近提交的版本覆盖掉它。 除非你确实清楚不想要对那个文件的本地修改了，否则请不要使用这个命令。</strong></p>
-<h2 id="远程仓库的使用"><a href="#远程仓库的使用" class="headerlink" title="远程仓库的使用"></a>远程仓库的使用</h2><h4 id="远程仓库的使用-1"><a href="#远程仓库的使用-1" class="headerlink" title="远程仓库的使用"></a>远程仓库的使用</h4><p>查看已经配置好的远程仓库服务器 <code>git remote</code></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/schacon/ticgit</span><br><span class="line">git remote</span><br></pre></td></tr></tbody></table></figure>
-
-<p>如果指定<code>-v</code> 会显示需要读写远程仓库使用的 Git 保存的简写与之对应的 URL 如果远程仓库不止一个 还会将协作者一起列出来</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br><span class="line">origin	https://github.com/schacon/ticgit (fetch)</span><br><span class="line">origin	https://github.com/schacon/ticgit (push)</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h4><p>运行 <code>git remote add &lt;shortname&gt; &lt;url&gt;</code> 添加一个新的远程 Git 仓库 同时指定一个方便使用的简写</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> git remote</span><br><span class="line">origin</span><br><span class="line">$ git remote add pb https://github.com/paulboone/ticgit</span><br><span class="line">$ git remote -v</span><br><span class="line">origin	https://github.com/schacon/ticgit (fetch)</span><br><span class="line">origin	https://github.com/schacon/ticgit (push)</span><br><span class="line">pb	https://github.com/paulboone/ticgit (fetch)</span><br><span class="line">pb	https://github.com/paulboone/ticgit (push)</span><br></pre></td></tr></tbody></table></figure>
-
-<p>如果想要拉取仓库的代码 使用 git fetch pb</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch pb</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="从远程仓库中抓取与拉取"><a href="#从远程仓库中抓取与拉取" class="headerlink" title="从远程仓库中抓取与拉取"></a>从远程仓库中抓取与拉取</h4><p>从远程仓库中获取代码 可以执行</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch &lt;remote&gt;</span><br></pre></td></tr></tbody></table></figure>
-
-<p>这个命令会访问远程仓库，从中拉取所有你还没有的数据。 执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。</p>
-<p>如果你的当前分支设置了跟踪远程分支 那么可以用 <code>git pull</code> 命令来自动抓取后合并该远程分支到当前分支。</p>
-<p>默认情况下，<code>git clone</code> 命令会自动设置本地 master 分支跟踪克隆的远程仓库的 <code>master</code> 分支（或其它名字的默认分支）。 运行 <code>git pull</code> 通常会从最初克隆的服务器上抓取数据并自动尝试合并到当前所在的分支。</p>
-<h4 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h4><p><code>git push &lt;remote&gt; &lt;branch&gt;</code>。</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master//将master分支推送到origin分支</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="查看某个远程仓库"><a href="#查看某个远程仓库" class="headerlink" title="查看某个远程仓库"></a>查看某个远程仓库</h4><p><code>git remote show &lt;remote&gt;</code></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">git remote show origin</span><br><span class="line">* remote origin</span><br><span class="line">  Fetch URL: https://github.com/schacon/ticgit</span><br><span class="line">  Push  URL: https://github.com/schacon/ticgit</span><br><span class="line">  HEAD branch: master</span><br><span class="line">  Remote branches:</span><br><span class="line">    master                               tracked</span><br><span class="line">    dev-branch                           tracked</span><br><span class="line">  Local branch configured for 'git pull':</span><br><span class="line">    master merges with remote master</span><br><span class="line">  Local ref configured for 'git push':</span><br><span class="line">    master pushes to master (up to date)</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="远程仓库的重命名与移除"><a href="#远程仓库的重命名与移除" class="headerlink" title="远程仓库的重命名与移除"></a>远程仓库的重命名与移除</h4><p><code>git remote rename</code></p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git remote rename pb paul //将pb重命名未paul</span><br><span class="line">$ git remote</span><br><span class="line">origin</span><br><span class="line">paul</span><br></pre></td></tr></tbody></table></figure>
-
-<p>值得注意的是这同样也会修改你所有远程跟踪的分支名字。 那些过去引用 <code>pb/master</code> 的现在会引用 <code>paul/master</code>。</p>
-<p>移除一个远程仓库</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git remote remove paul</span><br><span class="line">$ git remote</span><br><span class="line">origin</span><br></pre></td></tr></tbody></table></figure>
-
-<p>一旦你使用这种方式删除了一个远程仓库，那么所有和这个远程仓库相关的远程跟踪分支以及配置信息也会一起被删除。</p>
+<p>上面就是对于浏览器缓存的一些讲解了，相信看到这里你一定对于浏览器缓存有一些新的或者更深入的了解。</p>
+<h2 id="TCP-HTTP在浏览器中的使用"><a href="#TCP-HTTP在浏览器中的使用" class="headerlink" title="TCP/HTTP在浏览器中的使用"></a>TCP/HTTP在浏览器中的使用</h2><p>首先我们先学一些前置知识</p>
+<ul>
+<li><code>IP</code>：计算机的地址（互联网协议地址）</li>
+<li><code>UDP</code>：支持一个无连接的传输协议，为程序提供了一种无需建立连接就可以发送封装的 <code>IP</code>数据包的方法。不能保证数据的可靠性，但是传输速度非常快（可用于一些对完整性要求不高的场景，比如视频、互动游戏等）</li>
+<li><code>TCP</code>：一种面向连接的、可靠的、基于字节流的传输层通信协议（连接到不同但互相连接的计算机通信网络的著计算机中的成对进程之间依靠 <code>TCP</code>提供的可靠的通信服务）</li>
+<li><code>HTTP</code>:超文本传输协议，通常运行在 <code>TCP</code>之上，通过浏览器和服务器进行数据交互、进行超文本（文本、图片、视频等）传输的规定</li>
+</ul>
+<p>接下来我们讲一下 <code>TCP</code>连接的过程（包含 <code>建立连接 - 传输数据 - 断开连接</code>）</p>
+<ol>
+<li><strong>建立连接</strong>：通过三次握手来建立连接<ol>
+<li>客户端向服务端发送 <code>SYN包</code>并等待服务器确认（客户端进入 <code>SYN-SENT</code>阶段）</li>
+<li>服务端收到客户端的 <code>SYN包</code>后，对该包进行确认后结束 <code>LISTEN</code>阶段，并返回一段 <code>TCP</code>报文 随后进入 <code>SYN-RECV</code>阶段</li>
+<li>客户端接受到服务端的 <code>SYN + ACK</code>包之后，确认连接是正常的 从而结束 <code>SYN-SENT</code>阶段并发送最后一段报文</li>
+<li>服务端接收到客户端确认收到服务器数据的报文后，明确连接是正常的，三次握手的过程完成</li>
+</ol>
+</li>
+<li><strong>传输数据</strong>：客户端需要对每个数据包进行确认操作（接收到数据之后要发送确认数据包给服务端）所以当服务端在规定事件内没有接受到客户端的确认消息，就判断丢包并重发 （一个大的文件在传输的过程中会被拆封成多个小的数据包并在客户端按照TCP头部的序号排序重组成完整的数据）</li>
+<li><strong>断开连接</strong>：通过四次挥手来保证双方都断开连接</li>
+</ol>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1e0964b551654633a79922e6c259417b~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220928221859252"></p>
+<p><strong>总结：</strong> <code>TCP</code>牺牲了数据包的传输数量（三次握手和数据包校验机制大大提高了数据包的数量）来保证了数据传输的可靠性</p>
+<h3 id="浏览器中HTTP的请求流程"><a href="#浏览器中HTTP的请求流程" class="headerlink" title="浏览器中HTTP的请求流程"></a>浏览器中HTTP的请求流程</h3><p>先用一张图来看一下浏览器中的 HTTP请求所经历的各个阶段</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/96b26a25ab374bbda7025646c6a7a9ce~tplv-k3u1fbpfcp-zoom-1.image" alt="img"></p>
+<p>接下来我们按照图中的流程来解释下里面的各个过程</p>
+<ol>
+<li><p>构建请求（根据搜索框的信息构建请求url）</p>
+<ol>
+<li>如果是符合 <code>url</code>的形式则根据对应的网络协议拼接成请求<code>url</code>（比如我们输入 <code>juejin.cn</code>会被自动拼接为 <code>https://juejin.cn/</code>）</li>
+<li>如果是一些其他搜索内容，则根据对应的搜索引擎去拼接请求的 <code>url</code>（比如输入 <code>掘金</code>则会自动拼接为 <code>https://www.google.com/search?q=%E6%8E%98%E9%87%91&amp;oq=%E6%8E%98%E9%87%91&amp;aqs=chrome..69i57j0i13j69i59j0i13j0i30j0i13i30l4j0i10i13i15i30.1257j0j15&amp;sourceid=chrome&amp;ie=UTF-8</code>）</li>
+</ol>
+</li>
+<li><p>查找缓存：根据缓存策略去判断是使用缓存还是重新请求资源</p>
+<ol>
+<li>使用缓存：直接使用缓存，整个请求过程结束</li>
+<li>重新请求：进入网络请求过程</li>
+</ol>
+</li>
+<li><p>查找ip地址和端口： 根据 <code>DNS（域名系统）</code>查找对应的<code>ip</code>，拿到<code>ip</code>后就需要获取对应的端口（<code>url</code>没有特别指明默认使用 <code>80端口</code>）</p>
+</li>
+<li><p>等待tcp队列：由于 <strong>chrome</strong>对于每个域名的 <code>TCP</code>连接数量有限制 （同个域名下最多只能建立6个连接）</p>
+<ol>
+<li>同一个域名下有大于6个请求同时发生，则需要等待</li>
+<li>少于6个。则直接建立TCP连接</li>
+</ol>
+</li>
+<li><p>建立TCP连接：进行三次握手进行TCP连接，连接成功则进入下一阶段</p>
+</li>
+<li><p>发送HTTP请求：</p>
+<ol>
+<li>浏览器向服务器发送 <strong>请求行</strong> ，包括 <strong>请求方法、请求URI、HTTP版本协议</strong>（如果是像 <code>post</code>这些方法，还需要在 <code>请求体</code>中将对应的数据发送过去）</li>
+<li>发送<strong>请求头</strong>，包括所使用的操作系统、浏览器内核、域名信息、cookie等信息</li>
+</ol>
+</li>
+<li><p>服务器处理HTTP请求： 根据浏览器的请求信息返回相应的内容</p>
+<ol>
+<li>服务器返回的数据格式包括响应行（包括协议版本和1状态码等）、响应头（包括生成数据的时间戳、数据类型以及cookie等信息）、响应体（客户端实际想要的大部分内容）</li>
+<li>断开连接<ol>
+<li>正常情况下服务器返回了响应数据后就会请求端来 <code>TCP</code>连接</li>
+<li>如果浏览器/服务器在头部信息加入了 <code>Connection:Keep-Alive</code> 则不会断开连接（可以省去下次请求时建立连接的时间从而加快资源加载速度）</li>
+</ol>
+</li>
+<li>重定向：如果服务器返回了 <code>3xx</code>一般就是重定向 比如 <code>301</code> 这个时候会在响应头的 <code>location</code>中带上重定向的地址，浏览器接收到后就会自动再请求重定向的地址 (比如你输入 <code>baidu.com</code>会被重定向到 <code>https://www.baidu.com</code> )</li>
+</ol>
+<p><strong>总结</strong>：以上便是浏览器中 <code>HTTP</code>请求的全部过程了，经过了 <code>：构建请求、查找缓存、准备 IP 和端口、等待 TCP 队列、建立 TCP 连接、发起 HTTP 请求、服务器处理请求、服务器返回请求和断开连接</code>这八个阶段</p>
+<h2 id="从输入URL到渲染完页面发生了什么"><a href="#从输入URL到渲染完页面发生了什么" class="headerlink" title="从输入URL到渲染完页面发生了什么"></a>从输入URL到渲染完页面发生了什么</h2><p><strong>面试官</strong>: 说一说从输入url到页面渲染完成这个过程发生了什么？</p>
+<p><strong>我：</strong>。。。。。。</p>
+<p>相信大家多多少少都看过上面这个问题，因为这是一道非常高频的经典面试题，面试官往往会从这道来考察你的基础知识（包括浏览器的进程架构、请求过程、渲染原理等等），接下来我们就一起来学习下这个过程，避免下次遇到的时候翻车！！</p>
+<p>我们先回顾下第一小节的知识，浏览器中有 <code>浏览器主进程、网络进程、渲染进程</code>，这三个进程便是这个过程的三大主力军，我们再来回顾下第二小节的内容 <code>浏览器缓存</code>，这会决定是否跳过请求资源的阶段，我们再回顾下上一小节的 <code>HTTP在浏览器中的应用</code>，这将决定哪个进程负责请求中的那个阶段，这么一看是不是发现这道题可以把前面的知识都连接起来！！！</p>
+<p>接下来进入我们的学习吧！</p>
+<p>按照管理，我们先看一下这个过程的大致流程图</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6d7d7e94c24443749c9fc9f78fb28425~tplv-k3u1fbpfcp-zoom-1.image" alt="image-20220928232858665"></p>
+<p>（作图使用的是<a target="_blank" rel="noopener" href="https://www.iodraw.com/%EF%BC%89">https://www.iodraw.com/）</a></p>
+</li>
+</ol>
+<p>我们先带大家回顾下三个进程的各自职责是干嘛的</p>
+<ul>
+<li>浏览器主进程：用户交互、主进程管理以及文件存储等功能</li>
+<li>网络进程：面向渲染进程和浏览器主进程提供网络相关功能（包括浏览器缓存）</li>
+<li>渲染进程：将 <code>HTML/CSS/JS/图片等资源</code>解析成页面（运行在沙箱内保证系统的安全）</li>
+</ul>
+<p>接下来我们按照图来讲解整个过程</p>
+<ol>
+<li><p>用户输入，浏览器根据用户输入生成请求的url并发起请求</p>
+</li>
+<li><p>判断是否使用缓存：</p>
+<ol>
+<li><p>如果有缓存资源，则直接将缓存资源返回给浏览器主进程</p>
+</li>
+<li><p>如果不使用缓存，则进入网络请求过程</p>
+<ol>
+<li>进行DNS解析 获取对应的 <code>ip</code>地址 （如果是 <code>HTPS</code> 还要建立 <code>TSL</code>连接）</li>
+<li>建立TCP连接 </li>
+<li>构建请求头、请求行、请求体信息发起请求</li>
+<li>服务器开始处理响应信息</li>
+<li>浏览器接收到响应信息并分析请求头<ol>
+<li>如果带有重定向等信息 则重新请求重定向url指向的资源</li>
+<li>否则接受响应并提示浏览器主进程准备渲染进程</li>
+</ol>
+</li>
+<li>判断响应信息的类型（<code>Content-Type</code>）<ol>
+<li>如果是下载类型 则被提交到下载管理器 URL请求的导航阶段结束</li>
+<li>如果是 <code>HTML</code>类型 则继续导航流程</li>
+</ol>
+</li>
+<li>接下来准备渲染流程</li>
+</ol>
+</li>
+<li><p>准备渲染流程</p>
+<ol>
+<li>浏览器默认会为每个tab页创建一个渲染进程</li>
+<li>如果是属于同一个站点（比如从一个页面打开另一个新的页面且两个页面是同一个站点）则新页面会复用父页面的渲染进程</li>
+<li>准备好渲染进程后将进入提交文档阶段</li>
+</ol>
+</li>
+<li><p>提交文档阶段：将网络进程接收到的 <code>HTML</code>数据提交给渲染进程</p>
+<ol>
+<li>浏览器进程接受到网络进程的响应头数据后 ，向浏览器进程发起 <code>提交文档</code>的信息</li>
+<li>渲染进程接收到 <code>提交文档</code>的信息后 就会和网络进程建立起传输数据的 <code>管道</code></li>
+<li>当文档数据传输完成后 渲染进程会返回 <code>确认提交</code>的信息给浏览器进程</li>
+<li>浏览器进程收到 <code>确认提交</code>的信息后 会更新浏览器页面状态（包括安全状态、地址栏url、历史状态以及web页面） 这就是为什么我们输入一个网址时浏览器并没有立马跳转而是过一会跳转的原因</li>
+<li>之后就进入了渲染阶段</li>
+</ol>
+<p>5.渲染阶段：渲染阶段即将 <code>HTML/CSS/JS/图片</code>等资源渲染成我们看到的页面，这一部分的内容有点多，受限于篇幅，推荐大家直接看我的另一篇文章 <a target="_blank" rel="noopener" href="https://juejin.cn/post/7098248836543414285">浏览器是如何将HTML、CSS、JavaScript变成可视的页面的 - 掘金 (juejin.cn)</a></p>
+<p><strong>总结</strong>: 好的，讲到这里我们已经将从输入 <code>URL</code>到页面渲染的内容讲完了，相信大家都收获了一些东西</p>
+<p><strong>结束语：</strong></p>
+<p>不知不觉已经写了好多，无奈涉及的知识太多无法一篇讲完，后续将继续更新浏览器原理知识系列，感兴趣的小伙伴可以点个关注一起学习！！！</p>
+<p><strong>往期推荐：</strong></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7140185024653066271">谈谈前端性能优化的常见手段及知识原理 - 掘金 (juejin.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7138203576098095112">一文带你读懂webpack的知识和原理，附带常见面试题！ - 掘金 (juejin.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7128965885057826846">谈谈前端中的设计模式和使用场景 - 掘金 (juejin.cn)</a></p>
+</li>
+</ol>
+</li>
+</ol>
 
                 
             </div>
@@ -800,7 +775,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://23olddog.github.io/2022/04/15/chu-xue-git-di-yi-tian/">https://23olddog.github.io/2022/04/15/chu-xue-git-di-yi-tian/</a>
+                    <a href="https://23olddog.github.io/2022/10/05/liu-lan-qi-yuan-li-xi-lie-yi-guan-yu-jia-gou-tcp/http-huan-cun-yi-ji-xuan-ran-liu-cheng-de-yuan-li/">https://23olddog.github.io/2022/10/05/liu-lan-qi-yuan-li-xi-lie-yi-guan-yu-jia-gou-tcp/http-huan-cun-yi-ji-xuan-ran-liu-cheng-de-yuan-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -838,8 +813,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Git/">
-                                    <span class="chip bg-color">Git</span>
+                                <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
+                                    <span class="chip bg-color">浏览器</span>
                                 </a>
                             
                         </div>
@@ -1013,17 +988,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/04/18/chong-xue-css1.0/">
+                <a href="/2022/10/05/liu-lan-qi-yuan-li-xi-lie-yi-guan-yu-jia-gou-tcp/http-huan-cun-yi-ji-xuan-ran-liu-cheng-de-yuan-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="重学CSS1.0">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="浏览器原理系列（一）：关于架构、TCP/HTTP、缓存以及渲染流程的原理">
                         
-                        <span class="card-title">重学CSS1.0</span>
+                        <span class="card-title">浏览器原理系列（一）：关于架构、TCP/HTTP、缓存以及渲染流程的原理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1033,26 +1009,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-18
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    前端基础
+                            <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/" class="post-category">
+                                    浏览器
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CSS/">
-                        <span class="chip bg-color">CSS</span>
+                    <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/">
+                        <span class="chip bg-color">浏览器</span>
                     </a>
                     
                 </div>
@@ -1066,13 +1043,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/14/vueapi/">
+                <a href="/2022/09/27/tan-tan-qian-duan-chang-jian-xing-neng-you-hua-fang-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="VUEAPI">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="前端常见性能优化方式及手段">
                         
-                        <span class="card-title">VUEAPI</span>
+                        <span class="card-title">前端常见性能优化方式及手段</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1083,14 +1060,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-27
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%A1%86%E6%9E%B6/" class="post-category">
-                                    框架
+                            <a href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="post-category">
+                                    性能优化
                                 </a>
                             
                             
@@ -1100,8 +1077,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/VUE/">
-                        <span class="chip bg-color">VUE</span>
+                    <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+                        <span class="chip bg-color">性能优化</span>
                     </a>
                     
                 </div>

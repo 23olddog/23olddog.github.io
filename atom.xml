@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-09-27T13:58:09.656Z</updated>
+  <updated>2022-10-05T09:24:25.626Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浏览器原理系列（一）：关于架构、TCP/HTTP、缓存以及渲染流程的原理</title>
+    <link href="https://23olddog.github.io/2022/10/05/liu-lan-qi-yuan-li-xi-lie-yi-guan-yu-jia-gou-tcp/http-huan-cun-yi-ji-xuan-ran-liu-cheng-de-yuan-li/"/>
+    <id>https://23olddog.github.io/2022/10/05/liu-lan-qi-yuan-li-xi-lie-yi-guan-yu-jia-gou-tcp/http-huan-cun-yi-ji-xuan-ran-liu-cheng-de-yuan-li/</id>
+    <published>2022-10-05T09:21:44.916Z</published>
+    <updated>2022-10-05T09:24:25.626Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;我们都知道前端工程师每天都需要和浏览器打交道，浏览器对于我们的重要程度不言而喻。但是不知道各位在日常开发（摸鱼bushi）中有没有和笔者有一些共同的疑惑，比如为什么我只是打开了一个标签页却开了好几个进程（可通过浏览器的任务管理器查看）、为什么大家都倾向于使用</summary>
+        
+      
+    
+    
+    
+    <category term="浏览器" scheme="https://23olddog.github.io/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+    
+    
+    <category term="浏览器" scheme="https://23olddog.github.io/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>前端常见性能优化方式及手段</title>
@@ -491,31 +516,6 @@
     
     
     <category term="框架源码" scheme="https://23olddog.github.io/categories/%E6%A1%86%E6%9E%B6%E6%BA%90%E7%A0%81/"/>
-    
-    
-    <category term="VUE" scheme="https://23olddog.github.io/tags/VUE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>重学vue</title>
-    <link href="https://23olddog.github.io/2022/04/09/chong-xue-vue/"/>
-    <id>https://23olddog.github.io/2022/04/09/chong-xue-vue/</id>
-    <published>2022-04-09T08:45:09.527Z</published>
-    <updated>2022-09-27T13:42:13.607Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;模板语法&quot;&gt;&lt;a href=&quot;#模板语法&quot; class=&quot;headerlink&quot; title=&quot;模板语法&quot;&gt;&lt;/a&gt;模板语法&lt;/h2&gt;&lt;h4 id=&quot;调用函数&quot;&gt;&lt;a href=&quot;#调用函数&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="框架" scheme="https://23olddog.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
     
     
     <category term="VUE" scheme="https://23olddog.github.io/tags/VUE/"/>
