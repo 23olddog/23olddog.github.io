@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-10-11T01:07:37.262Z</updated>
+  <updated>2022-10-25T02:53:25.318Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Eeact/Vue的Diff算法</title>
+    <link href="https://23olddog.github.io/2022/10/25/kuang-jia-de-diff-suan-fa/"/>
+    <id>https://23olddog.github.io/2022/10/25/kuang-jia-de-diff-suan-fa/</id>
+    <published>2022-10-25T02:51:39.537Z</published>
+    <updated>2022-10-25T02:53:25.318Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;React&quot;&gt;&lt;a href=&quot;#React&quot; class=&quot;headerlink&quot; title=&quot;React&quot;&gt;&lt;/a&gt;React&lt;/h1&gt;&lt;p&gt;&lt;code&gt;React16&lt;/code&gt;之前是直接递归渲染 &lt;code&gt;vdom&lt;/code&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="框架" scheme="https://23olddog.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="Vue React" scheme="https://23olddog.github.io/tags/Vue-React/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机网络知识系列一</title>
@@ -493,32 +518,6 @@
     
     
     <category term="性能优化" scheme="https://23olddog.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谈谈设计模式</title>
-    <link href="https://23olddog.github.io/2022/04/09/qian-tan-she-ji-mo-shi/"/>
-    <id>https://23olddog.github.io/2022/04/09/qian-tan-she-ji-mo-shi/</id>
-    <published>2022-04-09T08:51:41.164Z</published>
-    <updated>2022-09-27T13:32:54.954Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;多态&quot;&gt;&lt;a href=&quot;#多态&quot; class=&quot;headerlink&quot; title=&quot;多态&quot;&gt;&lt;/a&gt;多态&lt;/h1&gt;&lt;p&gt;多态的思想是把”做什么”和“谁去做”分开来&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;多态最根本的作用是通过过程化的条件分支语句转化为对象的多态性</summary>
-        
-      
-    
-    
-    
-    <category term="前端基础" scheme="https://23olddog.github.io/categories/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/"/>
-    
-    
-    <category term="设计模式" scheme="https://23olddog.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
