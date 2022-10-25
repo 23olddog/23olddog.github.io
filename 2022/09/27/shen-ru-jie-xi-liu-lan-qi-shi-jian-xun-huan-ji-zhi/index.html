@@ -7,11 +7,11 @@
     <meta name="keywords" content="深入解析浏览器事件循环机制, 前端 | Android">
     <meta name="description" content="浏览器事件循环
 js是单线程的 非阻塞的
-如果是多线程 会面临很多问题 比如一个DOM元素被同时操作带来的问题 （H5提出Web Worker标准 有很多限制 受主线程的控制 是主线程的子线程
+如果是多线程 会面临很多问题 比如一个DOM元素被同时操作带来的问题 （H5 提出Web Worker标准 有很多限制 受主线程的控制 是主线程的子线程
 通过event Loop实现非阻塞
 
 
-浏览器">
+浏览">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -452,6 +452,10 @@ js是单线程的 非阻塞的
                                 <span class="chip bg-color">浏览器原理</span>
                             </a>
                         
+                            <a href="/tags/js/">
+                                <span class="chip bg-color">js</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -480,7 +484,7 @@ js是单线程的 非阻塞的
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-09-27
+                    2022-10-25
                 </div>
                 
 
@@ -516,7 +520,7 @@ js是单线程的 非阻塞的
             <div id="articleContent">
                 <h1 id="浏览器事件循环"><a href="#浏览器事件循环" class="headerlink" title="浏览器事件循环"></a>浏览器事件循环</h1><ol>
 <li><code>js</code>是单线程的 非阻塞的<ol>
-<li>如果是多线程 会面临很多问题 比如一个<code>DOM</code>元素被同时操作带来的问题 （H5提出<code>Web Worker</code>标准 有很多限制 受主线程的控制 是主线程的子线程</li>
+<li>如果是多线程 会面临很多问题 比如一个<code>DOM</code>元素被同时操作带来的问题 （H5 提出<code>Web Worker</code>标准 有很多限制 受主线程的控制 是主线程的子线程</li>
 <li>通过<code>event Loop</code>实现<strong>非阻塞</strong></li>
 </ol>
 </li>
@@ -556,31 +560,31 @@ js是单线程的 非阻塞的
 <p>当前执行栈执行完毕后时会立刻处理所有微任务队列中的事件，然后再去宏任务队列中取出一个事件。同一次事件循环中，微任务永远在宏任务之前执行</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a2f53462a66b49f2a0cabedac102235b~tplv-k3u1fbpfcp-zoom-1.image" alt="1100815376-96173ef6295d6c1f"></p>
 <p>总结：先执行宏任务 然后执行该宏任务产生的微任务 若微任务执行中产生了其他任务（微任务则继续执行微任务 宏任务则放入下一轮宏任务中） 微任务执行完毕 再回到宏任务中进行下一轮循环</p>
-<h3 id="小练"><a href="#小练" class="headerlink" title="小练"></a>小练</h3><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'1'</span>)</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> {</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'p2'</span>);</span><br><span class="line">  <span class="title function_">resolve</span>(<span class="number">3</span>)</span><br><span class="line">}).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> {</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'pro time'</span>)</span><br><span class="line">  }, <span class="number">0</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'after pro time'</span>)</span><br><span class="line">}).<span class="title function_">then</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'second then'</span>)</span><br><span class="line">})</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'t1'</span>)</span><br><span class="line">}, <span class="number">0</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'end'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="小练"><a href="#小练" class="headerlink" title="小练"></a>小练</h3><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">"1"</span>);</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> {</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">"p2"</span>);</span><br><span class="line">  <span class="title function_">resolve</span>(<span class="number">3</span>);</span><br><span class="line">})</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> {</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">"pro time"</span>);</span><br><span class="line">    }, <span class="number">0</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">"after pro time"</span>);</span><br><span class="line">  })</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">"second then"</span>);</span><br><span class="line">  });</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> {</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">"t1"</span>);</span><br><span class="line">}, <span class="number">0</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">"end"</span>);</span><br></pre></td></tr></tbody></table></figure>
 
 <p><strong>第一轮事件循环</strong></p>
 <ol>
 <li>全局代码压入执行栈 执行<code>console.log('1')</code> 然后出栈</li>
 <li><code>new Promise()</code>入执行栈 执行<code>console.log(p2)</code> 并将<code>then（）</code>放入微任务队列 <code>new Promise()</code>出栈</li>
 <li><code>setTimeout（）</code>入执行栈 将对应事件放入宏任务队列 <code>setTimeout</code>出栈</li>
-<li><code>console.log('end')</code> 入栈 执行<code>console.log('end')</code> 然后出栈 </li>
-<li>至此第一轮事件循环结束 此时微任务有<code>promise.then()</code> 宏任务有<code>setTimeout()</code> 输出1-p2-3</li>
+<li><code>console.log('end')</code> 入栈 执行<code>console.log('end')</code> 然后出栈</li>
+<li>至此第一轮事件循环结束 此时微任务有<code>promise.then()</code> 宏任务有<code>setTimeout()</code> 输出 1-p2-3</li>
 </ol>
 <p><strong>第二轮事件循环</strong></p>
 <ol>
 <li>取出微任务队列第一个事件的回调至任务栈 及第一个<code>then</code> 执行<code>console.log(result)</code> 遇到<code>setTimeout</code> 将其翻入宏任务 继续执行下面的代码 即<code>console.log('after pro time')</code> 遇到<code>then</code> 属于微任务 则继续执行 <code>console.log('second then')</code> 微任务队列清空 前往宏任务队列</li>
-<li>取出宏任务队列第一个事件并将回调放入执行栈 即<code>console.log(t1)</code> </li>
+<li>取出宏任务队列第一个事件并将回调放入执行栈 即<code>console.log(t1)</code></li>
 <li>至此第二轮事件循环结束 宏任务队列还有一个<code>setTimeout</code>（刚才<code>promise</code>产生的） 微任务无事件 输出”after pro time” - “second then” - “t1”</li>
 </ol>
 <p><strong>第三轮事件循环</strong></p>
 <ol>
 <li>检查微任务队列 无待处理事件 前往宏任务队列</li>
-<li>取出宏任务队列第一个事件 执行<code>console.log('pro time')</code> </li>
+<li>取出宏任务队列第一个事件 执行<code>console.log('pro time')</code></li>
 <li>宏任务和微任务队列均清空 第三轮事件循环结束 输出 “pro time”</li>
 </ol>
 <p><strong>至此 所有事件执行完毕 输出依次为:</strong>“1” - “p2” - “end” - 3 - “after pro time” - “second then” - “t1” - “pro time”</p>
 <p>相信看到这里，大家对于事件循环应该有了深刻的认识，本文错误之处，请各位在评论区指出</p>
-<p><strong>文章参考</strong><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022805523#comment-area">：<em>JS中的事件循环机制</em></a></p>
+<p><strong>文章参考</strong><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022805523#comment-area">：<em>JS 中的事件循环机制</em></a></p>
 
                 
             </div>
@@ -647,6 +651,10 @@ js是单线程的 非阻塞的
                             
                                 <a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/">
                                     <span class="chip bg-color">浏览器原理</span>
+                                </a>
+                            
+                                <a href="/tags/js/">
+                                    <span class="chip bg-color">js</span>
                                 </a>
                             
                         </div>
@@ -1136,7 +1144,7 @@ js是单线程的 非阻塞的
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">117.5k</span>
+                        class="white-color">118.5k</span>
             
             
             

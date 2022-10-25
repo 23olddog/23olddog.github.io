@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-10-25T02:53:25.318Z</updated>
+  <updated>2022-10-25T08:20:27.661Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://23olddog.github.io/2022/10/25/kuang-jia-de-diff-suan-fa/"/>
     <id>https://23olddog.github.io/2022/10/25/kuang-jia-de-diff-suan-fa/</id>
     <published>2022-10-25T02:51:39.537Z</published>
-    <updated>2022-10-25T02:53:25.318Z</updated>
+    <updated>2022-10-25T08:20:27.661Z</updated>
     
     
       
@@ -37,7 +37,9 @@
     <category term="框架" scheme="https://23olddog.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
     
     
-    <category term="Vue React" scheme="https://23olddog.github.io/tags/Vue-React/"/>
+    <category term="Vue" scheme="https://23olddog.github.io/tags/Vue/"/>
+    
+    <category term="React" scheme="https://23olddog.github.io/tags/React/"/>
     
   </entry>
   
@@ -46,7 +48,7 @@
     <link href="https://23olddog.github.io/2022/10/11/ji-suan-ji-wang-luo-1/"/>
     <id>https://23olddog.github.io/2022/10/11/ji-suan-ji-wang-luo-1/</id>
     <published>2022-10-11T01:04:53.704Z</published>
-    <updated>2022-10-11T01:07:37.262Z</updated>
+    <updated>2022-10-25T02:59:18.603Z</updated>
     
     
       
@@ -62,7 +64,7 @@
     <category term="计算机网络" scheme="https://23olddog.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
     
-    <category term="计算机网络" scheme="https://23olddog.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    <category term="计网" scheme="https://23olddog.github.io/tags/%E8%AE%A1%E7%BD%91/"/>
     
   </entry>
   
@@ -71,14 +73,14 @@
     <link href="https://23olddog.github.io/2022/10/05/liu-lan-qi-yuan-li-xi-lie-yi-guan-yu-jia-gou-tcp/http-huan-cun-yi-ji-xuan-ran-liu-cheng-de-yuan-li/"/>
     <id>https://23olddog.github.io/2022/10/05/liu-lan-qi-yuan-li-xi-lie-yi-guan-yu-jia-gou-tcp/http-huan-cun-yi-ji-xuan-ran-liu-cheng-de-yuan-li/</id>
     <published>2022-10-05T09:21:44.916Z</published>
-    <updated>2022-10-05T09:24:25.626Z</updated>
+    <updated>2022-10-25T02:58:16.694Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;我们都知道前端工程师每天都需要和浏览器打交道，浏览器对于我们的重要程度不言而喻。但是不知道各位在日常开发（摸鱼bushi）中有没有和笔者有一些共同的疑惑，比如为什么我只是打开了一个标签页却开了好几个进程（可通过浏览器的任务管理器查看）、为什么大家都倾向于使用</summary>
+    <summary type="html">&lt;p&gt;我们都知道前端工程师每天都需要和浏览器打交道，浏览器对于我们的重要程度不言而喻。但是不知道各位在日常开发（摸鱼 bushi）中有没有和笔者有一些共同的疑惑，比如为什么我只是打开了一个标签页却开了好几个进程（可通过浏览器的任务管理器查看）、为什么大家都倾向于使用</summary>
         
       
     
@@ -122,7 +124,7 @@
     <link href="https://23olddog.github.io/2022/09/27/yi-wen-dai-ni-du-dong-webpack-xiang-guan-yuan-li-ji-ying-yong/"/>
     <id>https://23olddog.github.io/2022/09/27/yi-wen-dai-ni-du-dong-webpack-xiang-guan-yuan-li-ji-ying-yong/</id>
     <published>2022-09-27T13:55:53.214Z</published>
-    <updated>2022-09-27T13:56:50.237Z</updated>
+    <updated>2022-10-25T03:00:53.744Z</updated>
     
     
       
@@ -140,6 +142,8 @@
     
     
     <category term="webpack" scheme="https://23olddog.github.io/tags/webpack/"/>
+    
+    <category term="构建工具" scheme="https://23olddog.github.io/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
@@ -199,7 +203,7 @@
     <link href="https://23olddog.github.io/2022/09/27/shen-ru-jie-xi-liu-lan-qi-shi-jian-xun-huan-ji-zhi/"/>
     <id>https://23olddog.github.io/2022/09/27/shen-ru-jie-xi-liu-lan-qi-shi-jian-xun-huan-ji-zhi/</id>
     <published>2022-09-27T13:50:11.098Z</published>
-    <updated>2022-09-27T13:51:33.237Z</updated>
+    <updated>2022-10-25T03:00:14.247Z</updated>
     
     
       
@@ -218,6 +222,8 @@
     
     
     <category term="浏览器原理" scheme="https://23olddog.github.io/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/"/>
+    
+    <category term="js" scheme="https://23olddog.github.io/tags/js/"/>
     
   </entry>
   
@@ -251,14 +257,14 @@
     <link href="https://23olddog.github.io/2022/09/27/liu-lan-qi-di-ceng-xuan-ran-yuan-li/"/>
     <id>https://23olddog.github.io/2022/09/27/liu-lan-qi-di-ceng-xuan-ran-yuan-li/</id>
     <published>2022-09-27T13:44:43.003Z</published>
-    <updated>2022-09-27T13:46:33.799Z</updated>
+    <updated>2022-10-25T02:59:38.828Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;浏览器是如何将HTML、CSS、JavaScript变成可视的页面的&quot;&gt;&lt;a href=&quot;#浏览器是如何将HTML、CSS、JavaScript变成可视的页面的&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;浏览器是如何将-HTML、CSS、JavaScript-变成可视的页面的&quot;&gt;&lt;a href=&quot;#浏览器是如何将-HTML、CSS、JavaScript-变成可视的页面的&quot; class=&quot;headerlink&quot; title=&quot;浏览器是如何将</summary>
         
       
     
@@ -266,6 +272,8 @@
     
     <category term="浏览器" scheme="https://23olddog.github.io/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
+    
+    <category term="浏览器" scheme="https://23olddog.github.io/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/"/>
     
     <category term="浏览器原理" scheme="https://23olddog.github.io/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86/"/>
     
@@ -376,7 +384,7 @@
     <link href="https://23olddog.github.io/2022/04/15/chu-xue-git-di-yi-tian/"/>
     <id>https://23olddog.github.io/2022/04/15/chu-xue-git-di-yi-tian/</id>
     <published>2022-04-15T15:17:38.222Z</published>
-    <updated>2022-09-27T13:33:07.283Z</updated>
+    <updated>2022-10-25T02:59:04.596Z</updated>
     
     
       
@@ -389,7 +397,7 @@
     
     
     
-    <category term="前端过程化" scheme="https://23olddog.github.io/categories/%E5%89%8D%E7%AB%AF%E8%BF%87%E7%A8%8B%E5%8C%96/"/>
+    <category term="开发工具" scheme="https://23olddog.github.io/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
     
     
     <category term="Git" scheme="https://23olddog.github.io/tags/Git/"/>
@@ -401,7 +409,7 @@
     <link href="https://23olddog.github.io/2022/04/14/vueapi/"/>
     <id>https://23olddog.github.io/2022/04/14/vueapi/</id>
     <published>2022-04-14T02:19:50.254Z</published>
-    <updated>2022-09-27T13:43:47.221Z</updated>
+    <updated>2022-10-25T03:01:34.350Z</updated>
     
     
       
@@ -417,7 +425,7 @@
     <category term="框架" scheme="https://23olddog.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
     
     
-    <category term="VUE" scheme="https://23olddog.github.io/tags/VUE/"/>
+    <category term="Vue" scheme="https://23olddog.github.io/tags/Vue/"/>
     
   </entry>
   
@@ -451,7 +459,7 @@
     <link href="https://23olddog.github.io/2022/04/10/chong-xue-vue2.0/"/>
     <id>https://23olddog.github.io/2022/04/10/chong-xue-vue2.0/</id>
     <published>2022-04-10T13:56:54.839Z</published>
-    <updated>2022-09-27T13:42:41.065Z</updated>
+    <updated>2022-10-25T03:01:16.990Z</updated>
     
     
       
@@ -467,7 +475,7 @@
     <category term="框架" scheme="https://23olddog.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
     
     
-    <category term="VUE" scheme="https://23olddog.github.io/tags/VUE/"/>
+    <category term="Vue" scheme="https://23olddog.github.io/tags/Vue/"/>
     
   </entry>
   
@@ -476,7 +484,7 @@
     <link href="https://23olddog.github.io/2022/04/09/vue-xiang-ying-shi-yuan-li/"/>
     <id>https://23olddog.github.io/2022/04/09/vue-xiang-ying-shi-yuan-li/</id>
     <published>2022-04-09T08:55:08.115Z</published>
-    <updated>2022-09-27T13:43:29.411Z</updated>
+    <updated>2022-10-25T03:01:28.194Z</updated>
     
     
       
@@ -492,7 +500,7 @@
     <category term="框架原理" scheme="https://23olddog.github.io/categories/%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86/"/>
     
     
-    <category term="VUE" scheme="https://23olddog.github.io/tags/VUE/"/>
+    <category term="Vue" scheme="https://23olddog.github.io/tags/Vue/"/>
     
   </entry>
   

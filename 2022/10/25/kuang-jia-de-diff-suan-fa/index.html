@@ -443,8 +443,12 @@ React16之后 为了性能优化 会先将 vdom转换为fiber （从树转换成
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Vue-React/">
-                                <span class="chip bg-color">Vue React</span>
+                            <a href="/tags/Vue/">
+                                <span class="chip bg-color">Vue</span>
+                            </a>
+                        
+                            <a href="/tags/React/">
+                                <span class="chip bg-color">React</span>
                             </a>
                         
                     </div>
@@ -482,14 +486,14 @@ React16之后 为了性能优化 会先将 vdom转换为fiber （从树转换成
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.9k
+                    8.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    32 分
+                    36 分
                 </div>
                 
 
@@ -671,6 +675,36 @@ React16之后 为了性能优化 会先将 vdom转换为fiber （从树转换成
 <li>遍历结束</li>
 </ol>
 <p><img src="https://img-blog.csdnimg.cn/20200607002918225.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3psX0FsaWVu,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="vue3-相比-vue2-的优化"><a href="#vue3-相比-vue2-的优化" class="headerlink" title="vue3 相比 vue2 的优化"></a>vue3 相比 vue2 的优化</h2><h4 id="事件缓存"><a href="#事件缓存" class="headerlink" title="事件缓存"></a>事件缓存</h4><p>将事件进行缓存，这样如果多次用到相同的事件，就不用重复去创建以及绑定</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> &lt;button @click={toClickSec}&gt;clickSecondBtn&lt;/button&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) {</span><br><span class="line">  <span class="keyword">return</span> (<span class="title function_">_openBlock</span>(), <span class="title function_">_createElementBlock</span>(<span class="string">"div"</span>, _hoisted_1, [</span><br><span class="line">    <span class="title function_">_createElementVNode</span>(<span class="string">"button"</span>, {</span><br><span class="line">      <span class="attr">onClick</span>: _cache[<span class="number">1</span>] || (_cache[<span class="number">1</span>] = $event =&gt; ({<span class="attr">toClickSec</span>: _ctx.<span class="property">toClickSec</span>}))</span><br><span class="line">    }, <span class="string">"clickSecondBtn"</span>)</span><br><span class="line">  ]))</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="静态标记"><a href="#静态标记" class="headerlink" title="静态标记"></a>静态标记</h4><p>对于一些属性或者内容固定的节点，对其打上静态节点的标记，这样在后续的<code>diff</code>过程中，可以跳过这些不必要的比较来优化<code>diff</code>算法 ，同样的 还有类似于<code>class绑定、props</code>等，也是同样的道理，利用标记来避免不必要的比较</p>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> &lt;h2&gt;i am olddog&lt;/h2&gt;</span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>i am div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">{style}</span>&gt;</span>i am class div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:pro</span>=<span class="string">"props"</span> <span class="attr">:class</span>=<span class="string">{style}</span>&gt;</span> i am props div <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">   onst _hoisted_1 = { <span class="attr">id</span>: <span class="string">"app"</span> }</span><br><span class="line"><span class="keyword">const</span> _hoisted_2 = <span class="comment">/*#__PURE__*/</span><span class="title function_">_createElementVNode</span>(<span class="string">"h2"</span>, <span class="literal">null</span>, <span class="string">"i am olddog"</span>, -<span class="number">1</span> <span class="comment">/* HOISTED */</span>)</span><br><span class="line"><span class="keyword">const</span> _hoisted_3 = <span class="comment">/*#__PURE__*/</span><span class="title function_">_createElementVNode</span>(<span class="string">"div"</span>, <span class="literal">null</span>, <span class="string">"i am div"</span>, -<span class="number">1</span> <span class="comment">/* HOISTED */</span>)</span><br><span class="line"><span class="keyword">const</span> _hoisted_4 = [<span class="string">"pro"</span>]</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以看到，这些标记其实就是一些位运算</p>
+<blockquote>
+<p>不仅 vue。react 使用的也是位运算来标记，除此之外，位运算还可以用于在权限系统中（例如一个系统拥有多个用户，而每个用户只有几个权限的情况下 但是需注意这种情况下的权限查找较不方便）</p>
+</blockquote>
+<figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> enum <span class="title class_">PatchFlags</span> {</span><br><span class="line"></span><br><span class="line">  <span class="variable constant_">TEXT</span> = <span class="number">1</span>,<span class="comment">// 表示具有动态textContent的元素</span></span><br><span class="line">  <span class="variable constant_">CLASS</span> = <span class="number">1</span> &lt;&lt; <span class="number">1</span>,  <span class="comment">// 表示有动态Class的元素</span></span><br><span class="line">  <span class="variable constant_">STYLE</span> = <span class="number">1</span> &lt;&lt; <span class="number">2</span>,  <span class="comment">// 表示动态样式（静态如style="color: red"，也会提升至动态）</span></span><br><span class="line">  <span class="variable constant_">PROPS</span> = <span class="number">1</span> &lt;&lt; <span class="number">3</span>,  <span class="comment">// 表示具有非类/样式动态道具的元素。</span></span><br><span class="line">  <span class="variable constant_">FULL_PROPS</span> = <span class="number">1</span> &lt;&lt; <span class="number">4</span>,  <span class="comment">// 表示带有动态键的道具的元素，与上面三种相斥</span></span><br><span class="line">  <span class="variable constant_">HYDRATE_EVENTS</span> = <span class="number">1</span> &lt;&lt; <span class="number">5</span>,  <span class="comment">// 表示带有事件监听器的元素</span></span><br><span class="line">  <span class="variable constant_">STABLE_FRAGMENT</span> = <span class="number">1</span> &lt;&lt; <span class="number">6</span>,   <span class="comment">// 表示其子顺序不变的片段（没懂）。</span></span><br><span class="line">  <span class="variable constant_">KEYED_FRAGMENT</span> = <span class="number">1</span> &lt;&lt; <span class="number">7</span>, <span class="comment">// 表示带有键控或部分键控子元素的片段。</span></span><br><span class="line">  <span class="variable constant_">UNKEYED_FRAGMENT</span> = <span class="number">1</span> &lt;&lt; <span class="number">8</span>, <span class="comment">// 表示带有无key绑定的片段</span></span><br><span class="line">  <span class="variable constant_">NEED_PATCH</span> = <span class="number">1</span> &lt;&lt; <span class="number">9</span>,   <span class="comment">// 表示只需要非属性补丁的元素，例如ref或hooks</span></span><br><span class="line">  <span class="variable constant_">DYNAMIC_SLOTS</span> = <span class="number">1</span> &lt;&lt; <span class="number">10</span>,  <span class="comment">// 表示具有动态插槽的元素</span></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+
+<blockquote>
+<p><code>vue2</code>是全量<code>Diff</code>（即不管任何节点都会进行<code>diff</code>） <code>vue3</code>是 静态标记 + 非全量<code>DIff</code>（即通过静态标记标记不同<code>Vdom</code>的类型，以此跳过不必要的比较来优化<code>diff</code>的效率）</p>
+</blockquote>
+<h4 id="静态提升"><a href="#静态提升" class="headerlink" title="静态提升"></a>静态提升</h4><figure class="highlight js"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;h2&gt;i am olddog&lt;/h2&gt;</span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>i am div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">{style}</span>&gt;</span>i am class div<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:pro</span>=<span class="string">"props"</span> <span class="attr">:class</span>=<span class="string">{style}</span>&gt;</span> i am props div <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">   onst _hoisted_1 = { <span class="attr">id</span>: <span class="string">"app"</span> }</span><br><span class="line"><span class="keyword">const</span> _hoisted_2 = <span class="comment">/*#__PURE__*/</span><span class="title function_">_createElementVNode</span>(<span class="string">"h2"</span>, <span class="literal">null</span>, <span class="string">"i am olddog"</span>, -<span class="number">1</span> <span class="comment">/* HOISTED */</span>)</span><br><span class="line"><span class="keyword">const</span> _hoisted_3 = <span class="comment">/*#__PURE__*/</span><span class="title function_">_createElementVNode</span>(<span class="string">"div"</span>, <span class="literal">null</span>, <span class="string">"i am div"</span>, -<span class="number">1</span> <span class="comment">/* HOISTED */</span>)</span><br><span class="line"><span class="keyword">const</span> _hoisted_4 = [<span class="string">"pro"</span>]</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) {</span><br><span class="line">  <span class="keyword">return</span> (<span class="title function_">_openBlock</span>(), <span class="title function_">_createElementBlock</span>(<span class="string">"div"</span>, _hoisted_1, [</span><br><span class="line">    _hoisted_2,</span><br><span class="line">    _hoisted_3,</span><br><span class="line">    <span class="title function_">_createElementVNode</span>(<span class="string">"div"</span>, {</span><br><span class="line">      <span class="attr">class</span>: <span class="title function_">_normalizeClass</span>({<span class="attr">style</span>: _ctx.<span class="property">style</span>})</span><br><span class="line">    }, <span class="string">"i am class div"</span>, <span class="number">2</span> <span class="comment">/* CLASS */</span>),</span><br></pre></td></tr></tbody></table></figure>
+
+<p>可以看到 对于一些内容或属性固定的静态节点 <code>vue3</code> 将它们定义在 <code>render</code> 函数外部来做到 <code>静态提升</code> 这样当多次用到这些节点的时候 可以直接引用而不是重复创建 大大提高了性能</p>
+<h4 id="使用最长稳定子序列优化对比流程"><a href="#使用最长稳定子序列优化对比流程" class="headerlink" title="使用最长稳定子序列优化对比流程"></a>使用最长稳定子序列优化对比流程</h4><h5 id="vue2"><a href="#vue2" class="headerlink" title="vue2"></a>vue2</h5><ul>
+<li>旧头和新头相比</li>
+<li>旧头和新尾相比</li>
+<li>旧尾和新头相比</li>
+<li>旧尾和新尾相比</li>
+<li>都没有命中的对比</li>
+</ul>
+<h5 id="vue3-1"><a href="#vue3-1" class="headerlink" title="vue3"></a>vue3</h5><ul>
+<li>旧头和新头对比</li>
+<li>旧尾和新尾对比</li>
+<li>基于最长递增子序列进行移动/增加/删除 （使用最长递增子序列可以最大程度的减少<code>DOM</code>的移动 达到最少的<code>DOM</code>操作）</li>
+</ul>
 
                 
             </div>
@@ -735,8 +769,12 @@ React16之后 为了性能优化 会先将 vdom转换为fiber （从树转换成
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Vue-React/">
-                                    <span class="chip bg-color">Vue React</span>
+                                <a href="/tags/Vue/">
+                                    <span class="chip bg-color">Vue</span>
+                                </a>
+                            
+                                <a href="/tags/React/">
+                                    <span class="chip bg-color">React</span>
                                 </a>
                             
                         </div>
@@ -950,8 +988,12 @@ React16之后 为了性能优化 会先将 vdom转换为fiber （从树转换成
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Vue-React/">
-                        <span class="chip bg-color">Vue React</span>
+                    <a href="/tags/Vue/">
+                        <span class="chip bg-color">Vue</span>
+                    </a>
+                    
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
                     </a>
                     
                 </div>
@@ -999,8 +1041,8 @@ React16之后 为了性能优化 会先将 vdom转换为fiber （从树转换成
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
-                        <span class="chip bg-color">计算机网络</span>
+                    <a href="/tags/%E8%AE%A1%E7%BD%91/">
+                        <span class="chip bg-color">计网</span>
                     </a>
                     
                 </div>
@@ -1228,7 +1270,7 @@ React16之后 为了性能优化 会先将 vdom转换为fiber （从树转换成
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">117.5k</span>
+                        class="white-color">118.5k</span>
             
             
             
