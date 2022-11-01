@@ -6,7 +6,7 @@
   <link href="https://23olddog.github.io/atom.xml" rel="self"/>
   
   <link href="https://23olddog.github.io/"/>
-  <updated>2022-10-25T08:20:27.661Z</updated>
+  <updated>2022-11-01T08:10:00.569Z</updated>
   <id>https://23olddog.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从0到1搭建前端监控系统</title>
+    <link href="https://23olddog.github.io/2022/11/01/qian-duan-yi-chang-jian-kong/"/>
+    <id>https://23olddog.github.io/2022/11/01/qian-duan-yi-chang-jian-kong/</id>
+    <published>2022-11-01T08:08:37.751Z</published>
+    <updated>2022-11-01T08:10:00.569Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;搭建异常监控系统&quot;&gt;&lt;a href=&quot;#搭建异常监控系统&quot; class=&quot;headerlink&quot; title=&quot;搭建异常监控系统&quot;&gt;&lt;/a&gt;搭建异常监控系统&lt;/h1&gt;&lt;h2 id=&quot;流程&quot;&gt;&lt;a href=&quot;#流程&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="前端工程化" scheme="https://23olddog.github.io/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/"/>
+    
+    
+    <category term="异常监控" scheme="https://23olddog.github.io/tags/%E5%BC%82%E5%B8%B8%E7%9B%91%E6%8E%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>Eeact/Vue的Diff算法</title>
@@ -501,31 +526,6 @@
     
     
     <category term="Vue" scheme="https://23olddog.github.io/tags/Vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>性能优化</title>
-    <link href="https://23olddog.github.io/2022/04/09/xing-neng-you-hua/"/>
-    <id>https://23olddog.github.io/2022/04/09/xing-neng-you-hua/</id>
-    <published>2022-04-09T08:53:48.757Z</published>
-    <updated>2022-09-27T13:40:34.783Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;页面内容的呈现过程&quot;&gt;&lt;a href=&quot;#页面内容的呈现过程&quot; class=&quot;headerlink&quot; title=&quot;页面内容的呈现过程&quot;&gt;&lt;/a&gt;页面内容的呈现过程&lt;/h1&gt;&lt;h2 id=&quot;页面的首屏加载性能-白屏时间是否过长？&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="优化" scheme="https://23olddog.github.io/categories/%E4%BC%98%E5%8C%96/"/>
-    
-    
-    <category term="性能优化" scheme="https://23olddog.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
